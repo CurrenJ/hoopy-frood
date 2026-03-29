@@ -11,6 +11,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.packs.VanillaRecipeProvider;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 
@@ -32,6 +33,8 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_brown_brick", has(HoopyFroodItems.BROWN_BRICK.get()));
         ResourceKey<Recipe<?>> recipeKey = recipeBuilder.defaultId();
         recipeBuilder.save(this.output, recipeKey);
+
+        generateRecipes(HoopyFroodTutBlocks.BROWN_BRICKS_FAMILY.get(), FeatureFlagSet.of());
     }
 
     public static class Runner extends VanillaRecipeProvider.Runner {

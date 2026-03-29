@@ -7,6 +7,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 
 public class BlockModelProvider extends ModelProvider {
@@ -16,11 +17,13 @@ public class BlockModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        blockModels.createTrivialCube(HoopyFroodTutBlocks.BROWN_BRICKS.get());
+//        blockModels.createTrivialCube(HoopyFroodTutBlocks.BROWN_BRICKS.get());
         // ALTERNATIVELY, the above live in equivalent to doing it manually like this:
 //        Block brownBricksBlock = HoopyFroodTut.BROWN_BRICKS.get();
 //        Identifier brownBricksId = ModelTemplates.CUBE_ALL.create(brownBricksBlock, TextureMapping.cube(brownBricksBlock), blockModels.modelOutput);
 //        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(brownBricksBlock, BlockModelGenerators.plainVariant(brownBricksId)));
+
+        blockModels.family(HoopyFroodTutBlocks.BROWN_BRICKS.get()).generateFor(HoopyFroodTutBlocks.BROWN_BRICKS_FAMILY.get());
 
         itemModels.generateFlatItem(HoopyFroodItems.BROWN_BRICK.get(), ModelTemplates.FLAT_ITEM);
         // ALTERNATIVELY, the above is live in equivalent to doing it manually like this:

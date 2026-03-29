@@ -1,6 +1,8 @@
 {
   "itemGroup.hoopyfroodtut": "Example Mod Tab",
   "block.hoopyfroodtut.brown_bricks": "Brown Bricks",
+  "block.hoopyfroodtut.brown_bricks_slab": "Brown Bricks Slab",
+  "block.hoopyfroodtut.brown_bricks_stairs": "Brown Bricks Stairs",
   "item.hoopyfroodtut.brown_brick": "Brown Brick",
 
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",

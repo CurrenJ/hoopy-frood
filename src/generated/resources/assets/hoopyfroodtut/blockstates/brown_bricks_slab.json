@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hoopyfroodtut:block/brown_bricks_slab"
+    },
+    "type=double": {
+      "model": "hoopyfroodtut:block/brown_bricks"
+    },
+    "type=top": {
+      "model": "hoopyfroodtut:block/brown_bricks_slab_top"
+    }
+  }
+}
