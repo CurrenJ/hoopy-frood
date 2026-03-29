@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "hoopyfroodtut:block/brown_bricks"
+  }
+}

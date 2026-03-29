@@ -1,0 +1,13 @@
+{
+  "itemGroup.hoopyfroodtut": "Example Mod Tab",
+  "block.hoopyfroodtut.brown_bricks": "Brown Bricks",
+  "item.hoopyfroodtut.brown_brick": "Brown Brick",
+
+  "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",
+  "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",
+  "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs",
+  "hoopyfroodtut.configuration.items": "Item List",
+  "hoopyfroodtut.configuration.logDirtBlock": "Log Dirt Block",
+  "hoopyfroodtut.configuration.magicNumberIntroduction": "Magic Number Text",
+  "hoopyfroodtut.configuration.magicNumber": "Magic Number"
+}

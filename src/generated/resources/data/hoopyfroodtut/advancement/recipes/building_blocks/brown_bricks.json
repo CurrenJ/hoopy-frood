@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_brown_brick": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hoopyfroodtut:brown_brick"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hoopyfroodtut:brown_bricks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_brown_brick"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hoopyfroodtut:brown_bricks"
+    ]
+  }
+}
