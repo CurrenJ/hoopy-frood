@@ -4,6 +4,8 @@
   "block.hoopyfroodtut.brown_bricks_slab": "Brown Bricks Slab",
   "block.hoopyfroodtut.brown_bricks_stairs": "Brown Bricks Stairs",
   "item.hoopyfroodtut.brown_brick": "Brown Brick",
+  "block.hoopyfroodtut.balancer_node": "Balancer Node",
+  "item.hoopyfroodtut.balancer_range_extender": "Balancer Range Extender",
 
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",

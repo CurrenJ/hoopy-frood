@@ -1,0 +1,7 @@
+{
+  "parent": "hoopyfroodtut:block/balancer_node",
+  "textures": {
+    "particle": "block/diamond_block",
+    "0": "block/diamond_block"
+  }
+}

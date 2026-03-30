@@ -34,6 +34,8 @@ public class HoopyFroodTut {
         HoopyFroodTutBlocks.BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         HoopyFroodItems.ITEMS.register(modEventBus);
+        // Register the Deferred Register to the mod event bus so block entity types get registered
+        HoopyFroodBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         HoopyFroodCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 

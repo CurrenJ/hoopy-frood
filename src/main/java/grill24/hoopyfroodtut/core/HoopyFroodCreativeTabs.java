@@ -22,6 +22,8 @@ public class HoopyFroodCreativeTabs {
             .displayItems((parameters, output) -> {
                 output.accept(HoopyFroodItems.BROWN_BRICK.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(HoopyFroodItems.BROWN_BRICKS_ITEM.get());
+                output.accept(HoopyFroodItems.BALANCER_NODE_ITEM.get());
+                output.accept(HoopyFroodItems.BALANCER_RANGE_EXTENDER.get());
             }).build());
 
     // Add the example block item to the building blocks tab

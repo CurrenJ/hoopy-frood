@@ -34,6 +34,14 @@ public class Config {
             .comment("A list of items to log on common setup.")
             .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), () -> "", Config::validateItemName);
 
+    public static final ModConfigSpec.IntValue BALANCER_TICK_RATE = BUILDER
+            .comment("How many game ticks between each Balancer Node transfer attempt. Lower = faster.")
+            .defineInRange("balancerTickRate", 20, 1, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.IntValue BALANCER_BATCH_SIZE = BUILDER
+            .comment("Maximum items sent to each destination per transfer attempt.")
+            .defineInRange("balancerBatchSize", 4, 1, Integer.MAX_VALUE);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     private static boolean validateItemName(final Object obj) {

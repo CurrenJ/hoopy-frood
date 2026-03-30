@@ -1,5 +1,6 @@
 package grill24.hoopyfroodtut.core;
 
+import grill24.hoopyfroodtut.item.BalancerRangeExtender;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -17,4 +18,9 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> BROWN_BRICKS_ITEM = ITEMS.registerSimpleBlockItem("brown_bricks", HoopyFroodTutBlocks.BROWN_BRICKS);
     public static final DeferredItem<BlockItem> BROWN_BRICKS_SLAB_ITEM = ITEMS.registerSimpleBlockItem("brown_bricks_slab", HoopyFroodTutBlocks.BROWN_BRICKS_SLAB);
     public static final DeferredItem<BlockItem> BROWN_BRICKS_STAIRS_ITEM = ITEMS.registerSimpleBlockItem("brown_bricks_stairs", HoopyFroodTutBlocks.BROWN_BRICKS_STAIRS);
+
+    public static final DeferredItem<BlockItem> BALANCER_NODE_ITEM = ITEMS.registerSimpleBlockItem("balancer_node", HoopyFroodTutBlocks.BALANCER_NODE);
+
+    public static final DeferredItem<BalancerRangeExtender> BALANCER_RANGE_EXTENDER =
+            ITEMS.registerItem("balancer_range_extender", BalancerRangeExtender::new);
 }

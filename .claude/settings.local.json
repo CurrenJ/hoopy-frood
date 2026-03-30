@@ -2,7 +2,25 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "WebFetch(domain:docs.neoforged.net)"
+      "WebFetch(domain:docs.neoforged.net)",
+      "Bash(./gradlew compileJava)",
+      "Bash(xargs grep:*)",
+      "Bash(find D:GitHubhoopy-frood-tutdebugminecraft-patched-26.1.0.8-beta-sourcesnetminecraftclientdatamodels -name *.java)",
+      "Bash(find ~/.gradle/caches -name neoforge-26* -name *.jar)",
+      "Bash(find ~/.gradle/caches -name *26.1*)",
+      "Bash(jar tf:*)",
+      "Bash(find D:GitHubhoopy-frood-tut.gradle -name *.java)",
+      "Bash(ls \"D:\\\\GitHub\\\\hoopy-frood-tut\\\\debug\\\\minecraft-patched-26.1.0.8-beta-sources\\\\net\\\\minecraft\\\\world\\\\level\\\\block\\\\entity\"\" | grep -i \"furnace)",
+      "Bash(container)",
+      "Bash(inventory \")",
+      "Bash(find ~/.gradle/caches -path *26.1.0.8* -name *.java)",
+      "Read(//tmp/**)",
+      "Bash(unzip -q ~/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.1.0.8-beta/248bb8fa2b1ef1474b7b1f00bd6589bc9e4c2684/neoforge-26.1.0.8-beta-sources.jar \"net/neoforged/neoforge/transfer/ResourceHandler.java\" \"net/neoforged/neoforge/transfer/item/ItemResource.java\")",
+      "Bash(find D:/GitHub/hoopy-frood-tut/debug/neoforge-26.1.0.8-beta-universal -name *.java)",
+      "Bash(find D:/GitHub/hoopy-frood-tut/debug/neoforge-26.1.0.8-beta-universal/net -name *.java)",
+      "Bash(javap:*)",
+      "Bash(find D:/GitHub/NeoForge/src/main/java -name ItemUtil.java -path */transfer/*)",
+      "Bash(head -5 grep -n \"void onRemove\\\\|protected void onRemove\" \"D:/GitHub/hoopy-frood-tut/debug/minecraft-patched-26.1.0.8-beta-sources/net/minecraft/world/level/block/state/BlockBehaviour.java\")"
     ]
   }
 }
