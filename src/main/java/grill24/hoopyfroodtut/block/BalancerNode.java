@@ -66,9 +66,7 @@ public class BalancerNode extends BaseEntityBlock {
     /** Whether the node is currently active (successfully transferring items). */
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
-    // Small rectangular node shape (8×8×4 pixels) for each facing direction.
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
-
     static {
         SHAPES.put(Direction.NORTH, Block.box(4, 4, 12, 12, 12, 16));
         SHAPES.put(Direction.SOUTH, Block.box(4, 4,  0, 12, 12,  4));
@@ -96,7 +94,7 @@ public class BalancerNode extends BaseEntityBlock {
     }
 
     // -------------------------------------------------------------------------
-    // Placement & survival
+    // Placement and Shape
     // -------------------------------------------------------------------------
 
     @Override
@@ -175,12 +173,7 @@ public class BalancerNode extends BaseEntityBlock {
     // Drops — include stored range extenders
     // -------------------------------------------------------------------------
 
-    /**
-     * Drops extenders when broken in creative mode.
-     * In survival the loot-table path ({@link #getDrops}) already handles them,
-     * but {@code getDrops} is never called for creative players, so we intercept here.
-     * The block entity is still intact at this point.
-     */
+    /** Drops extenders when broken in creative mode. */
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player,
             ItemStack toolStack, boolean willHarvest, FluidState fluid) {
@@ -191,10 +184,7 @@ public class BalancerNode extends BaseEntityBlock {
         return super.onDestroyedByPlayer(state, level, pos, player, toolStack, willHarvest, fluid);
     }
 
-    /**
-     * Appends stored Balancer Range Extenders to the normal loot-table drops.
-     * Called for survival-mode players and non-player destruction (explosions, pistons).
-     */
+    /** Appends stored Balancer Range Extenders to the normal loot-table drops. */
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         List<ItemStack> drops = new ArrayList<>(super.getDrops(state, params));
@@ -205,24 +195,6 @@ public class BalancerNode extends BaseEntityBlock {
             }
         }
         return drops;
-    }
-
-    // -------------------------------------------------------------------------
-    // Shape
-    // -------------------------------------------------------------------------
-
-    @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPES.get(state.getValue(FACING));
-    }
-
-    // -------------------------------------------------------------------------
-    // Rendering
-    // -------------------------------------------------------------------------
-
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
     }
 
     // -------------------------------------------------------------------------
@@ -241,5 +213,18 @@ public class BalancerNode extends BaseEntityBlock {
         if (level.isClientSide()) return null;
         return createTickerHelper(type, HoopyFroodBlockEntityTypes.BALANCER_NODE.get(),
                 BalancerNodeBlockEntity::tick);
+    }
+
+    // -------------------------------------------------------------------------
+    // Misc
+    // -------------------------------------------------------------------------
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPES.get(state.getValue(FACING));
+    }
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 }

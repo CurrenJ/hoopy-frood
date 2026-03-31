@@ -30,13 +30,9 @@ public class HoopyFroodTut {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
         HoopyFroodTutBlocks.BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
         HoopyFroodItems.ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so block entity types get registered
         HoopyFroodBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
         HoopyFroodCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us

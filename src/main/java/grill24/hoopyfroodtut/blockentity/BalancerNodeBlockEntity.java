@@ -55,9 +55,7 @@ public class BalancerNodeBlockEntity extends BlockEntity {
 
     /**
      * Face priority order for acquiring item handlers from a destination block.
-     * Tries cardinal sides first, then top, then bottom, then the direction-agnostic
-     * (null) capability last.  Multiple faces may return the same handler instance;
-     * callers should deduplicate by identity before storing.
+     * The direction-agnostic (null) capability last.
      */
     private static final Direction[] INSERTION_FACE_PRIORITY = {
         Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST,
@@ -65,10 +63,7 @@ public class BalancerNodeBlockEntity extends BlockEntity {
         Direction.DOWN
     };
 
-    /**
-     * Index into the destination list at which the next distribution tick will start.
-     * Persisted so that a server reload doesn't reset the round-robin position.
-     */
+    /** Index into the destination list at which the next distribution tick will start. */
     private int nextDestIndex = 0;
 
     /** Number of Balancer Range Extender items currently stored in this node. */
@@ -169,11 +164,6 @@ public class BalancerNodeBlockEntity extends BlockEntity {
     /**
      * Spawns a visual preview of the source and all potential destinations within
      * the effective range.  Called server-side on shift right-click with empty hand.
-     * <ul>
-     *   <li>{@link ParticleTypes#END_ROD}      — source block with a recognised item handler</li>
-     *   <li>{@link ParticleTypes#HAPPY_VILLAGER} — destination block with a recognised item handler</li>
-     *   <li>{@link ParticleTypes#SMOKE}         — non-air block within range that has no item handler</li>
-     * </ul>
      */
     public void spawnPreviewParticles(ServerLevel level, BlockPos nodePos, BlockState state) {
         Direction facing = state.getValue(BalancerNode.FACING);
