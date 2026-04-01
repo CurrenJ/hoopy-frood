@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.block.BalancerNode;
+import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -21,6 +22,11 @@ public class HoopyFroodTutBlocks {
     // A small directional node that balances items from an attached source into a line of destinations.
     public static final DeferredBlock<BalancerNode> BALANCER_NODE = BLOCKS.registerBlock("balancer_node",
             p -> new BalancerNode(p.noOcclusion().noCollision()));
+
+    // A redstone-activated block that mines forward, places a successor with one fewer charge, then breaks.
+    public static final DeferredBlock<DisposableCaterpillar> DISPOSABLE_CATERPILLAR = BLOCKS.registerBlock(
+            "disposable_caterpillar",
+            p -> new DisposableCaterpillar(p.mapColor(MapColor.COLOR_GREEN).noOcclusion()));
 
     // ---- Block Families -----
     public static final Lazy<BlockFamily> BROWN_BRICKS_FAMILY = Lazy.lazy(() -> new BlockFamily.Builder(HoopyFroodTutBlocks.BROWN_BRICKS.get())

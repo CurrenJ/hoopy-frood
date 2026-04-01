@@ -24,6 +24,7 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.BROWN_BRICKS_ITEM.get());
                 output.accept(HoopyFroodItems.BALANCER_NODE_ITEM.get());
                 output.accept(HoopyFroodItems.BALANCER_RANGE_EXTENDER.get());
+                output.accept(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get());
             }).build());
 
     // Add the example block item to the building blocks tab

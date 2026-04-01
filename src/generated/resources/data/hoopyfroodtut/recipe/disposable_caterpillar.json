@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "minecraft:dirt",
+    "S": "minecraft:slime_ball"
+  },
+  "pattern": [
+    " S ",
+    "SDS",
+    " S "
+  ],
+  "result": {
+    "id": "hoopyfroodtut:disposable_caterpillar"
+  }
+}

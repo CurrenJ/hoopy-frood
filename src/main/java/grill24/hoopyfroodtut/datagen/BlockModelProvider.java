@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.datagen;
 
 import grill24.hoopyfroodtut.block.BalancerNode;
+import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
@@ -37,6 +38,7 @@ public class BlockModelProvider extends ModelProvider {
 //        itemModels.itemModelOutput.accept(HoopyFroodTut.BROWN_BRICK.get(), ItemModelUtils.plainModel(brownBrickId));
 
         registerBalancerNode(blockModels);
+        registerDisposableCaterpillar(blockModels);
     }
 
     /**
@@ -52,8 +54,8 @@ public class BlockModelProvider extends ModelProvider {
      * (6 directions × 2 power states) automatically.
      * <p>
      * Model files ({@code balancer_node_off.json} / {@code balancer_node_on.json}) are
-     * hand-authored in {@code src/main/resources/} so they are not generated here —
-     * only the blockstate JSON is emitted by datagen.
+     * hand-authored in {@code src/main/resources/} so they are not generated here.
+     * Only the blockstate JSON is datagen.
      * <p>
      * Rotation convention (matches {@link BlockModelGenerators#ROTATION_FACING}; base model faces NORTH):
      * <pre>
@@ -65,6 +67,33 @@ public class BlockModelProvider extends ModelProvider {
      *   DOWN   → x=90
      * </pre>
      */
+    /**
+     * Generates the blockstate JSON for the Disposable Caterpillar.
+     * <p>
+     * Combines two independent dispatches:
+     * <ul>
+     *   <li><b>TRIGGERED</b> – selects between the idle (lime) and active (yellow) model.</li>
+     *   <li><b>FACING</b> – rotates the chosen model via the pre-built
+     *       {@link BlockModelGenerators#ROTATION_FACING} dispatch (all 6 directions).</li>
+     * </ul>
+     * Model files are hand-authored in {@code src/main/resources/}; only the blockstate
+     * JSON is datagen-generated.
+     */
+    private static void registerDisposableCaterpillar(BlockModelGenerators blockModels) {
+        MultiVariant idleModel = BlockModelGenerators.plainVariant(
+                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/disposable_caterpillar"));
+        MultiVariant activeModel = BlockModelGenerators.plainVariant(
+                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/disposable_caterpillar_active"));
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get())
+                        .with(PropertyDispatch.initial(DisposableCaterpillar.TRIGGERED)
+                                .select(false, idleModel)
+                                .select(true,  activeModel))
+                        .with(BlockModelGenerators.ROTATION_FACING)
+        );
+    }
+
     private static void registerBalancerNode(BlockModelGenerators blockModels) {
         MultiVariant offModel = BlockModelGenerators.plainVariant(
                 Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/balancer_node_off"));

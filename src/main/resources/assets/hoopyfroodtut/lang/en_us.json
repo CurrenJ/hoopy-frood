@@ -7,6 +7,10 @@
   "block.hoopyfroodtut.balancer_node": "Balancer Node",
   "item.hoopyfroodtut.balancer_range_extender": "Balancer Range Extender",
 
+  "block.hoopyfroodtut.disposable_caterpillar": "Disposable Caterpillar",
+  "item.hoopyfroodtut.disposable_caterpillar.charges": "Charges: %s",
+  "item.hoopyfroodtut.disposable_caterpillar.torches": "Torches: %s",
+
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs",

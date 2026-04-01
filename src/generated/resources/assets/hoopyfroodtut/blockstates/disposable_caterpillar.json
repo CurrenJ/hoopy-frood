@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=down,triggered=false": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar",
+      "x": 90
+    },
+    "facing=down,triggered=true": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar_active",
+      "x": 90
+    },
+    "facing=east,triggered=false": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar",
+      "y": 90
+    },
+    "facing=east,triggered=true": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar_active",
+      "y": 90
+    },
+    "facing=north,triggered=false": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar"
+    },
+    "facing=north,triggered=true": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar_active"
+    },
+    "facing=south,triggered=false": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar",
+      "y": 180
+    },
+    "facing=south,triggered=true": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar_active",
+      "y": 180
+    },
+    "facing=up,triggered=false": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar",
+      "x": 270
+    },
+    "facing=up,triggered=true": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar_active",
+      "x": 270
+    },
+    "facing=west,triggered=false": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar",
+      "y": 270
+    },
+    "facing=west,triggered=true": {
+      "model": "hoopyfroodtut:block/disposable_caterpillar_active",
+      "y": 270
+    }
+  }
+}
