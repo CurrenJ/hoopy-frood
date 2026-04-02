@@ -1,9 +1,11 @@
 package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.block.BalancerNode;
+import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.material.MapColor;
@@ -27,6 +29,16 @@ public class HoopyFroodTutBlocks {
     public static final DeferredBlock<DisposableCaterpillar> DISPOSABLE_CATERPILLAR = BLOCKS.registerBlock(
             "disposable_caterpillar",
             p -> new DisposableCaterpillar(p.mapColor(MapColor.COLOR_GREEN).noOcclusion()));
+
+    // An autonomous item-collector that crawls toward dropped items and picks them up. Requires metallic nuggets as fuel.
+    public static final DeferredBlock<BeggingItemScrabbler> BEGGING_ITEM_SCRABBLER = BLOCKS.registerBlock(
+            "begging_item_scrabbler",
+            p -> new BeggingItemScrabbler(p.mapColor(MapColor.COLOR_BROWN)
+                    .noOcclusion()
+                    .isSuffocating((_, _, _) -> false)
+                    .isViewBlocking((_, _, _) -> false)
+                    .strength(1.0F, 6.0F)
+            ));
 
     // ---- Block Families -----
     public static final Lazy<BlockFamily> BROWN_BRICKS_FAMILY = Lazy.lazy(() -> new BlockFamily.Builder(HoopyFroodTutBlocks.BROWN_BRICKS.get())

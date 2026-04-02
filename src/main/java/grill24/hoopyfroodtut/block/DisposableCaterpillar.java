@@ -2,6 +2,7 @@ package grill24.hoopyfroodtut.block;
 
 import com.mojang.serialization.MapCodec;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
+import grill24.hoopyfroodtut.blockentity.MovingBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
 import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
@@ -9,8 +10,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -125,6 +130,15 @@ public class DisposableCaterpillar extends BaseEntityBlock {
         if (level.isClientSide()) return null;
         return createTickerHelper(type, HoopyFroodBlockEntityTypes.DISPOSABLE_CATERPILLAR.get(),
                 DisposableCaterpillarBlockEntity::tick);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (level instanceof Level worldLevel
+                && worldLevel.getBlockEntity(pos) instanceof MovingBlockEntity be) {
+            return MovingBlockEntity.animatedShape(worldLevel.getGameTime(), be);
+        }
+        return Shapes.block();
     }
 
     @Override

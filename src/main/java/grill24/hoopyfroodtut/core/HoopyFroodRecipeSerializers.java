@@ -2,6 +2,8 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.recipe.CaterpillarAddTorchesRecipe;
 import grill24.hoopyfroodtut.recipe.CaterpillarCombineRecipe;
+import grill24.hoopyfroodtut.recipe.ScrabblerAddNuggetsRecipe;
+import grill24.hoopyfroodtut.recipe.ScrabblerClearHomeRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -20,4 +22,14 @@ public class HoopyFroodRecipeSerializers {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CaterpillarAddTorchesRecipe>>
             CATERPILLAR_ADD_TORCHES = RECIPE_SERIALIZERS.register("caterpillar_add_torches",
                     () -> new RecipeSerializer<>(CaterpillarAddTorchesRecipe.CODEC, CaterpillarAddTorchesRecipe.STREAM_CODEC));
+
+    /** Serializer for loading metallic nuggets (fuel) into a Begging Item Scrabbler. */
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ScrabblerAddNuggetsRecipe>>
+            SCRABBLER_ADD_NUGGETS = RECIPE_SERIALIZERS.register("scrabbler_add_nuggets",
+                    () -> new RecipeSerializer<>(ScrabblerAddNuggetsRecipe.CODEC, ScrabblerAddNuggetsRecipe.STREAM_CODEC));
+
+    /** Serializer for clearing the home position from a Begging Item Scrabbler. */
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ScrabblerClearHomeRecipe>>
+            SCRABBLER_CLEAR_HOME = RECIPE_SERIALIZERS.register("scrabbler_clear_home",
+                    () -> new RecipeSerializer<>(ScrabblerClearHomeRecipe.CODEC, ScrabblerClearHomeRecipe.STREAM_CODEC));
 }

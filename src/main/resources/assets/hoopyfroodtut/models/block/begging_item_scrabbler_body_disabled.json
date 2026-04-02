@@ -1,0 +1,7 @@
+{
+	"parent": "hoopyfroodtut:block/begging_item_scrabbler_body",
+	"textures": {
+		"0": "hoopyfroodtut:block/begging_item_scrabbler_disabled",
+		"particle": "hoopyfroodtut:block/begging_item_scrabbler_disabled"
+	}
+}

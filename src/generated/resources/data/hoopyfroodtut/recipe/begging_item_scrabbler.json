@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "minecraft:chest",
+    "N": "minecraft:iron_nugget"
+  },
+  "pattern": [
+    " N ",
+    "NCN",
+    " N "
+  ],
+  "result": {
+    "id": "hoopyfroodtut:begging_item_scrabbler"
+  }
+}

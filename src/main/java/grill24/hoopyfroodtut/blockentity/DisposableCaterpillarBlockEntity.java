@@ -5,23 +5,12 @@ import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -40,8 +29,10 @@ import net.minecraft.world.phys.Vec3;
  * </ol>
  * Charges are transferred to/from the item form via the
  * {@code hoopyfroodtut:caterpillar_charges} data component.
+ * <p>
+ * Extends {@link MovingBlockEntity} for the shared advance-animation logic.
  */
-public class DisposableCaterpillarBlockEntity extends BlockEntity {
+public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
 
     private int charges = 1;
     private int torches = 0;
@@ -50,13 +41,10 @@ public class DisposableCaterpillarBlockEntity extends BlockEntity {
     private float mineProgress = 0f;
     private float miningSpeedMultiplier = 0.1f;
 
-    private int advanceTimestamp = -1;
-
     private int cooldown = 0;
 
     private static boolean ENABLE_CHAIN_TRIGGER = true;
     private static int COOLDOWN_AFTER = 20;
-    public static int ADVANCE_FORWARD_DURATION = 20;
     private static final int TORCH_INTERVAL = 12;
 
     public DisposableCaterpillarBlockEntity(BlockPos pos, BlockState state) {
@@ -101,17 +89,14 @@ public class DisposableCaterpillarBlockEntity extends BlockEntity {
         setChanged();
     }
 
-    public int getAdvanceTimestamp() {
-        return advanceTimestamp;
-    }
-
-    public void setAdvanceTimestamp(int advanceTimestamp) {
-        this.advanceTimestamp = advanceTimestamp;
-        setChanged();
-    }
-
     public void addCooldown(int amount) {
         setCooldown(this.cooldown + amount);
+    }
+
+
+    @Override
+    public int getAdvanceForwardDuration() {
+        return 20;
     }
 
     // -------------------------------------------------------------------------
@@ -120,46 +105,21 @@ public class DisposableCaterpillarBlockEntity extends BlockEntity {
 
     @Override
     protected void loadAdditional(ValueInput input) {
-        super.loadAdditional(input);
+        super.loadAdditional(input); // loads advanceTimestamp, moveDirection
         this.charges = input.getIntOr("Charges", 1);
         this.torches = input.getIntOr("Torches", 0);
         this.blocksSinceLastTorch = input.getIntOr("BlocksSinceLastTorch", 0);
         this.cooldown = input.getIntOr("Cooldown", 0);
-        this.advanceTimestamp = input.getIntOr("AdvanceTimestamp", -1);
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
-        super.saveAdditional(output);
+        super.saveAdditional(output); // saves advanceTimestamp, moveDirection
         output.putInt("Charges", charges);
         output.putInt("Torches", torches);
         output.putInt("BlocksSinceLastTorch", blocksSinceLastTorch);
         output.putInt("Cooldown", cooldown);
-        output.putInt("AdvanceTimestamp", advanceTimestamp);
     }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = this.saveWithoutMetadata(registries);
-        tag.putInt("AdvanceTimestamp", advanceTimestamp);
-        return tag;
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        // The packet uses the CompoundTag returned by #getUpdateTag. An alternative overload of #create exists
-        // that allows you to specify a custom update tag, including the ability to omit data the client might not need.
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    // Optionally: Run some custom logic when the packet is received.
-    // The super/default implementation forwards to #loadWithComponents.
-    @Override
-    public void onDataPacket(Connection connection, ValueInput input) {
-        super.onDataPacket(connection, input);
-        this.advanceTimestamp = input.getIntOr("AdvanceTimestamp", -1);
-    }
-
 
     // -------------------------------------------------------------------------
     // Tick — rising-edge redstone detection
@@ -238,7 +198,7 @@ public class DisposableCaterpillarBlockEntity extends BlockEntity {
             return;
         }
 
-        if (advanceTimestamp >= 0 && level.getGameTime() - advanceTimestamp < ADVANCE_FORWARD_DURATION) {
+        if (advanceTimestamp >= 0 && level.getGameTime() - advanceTimestamp < getAdvanceForwardDuration()) {
             // Still in "advance forward" phase after mining: skip processing to allow the animation to play out.
             return;
         }
@@ -256,8 +216,7 @@ public class DisposableCaterpillarBlockEntity extends BlockEntity {
             if (targetState.getBlock() instanceof LiquidBlock) {
                 level.destroyBlock(targetPos, false); // Remove liquid without drops
             }
-            setAdvanceTimestamp((int) level.getGameTime());
-            level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL); // Notify clients to start the advance animation
+            startAdvance(level, facing);
             return;
         }
 
@@ -276,9 +235,8 @@ public class DisposableCaterpillarBlockEntity extends BlockEntity {
             return;
         } else {
             // Mine the target block (drops items naturally), then begin advance animation.
-            setAdvanceTimestamp((int) level.getGameTime());
             level.destroyBlock(targetPos, true);
-            level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL); // Notify clients to start the advance animation
+            startAdvance(level, facing);
             return;
         }
     }

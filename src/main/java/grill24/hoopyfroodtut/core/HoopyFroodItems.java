@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.item.BalancerRangeExtender;
+import grill24.hoopyfroodtut.item.BeggingItemScrabblerItem;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
@@ -28,4 +29,8 @@ public class HoopyFroodItems {
     public static final DeferredItem<DisposableCaterpillarItem> DISPOSABLE_CATERPILLAR_ITEM =
             ITEMS.registerItem("disposable_caterpillar",
                     p -> new DisposableCaterpillarItem(HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), p));
+
+    public static final DeferredItem<BeggingItemScrabblerItem> BEGGING_ITEM_SCRABBLER_ITEM =
+            ITEMS.registerItem("begging_item_scrabbler",
+                    p -> new BeggingItemScrabblerItem(HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(), p));
 }

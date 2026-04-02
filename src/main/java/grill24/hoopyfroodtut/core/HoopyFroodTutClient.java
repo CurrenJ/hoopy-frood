@@ -1,5 +1,6 @@
 package grill24.hoopyfroodtut.core;
 
+import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
 import grill24.hoopyfroodtut.client.renderer.DisposableCaterpillarRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
@@ -15,7 +16,6 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
-import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 
 @Mod(value = HoopyFroodTut.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = HoopyFroodTut.MODID, value = Dist.CLIENT)
@@ -30,6 +30,9 @@ public class HoopyFroodTutClient {
         event.registerBlockEntityRenderer(
                 HoopyFroodBlockEntityTypes.DISPOSABLE_CATERPILLAR.get(),
                 DisposableCaterpillarRenderer::new);
+        event.registerBlockEntityRenderer(
+                HoopyFroodBlockEntityTypes.BEGGING_ITEM_SCRABBLER.get(),
+                BeggingItemScrabblerRenderer::new);
     }
 
     private static void onRegisterAdditionalModels(ModelEvent.RegisterStandalone event) {
@@ -52,6 +55,23 @@ public class HoopyFroodTutClient {
                 SimpleUnbakedStandaloneModel.simpleModelWrapper(
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
                                 "block/disposable_caterpillar_legs")));
+
+        event.register(BeggingItemScrabblerRenderer.BODY_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "block/begging_item_scrabbler_body")));
+        event.register(BeggingItemScrabblerRenderer.HEAD_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "block/begging_item_scrabbler_head")));
+        event.register(BeggingItemScrabblerRenderer.BODY_DISABLED_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "block/begging_item_scrabbler_body_disabled")));
+        event.register(BeggingItemScrabblerRenderer.HEAD_DISABLED_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "block/begging_item_scrabbler_head_disabled")));
     }
 
     @SubscribeEvent

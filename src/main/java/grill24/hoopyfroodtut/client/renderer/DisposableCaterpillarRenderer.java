@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
+import grill24.hoopyfroodtut.blockentity.MovingBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import grill24.hoopyfroodtut.core.Util;
 import net.minecraft.client.Minecraft;
@@ -99,7 +100,7 @@ public class DisposableCaterpillarRenderer implements BlockEntityRenderer<Dispos
         float forwardProgress = 0f;
         if (advanceTimestamp > 0) {
             long elapsedTime = blockEntity.getLevel().getGameTime() - advanceTimestamp;
-            forwardProgress = Math.min(elapsedTime + partialTick, DisposableCaterpillarBlockEntity.ADVANCE_FORWARD_DURATION) / DisposableCaterpillarBlockEntity.ADVANCE_FORWARD_DURATION; // progress from 0 to 1 over 10 ticks
+            forwardProgress = Math.min(elapsedTime + partialTick, blockEntity.getAdvanceForwardDuration()) / blockEntity.getAdvanceForwardDuration(); // progress from 0 to 1 over ADVANCE_FORWARD_DURATION ticks
             forwardProgress = Util.easeInOutCubic(forwardProgress);
         }
         renderState.forwardOffset = forwardProgress;

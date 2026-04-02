@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.core;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -29,6 +30,40 @@ public class HoopyFroodDataComponents {
      */
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> CATERPILLAR_TORCHES =
             DATA_COMPONENT_TYPES.register("caterpillar_torches",
+                    () -> DataComponentType.<Integer>builder()
+                            .persistent(Codec.INT)
+                            .networkSynchronized(ByteBufCodecs.INT)
+                            .build());
+
+    /**
+     * Number of metallic nuggets (fuel) pre-loaded into a Begging Item Scrabbler item.
+     * Each nugget grants one block of movement. Defaults to 0 when absent.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> SCRABBLER_NUGGETS =
+            DATA_COMPONENT_TYPES.register("scrabbler_nuggets",
+                    () -> DataComponentType.<Integer>builder()
+                            .persistent(Codec.INT)
+                            .networkSynchronized(ByteBufCodecs.INT)
+                            .build());
+
+    /**
+     * Home container block position pre-linked to a Begging Item Scrabbler item.
+     * The scrabbler returns here to deposit collected items. Absent when no home is set.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPos>> SCRABBLER_HOME =
+            DATA_COMPONENT_TYPES.register("scrabbler_home",
+                    () -> DataComponentType.<BlockPos>builder()
+                            .persistent(BlockPos.CODEC)
+                            .networkSynchronized(BlockPos.STREAM_CODEC)
+                            .build());
+
+    /**
+     * Number of inventory slots on a Begging Item Scrabbler item.
+     * Defaults to {@code BeggingItemScrabblerBlockEntity.DEFAULT_INVENTORY_SIZE} when absent.
+     * Increased by crafting with a chest or right-clicking the placed block with a chest.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> SCRABBLER_SLOTS =
+            DATA_COMPONENT_TYPES.register("scrabbler_slots",
                     () -> DataComponentType.<Integer>builder()
                             .persistent(Codec.INT)
                             .networkSynchronized(ByteBufCodecs.INT)

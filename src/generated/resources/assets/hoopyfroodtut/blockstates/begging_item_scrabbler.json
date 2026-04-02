@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "hoopyfroodtut:block/begging_item_scrabbler"
+    },
+    "facing=east": {
+      "model": "hoopyfroodtut:block/begging_item_scrabbler"
+    },
+    "facing=north": {
+      "model": "hoopyfroodtut:block/begging_item_scrabbler"
+    },
+    "facing=south": {
+      "model": "hoopyfroodtut:block/begging_item_scrabbler"
+    },
+    "facing=up": {
+      "model": "hoopyfroodtut:block/begging_item_scrabbler"
+    },
+    "facing=west": {
+      "model": "hoopyfroodtut:block/begging_item_scrabbler"
+    }
+  }
+}

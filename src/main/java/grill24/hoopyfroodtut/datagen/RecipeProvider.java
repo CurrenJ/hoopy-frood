@@ -9,6 +9,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.packs.VanillaRecipeProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureFlagSet;
@@ -38,13 +39,21 @@ public class RecipeProvider extends VanillaRecipeProvider {
         generateRecipes(HoopyFroodTutBlocks.BROWN_BRICKS_FAMILY.get(), FeatureFlagSet.of());
 
         // Disposable Caterpillar: surround a dirt block with 4 slime balls
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get())
-                .pattern(" S ")
-                .pattern("SDS")
-                .pattern(" S ")
-                .define('S', Items.SLIME_BALL)
-                .define('D', Items.DIRT)
-                .unlockedBy("has_slime_ball", has(Items.SLIME_BALL))
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), 16)
+                .requires(Items.PISTON)
+                .requires(Items.REDSTONE)
+                .requires(Items.IRON_PICKAXE)
+                .unlockedBy("has_iron_pickaxe", has(Items.IRON_PICKAXE))
+                .save(this.output);
+
+        // Begging Item Scrabbler: surround a chest with 4 iron nuggets in cardinal positions
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get())
+                .pattern(" N ")
+                .pattern("NCN")
+                .pattern(" N ")
+                .define('N', Items.IRON_NUGGET)
+                .define('C', Items.CHEST)
+                .unlockedBy("has_iron_nugget", has(Items.IRON_NUGGET))
                 .save(this.output);
     }
 

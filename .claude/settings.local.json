@@ -35,7 +35,8 @@
       "Bash(grep -r ModelBaker D:GitHubhoopy-frood-tutdebugminecraft-patched-26.1.0.8-beta-sources --include=*.java -l)",
       "Bash(find D:GitHubhoopy-frood-tutdebug -name StandaloneModelKey* -o -name SimpleUnbakedStandaloneModel* -o -name ModelEvent*)",
       "Bash(grep -v \".class$\")",
-      "Bash(/dev/null javap:*)"
+      "Bash(/dev/null javap:*)",
+      "Bash(unzip -l /d/GitHub/hoopy-frood-tut/build/moddev/artifacts/minecraft-patched-26.1.0.8-beta-merged.jar)"
     ]
   }
 }

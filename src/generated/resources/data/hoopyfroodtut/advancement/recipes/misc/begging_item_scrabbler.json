@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_pickaxe": {
+    "has_iron_nugget": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:iron_pickaxe"
+            "items": "minecraft:iron_nugget"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hoopyfroodtut:disposable_caterpillar"
+        "recipe": "hoopyfroodtut:begging_item_scrabbler"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_pickaxe"
+      "has_iron_nugget"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hoopyfroodtut:disposable_caterpillar"
+      "hoopyfroodtut:begging_item_scrabbler"
     ]
   }
 }

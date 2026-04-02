@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.datagen;
 
 import grill24.hoopyfroodtut.block.BalancerNode;
+import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
@@ -39,6 +40,7 @@ public class BlockModelProvider extends ModelProvider {
 
         registerBalancerNode(blockModels);
         registerDisposableCaterpillar(blockModels);
+        registerBeggingItemScrabbler(blockModels);
     }
 
     /**
@@ -91,6 +93,29 @@ public class BlockModelProvider extends ModelProvider {
                                 .select(false, idleModel)
                                 .select(true,  activeModel))
                         .with(BlockModelGenerators.ROTATION_FACING)
+        );
+    }
+
+    /**
+     * Generates the blockstate JSON for the Begging Item Scrabbler.
+     * <p>
+     * The block uses {@link net.minecraft.world.level.block.RenderShape#INVISIBLE} so the
+     * blockstate model is never rendered in the world — it is only referenced for the item
+     * model in inventory. A single-model blockstate handles all FACING values.
+     */
+    private static void registerBeggingItemScrabbler(BlockModelGenerators blockModels) {
+        MultiVariant model = BlockModelGenerators.plainVariant(
+                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/begging_item_scrabbler"));
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get())
+                        .with(PropertyDispatch.initial(BeggingItemScrabbler.FACING)
+                                .select(net.minecraft.core.Direction.NORTH, model)
+                                .select(net.minecraft.core.Direction.SOUTH, model)
+                                .select(net.minecraft.core.Direction.EAST,  model)
+                                .select(net.minecraft.core.Direction.WEST,  model)
+                                .select(net.minecraft.core.Direction.UP,    model)
+                                .select(net.minecraft.core.Direction.DOWN,  model))
         );
     }
 
