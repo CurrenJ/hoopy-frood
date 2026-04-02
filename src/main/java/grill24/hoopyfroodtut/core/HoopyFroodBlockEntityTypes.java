@@ -3,6 +3,7 @@ package grill24.hoopyfroodtut.core;
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
+import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -20,6 +21,11 @@ public class HoopyFroodBlockEntityTypes {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DisposableCaterpillarBlockEntity>> DISPOSABLE_CATERPILLAR =
             BLOCK_ENTITY_TYPES.register("disposable_caterpillar",
                     () -> new BlockEntityType<>(DisposableCaterpillarBlockEntity::new, HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<InfiniteImprobabilityDriveBlockEntity>> INFINITE_IMPROBABILITY_DRIVE =
+            BLOCK_ENTITY_TYPES.register("infinite_improbability_drive",
+                    () -> new BlockEntityType<>(InfiniteImprobabilityDriveBlockEntity::new,
+                            HoopyFroodTutBlocks.INFINITE_IMPROBABILITY_DRIVE.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BeggingItemScrabblerBlockEntity>> BEGGING_ITEM_SCRABBLER =
             BLOCK_ENTITY_TYPES.register("begging_item_scrabbler",

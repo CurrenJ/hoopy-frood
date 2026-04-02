@@ -1,0 +1,54 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "hoopyfroodtut:block/infinite_improbability_drive",
+		"particle": "hoopyfroodtut:block/infinite_improbability_drive"
+	},
+	"elements": [
+		{
+			"name": "stamp0",
+			"from": [7, 0, 6],
+			"to": [9, 1, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 6]},
+			"faces": {
+				"north": {"uv": [0.5, 8.5, 1.5, 9], "texture": "#0"},
+				"east": {"uv": [2.5, 7.5, 4.5, 8], "texture": "#0"},
+				"south": {"uv": [0.5, 9, 1.5, 9.5], "texture": "#0"},
+				"west": {"uv": [5.5, 7.5, 7.5, 8], "texture": "#0"},
+				"up": {"uv": [1, 2, 0, 0], "texture": "#0"},
+				"down": {"uv": [2, 0, 1, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "stamp1",
+			"from": [9, 0, 7],
+			"to": [10, 1, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 6]},
+			"faces": {
+				"north": {"uv": [12.5, 2, 13, 2.5], "texture": "#0"},
+				"east": {"uv": [11.5, 10, 12.5, 10.5], "texture": "#0"},
+				"south": {"uv": [2.5, 12.5, 3, 13], "texture": "#0"},
+				"west": {"uv": [10.5, 11.5, 11.5, 12], "texture": "#0"},
+				"up": {"uv": [5, 10, 4.5, 9], "texture": "#0"},
+				"down": {"uv": [12, 10.5, 11.5, 11.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "stamp2",
+			"from": [6, 0, 7],
+			"to": [7, 1, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 6]},
+			"faces": {
+				"north": {"uv": [12.5, 2.5, 13, 3], "texture": "#0"},
+				"east": {"uv": [11.5, 11.5, 12.5, 12], "texture": "#0"},
+				"south": {"uv": [3, 12.5, 3.5, 13], "texture": "#0"},
+				"west": {"uv": [12, 4, 13, 4.5], "texture": "#0"},
+				"up": {"uv": [12.5, 6.5, 12, 5.5], "texture": "#0"},
+				"down": {"uv": [6.5, 12, 6, 13], "texture": "#0"}
+			}
+		}
+	]
+}

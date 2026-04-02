@@ -2,6 +2,7 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
 import grill24.hoopyfroodtut.client.renderer.DisposableCaterpillarRenderer;
+import grill24.hoopyfroodtut.client.renderer.InfiniteImprobabilityDriveRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
@@ -33,6 +34,9 @@ public class HoopyFroodTutClient {
         event.registerBlockEntityRenderer(
                 HoopyFroodBlockEntityTypes.BEGGING_ITEM_SCRABBLER.get(),
                 BeggingItemScrabblerRenderer::new);
+        event.registerBlockEntityRenderer(
+                HoopyFroodBlockEntityTypes.INFINITE_IMPROBABILITY_DRIVE.get(),
+                InfiniteImprobabilityDriveRenderer::new);
     }
 
     private static void onRegisterAdditionalModels(ModelEvent.RegisterStandalone event) {
@@ -72,6 +76,23 @@ public class HoopyFroodTutClient {
                 SimpleUnbakedStandaloneModel.simpleModelWrapper(
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
                                 "block/begging_item_scrabbler_head_disabled")));
+
+        event.register(InfiniteImprobabilityDriveRenderer.BASE_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "block/infinite_improbability_drive_base")));
+        event.register(InfiniteImprobabilityDriveRenderer.STAMP_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "block/infinite_improbability_drive_stamp")));
+        event.register(InfiniteImprobabilityDriveRenderer.WHEEL_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "block/infinite_improbability_drive_wheel")));
+        event.register(InfiniteImprobabilityDriveRenderer.SUPPORT_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "block/infinite_improbability_drive_support")));
     }
 
     @SubscribeEvent

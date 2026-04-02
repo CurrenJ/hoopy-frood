@@ -41,6 +41,7 @@ public class BlockModelProvider extends ModelProvider {
         registerBalancerNode(blockModels);
         registerDisposableCaterpillar(blockModels);
         registerBeggingItemScrabbler(blockModels);
+        registerInfiniteImprobabilityDrive(blockModels);
     }
 
     /**
@@ -117,6 +118,23 @@ public class BlockModelProvider extends ModelProvider {
                                 .select(net.minecraft.core.Direction.UP,    model)
                                 .select(net.minecraft.core.Direction.DOWN,  model))
         );
+    }
+
+    /**
+     * Generates the blockstate JSON for the Infinite Improbability Drive.
+     * <p>
+     * The block has no state properties, so a single static model variant covers all
+     * states. The block itself uses {@link net.minecraft.world.level.block.RenderShape#INVISIBLE}
+     * in-world — the blockstate model is only consulted for the inventory item icon.
+     * The machine geometry is rendered by {@link grill24.hoopyfroodtut.client.renderer.InfiniteImprobabilityDriveRenderer}.
+     */
+    private static void registerInfiniteImprobabilityDrive(BlockModelGenerators blockModels) {
+        blockModels.blockStateOutput.accept(
+                BlockModelGenerators.createSimpleBlock(
+                        HoopyFroodTutBlocks.INFINITE_IMPROBABILITY_DRIVE.get(),
+                        BlockModelGenerators.plainVariant(
+                                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                        "block/infinite_improbability_drive"))));
     }
 
     private static void registerBalancerNode(BlockModelGenerators blockModels) {

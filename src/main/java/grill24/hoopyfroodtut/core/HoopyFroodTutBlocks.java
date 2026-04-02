@@ -3,6 +3,7 @@ package grill24.hoopyfroodtut.core;
 import grill24.hoopyfroodtut.block.BalancerNode;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
+import grill24.hoopyfroodtut.block.InfiniteImprobabilityDrive;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -29,6 +30,11 @@ public class HoopyFroodTutBlocks {
     public static final DeferredBlock<DisposableCaterpillar> DISPOSABLE_CATERPILLAR = BLOCKS.registerBlock(
             "disposable_caterpillar",
             p -> new DisposableCaterpillar(p.mapColor(MapColor.COLOR_GREEN).noOcclusion()));
+
+    // A machine that converts any inserted item into a completely random item from the entire game registry.
+    public static final DeferredBlock<InfiniteImprobabilityDrive> INFINITE_IMPROBABILITY_DRIVE = BLOCKS.registerBlock(
+            "infinite_improbability_drive",
+            p -> new InfiniteImprobabilityDrive(p.strength(3.0F, 6.0F).noOcclusion()));
 
     // An autonomous item-collector that crawls toward dropped items and picks them up. Requires metallic nuggets as fuel.
     public static final DeferredBlock<BeggingItemScrabbler> BEGGING_ITEM_SCRABBLER = BLOCKS.registerBlock(

@@ -367,7 +367,7 @@ public class BeggingItemScrabblerBlockEntity extends MovingBlockEntity {
         BlockPos playerPos = nearest.blockPosition();
 
         // Already close enough — just hold items and wait
-        if (pos.closerThan(playerPos, 2.0)) return;
+        if (pos.closerThan(playerPos, 5.0)) return;
 
         Direction moveDir = aStarNextStep(level, pos, playerPos);
         if (moveDir == null) return;

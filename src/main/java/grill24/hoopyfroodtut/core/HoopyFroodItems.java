@@ -33,4 +33,8 @@ public class HoopyFroodItems {
     public static final DeferredItem<BeggingItemScrabblerItem> BEGGING_ITEM_SCRABBLER_ITEM =
             ITEMS.registerItem("begging_item_scrabbler",
                     p -> new BeggingItemScrabblerItem(HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(), p));
+
+    public static final DeferredItem<BlockItem> INFINITE_IMPROBABILITY_DRIVE_ITEM =
+            ITEMS.registerSimpleBlockItem("infinite_improbability_drive",
+                    HoopyFroodTutBlocks.INFINITE_IMPROBABILITY_DRIVE);
 }
