@@ -192,9 +192,6 @@ public class InfiniteImprobabilityDriveRenderer
             renderState.breatheScaleX = 1f + (float) Math.sin(breathPhase) * renderState.breatheAmplitude;
             renderState.breatheScaleY = 1f + (float) Math.sin(breathPhase + Math.PI * 2/3) * renderState.breatheAmplitude;
             renderState.breatheScaleZ = 1f + (float) Math.sin(breathPhase + Math.PI * 4/3) * renderState.breatheAmplitude;
-
-            HoopyFroodTut.LOGGER.debug("Extracted render state: supportY={}, targetY={}, wheelRotationOffset={}, itemScale={}, wheelScale={}",
-                    renderState.supportY, targetY, renderState.wheelRotationOffset, renderState.itemScale, renderState.wheelScale);
         }
     }
 

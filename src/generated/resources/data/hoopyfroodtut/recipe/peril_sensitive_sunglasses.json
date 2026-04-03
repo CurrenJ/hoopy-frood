@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "minecraft:tinted_glass"
+  },
+  "pattern": [
+    "GGG",
+    "G G",
+    "   "
+  ],
+  "result": {
+    "id": "hoopyfroodtut:peril_sensitive_sunglasses"
+  }
+}

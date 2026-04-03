@@ -55,6 +55,24 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .define('C', Items.CHEST)
                 .unlockedBy("has_iron_nugget", has(Items.IRON_NUGGET))
                 .save(this.output);
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.INFINITE_IMPROBABILITY_DRIVE.get())
+                .pattern("RIR")
+                .pattern("IDI")
+                .pattern("RIR")
+                .define('R', Items.REDSTONE)
+                .define('I', Items.IRON_INGOT)
+                .define('D', Items.DIAMOND)
+                .unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(this.output);
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.PERIL_SENSITIVE_SUNGLASSES.get())
+                .pattern("GGG")
+                .pattern("G G")
+                .pattern("   ")
+                .define('G', Items.TINTED_GLASS)
+                .unlockedBy("has_glass", has(Items.GLASS))
+                .save(this.output);
     }
 
     public static class Runner extends VanillaRecipeProvider.Runner {

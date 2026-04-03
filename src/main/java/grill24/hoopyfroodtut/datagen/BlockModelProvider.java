@@ -12,6 +12,7 @@ import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
@@ -33,6 +34,10 @@ public class BlockModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(HoopyFroodItems.BROWN_BRICK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(HoopyFroodItems.BALANCER_RANGE_EXTENDER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.PERIL_SENSITIVE_SUNGLASSES.get(),
+                ItemModelUtils.plainModel(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/peril_sensitive_sunglasses")));
         // ALTERNATIVELY, the above is live in equivalent to doing it manually like this:
 //        Item brownBrickItem = HoopyFroodTut.BROWN_BRICK.get();
 //        Identifier brownBrickId = ModelTemplates.FLAT_ITEM.create(brownBrickItem, TextureMapping.layer0(brownBrickItem), itemModels.modelOutput);

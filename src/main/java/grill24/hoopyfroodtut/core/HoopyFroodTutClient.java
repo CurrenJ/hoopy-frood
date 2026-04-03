@@ -3,8 +3,13 @@ package grill24.hoopyfroodtut.core;
 import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
 import grill24.hoopyfroodtut.client.renderer.DisposableCaterpillarRenderer;
 import grill24.hoopyfroodtut.client.renderer.InfiniteImprobabilityDriveRenderer;
+import grill24.hoopyfroodtut.item.PerilSensitiveSunglassesItem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -14,6 +19,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RenderLivingEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
@@ -99,5 +105,33 @@ public class HoopyFroodTutClient {
     static void onClientSetup(FMLClientSetupEvent event) {
         HoopyFroodTut.LOGGER.info("HELLO FROM CLIENT SETUP");
         HoopyFroodTut.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    }
+
+    /**
+     * Filters out hostile mob rendering when the local player is wearing Peril Sensitive Sunglasses.
+     * Tamed mobs and other players remain visible.
+     */
+    @SubscribeEvent
+    static void onRenderLivingEntity(RenderLivingEvent.Pre event) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Player localPlayer = minecraft.player;
+
+        if (localPlayer == null) {
+            return;
+        }
+
+        // Only filter if the local player is wearing the glasses in the head slot
+        ItemStack headArmor = localPlayer.getItemBySlot(EquipmentSlot.HEAD);
+        if (headArmor.isEmpty() || !(headArmor.getItem() instanceof PerilSensitiveSunglassesItem)) {
+            return;
+        }
+
+        // Get the entity being rendered - use the renderer's entity field if getEntity not available
+        if (event.getRenderState() instanceof LivingEntityRenderState renderState) {
+            EntityType<?> entityType = renderState.entityType;
+            if (entityType.getCategory() == MobCategory.MONSTER) {
+                event.setCanceled(true);
+            }
+        }
     }
 }

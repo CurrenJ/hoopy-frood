@@ -23,6 +23,8 @@
   "item.hoopyfroodtut.begging_item_scrabbler.no_container": "No container found on that block.",
   "item.hoopyfroodtut.begging_item_scrabbler.home_cleared": "Home base cleared.",
 
+  "item.hoopyfroodtut.peril_sensitive_sunglasses": "Peril-Sensitive Sunglasses",
+
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs",

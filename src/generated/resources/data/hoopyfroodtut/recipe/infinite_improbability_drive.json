@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "minecraft:diamond",
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone"
+  },
+  "pattern": [
+    "RIR",
+    "IDI",
+    "RIR"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:infinite_improbability_drive"
+  }
+}

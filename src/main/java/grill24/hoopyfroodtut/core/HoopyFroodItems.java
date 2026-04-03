@@ -3,6 +3,8 @@ package grill24.hoopyfroodtut.core;
 import grill24.hoopyfroodtut.item.BalancerRangeExtender;
 import grill24.hoopyfroodtut.item.BeggingItemScrabblerItem;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
+import grill24.hoopyfroodtut.item.PerilSensitiveSunglassesItem;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -37,4 +39,9 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> INFINITE_IMPROBABILITY_DRIVE_ITEM =
             ITEMS.registerSimpleBlockItem("infinite_improbability_drive",
                     HoopyFroodTutBlocks.INFINITE_IMPROBABILITY_DRIVE);
+
+    public static final DeferredItem<PerilSensitiveSunglassesItem> PERIL_SENSITIVE_SUNGLASSES =
+            ITEMS.registerItem("peril_sensitive_sunglasses",
+                    p -> new PerilSensitiveSunglassesItem(
+                            p.stacksTo(1).equippable(EquipmentSlot.HEAD)));
 }
