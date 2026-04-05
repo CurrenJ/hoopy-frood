@@ -13,8 +13,11 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(HoopyFroodTut.MODID)
@@ -29,6 +32,7 @@ public class HoopyFroodTut {
     public HoopyFroodTut(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::onRegisterCapabilities);
 
         HoopyFroodTutBlocks.BLOCKS.register(modEventBus);
         HoopyFroodItems.ITEMS.register(modEventBus);
@@ -39,6 +43,14 @@ public class HoopyFroodTut {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    }
+
+    private void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
+                HoopyFroodBlockEntityTypes.BEGGING_ITEM_SCRABBLER.get(),
+                (be, direction) -> VanillaContainerWrapper.of(be)
+        );
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

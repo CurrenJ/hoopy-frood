@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +49,7 @@ import java.util.*;
  * position is set by shift-right-clicking a container block while holding the scrabbler item.
  * The scrabbler emits a comparator signal (0–15) proportional to how full its inventory is.
  */
-public class BeggingItemScrabblerBlockEntity extends MovingBlockEntity {
+public class BeggingItemScrabblerBlockEntity extends MovingBlockEntity implements Container {
 
     /** Horizontal + vertical search radius in blocks. */
     public static final int SEARCH_RADIUS = 12;
@@ -174,6 +175,54 @@ public class BeggingItemScrabblerBlockEntity extends MovingBlockEntity {
     @Override
     public int getAdvanceForwardDuration() {
         return 8;
+    }
+
+    // -------------------------------------------------------------------------
+    // Container — exposes inventory to hoppers and item pipes via Transfer API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public int getContainerSize() { return inventorySize; }
+
+    @Override
+    public boolean isEmpty() { return !hasItems(); }
+
+    @Override
+    public ItemStack getItem(int slot) { return inventory.get(slot); }
+
+    @Override
+    public ItemStack removeItem(int slot, int count) {
+        ItemStack stack = inventory.get(slot);
+        if (stack.isEmpty()) return ItemStack.EMPTY;
+        ItemStack removed = stack.split(count);
+        if (stack.isEmpty()) inventory.set(slot, ItemStack.EMPTY);
+        setChanged();
+        return removed;
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int slot) {
+        ItemStack stack = inventory.get(slot);
+        if (stack.isEmpty()) return ItemStack.EMPTY;
+        inventory.set(slot, ItemStack.EMPTY);
+        return stack;
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        inventory.set(slot, stack);
+        setChanged();
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this, player);
+    }
+
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < inventory.size(); i++) inventory.set(i, ItemStack.EMPTY);
+        setChanged();
     }
 
     // -------------------------------------------------------------------------
