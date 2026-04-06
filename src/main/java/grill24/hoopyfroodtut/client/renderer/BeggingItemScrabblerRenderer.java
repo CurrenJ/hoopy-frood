@@ -35,6 +35,8 @@ public class BeggingItemScrabblerRenderer implements BlockEntityRenderer<Begging
     private static final float STRETCH_AMPLITUDE = 0.45f;
     private static final float ANIMATION_SPEED = 0.25f;
     private static final double PLAYER_TRACK_RADIUS = 5.0;
+    /** Fraction of the yaw delta closed per render frame (frame-rate dependent, tuned for ~60fps). */
+    private static final float HEAD_YAW_LERP = 0.15f;
 
     @SuppressWarnings("unchecked")
     public static final StandaloneModelKey<BlockStateModelPart> BODY_KEY = new StandaloneModelKey<>(
@@ -83,7 +85,15 @@ public class BeggingItemScrabblerRenderer implements BlockEntityRenderer<Begging
             renderState.moveOffset = blockEntity.getForwardOffset(level.getGameTime(), partialTick);
             renderState.animTime = (level.getGameTime() + partialTick) * ANIMATION_SPEED;
 
-            renderState.headYaw = computeHeadYaw(blockEntity, level, partialTick);
+            float targetYaw = computeHeadYaw(blockEntity, level, partialTick);
+            // Lerp toward target along the shortest arc.
+            // smoothHeadYaw lives on the block entity so it persists across frames
+            // (the render state is recreated every frame by the dispatcher).
+            float delta = ((targetYaw - blockEntity.smoothHeadYaw) % ((float) (2 * Math.PI)));
+            if (delta > Math.PI) delta -= (float) (2 * Math.PI);
+            if (delta < -Math.PI) delta += (float) (2 * Math.PI);
+            blockEntity.smoothHeadYaw += delta * HEAD_YAW_LERP;
+            renderState.headYaw = blockEntity.smoothHeadYaw;
         }
     }
 

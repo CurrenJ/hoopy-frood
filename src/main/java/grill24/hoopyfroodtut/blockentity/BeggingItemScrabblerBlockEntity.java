@@ -85,6 +85,9 @@ public class BeggingItemScrabblerBlockEntity extends MovingBlockEntity implement
     /** Extra path cost added for a step that moves through a fluid (water or lava). */
     private static final int FLUID_STEP_PENALTY = 2;
 
+    /** Client-only: smoothed head yaw (radians) for rendering interpolation. Not persisted. */
+    public float smoothHeadYaw = 0f;
+
     private int nuggets = 0;
     private int cooldown = 0;
     private int torchPlaceCooldown = 0;
