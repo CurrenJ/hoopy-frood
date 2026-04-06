@@ -63,6 +63,8 @@ public class DisposableCaterpillarItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> components, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, components, flag);
+        components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.tooltip.desc")
+                .withStyle(ChatFormatting.GRAY));
         int charges = getCharges(stack);
         components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.charges", charges)
                 .withStyle(ChatFormatting.GRAY));

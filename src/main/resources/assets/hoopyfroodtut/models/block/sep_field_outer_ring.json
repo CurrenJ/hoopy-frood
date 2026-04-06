@@ -1,0 +1,69 @@
+{
+	"format_version": "1.21.11",
+	"parent": "block/block",
+	"textures": {
+		"all": "minecraft:block/diamond_block",
+		"particle": "minecraft:block/diamond_block"
+	},
+	"elements": [
+		{
+			"name": "part",
+			"from": [14, 0, 1],
+			"to": [15, 1, 15],
+			"color": 6,
+			"faces": {
+				"north": {"uv": [0, 1, 1, 2], "texture": "#all"},
+				"east": {"uv": [1, 1, 15, 2], "texture": "#all"},
+				"south": {"uv": [14, 1, 15, 2], "texture": "#all"},
+				"west": {"uv": [1, 1, 15, 2], "texture": "#all"},
+				"up": {"uv": [14, 1, 15, 15], "texture": "#all"},
+				"down": {"uv": [14, 1, 15, 15], "texture": "#all"}
+			}
+		},
+		{
+			"name": "part",
+			"from": [1, 0, 1],
+			"to": [2, 1, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-13, 0, 0]},
+			"color": 6,
+			"faces": {
+				"north": {"uv": [0, 1, 1, 2], "texture": "#all"},
+				"east": {"uv": [1, 1, 15, 2], "texture": "#all"},
+				"south": {"uv": [14, 1, 15, 2], "texture": "#all"},
+				"west": {"uv": [1, 1, 15, 2], "texture": "#all"},
+				"up": {"uv": [14, 1, 15, 15], "texture": "#all"},
+				"down": {"uv": [14, 1, 15, 15], "texture": "#all"}
+			}
+		},
+		{
+			"name": "part",
+			"from": [2, 0, 1],
+			"to": [14, 1, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1, 0, 0]},
+			"color": 6,
+			"faces": {
+				"north": {"uv": [0, 1, 12, 2], "texture": "#all"},
+				"east": {"uv": [14, 1, 15, 2], "texture": "#all"},
+				"south": {"uv": [3, 1, 15, 2], "texture": "#all"},
+				"west": {"uv": [1, 1, 2, 2], "texture": "#all"},
+				"up": {"uv": [3, 1, 15, 2], "texture": "#all"},
+				"down": {"uv": [3, 14, 15, 15], "texture": "#all"}
+			}
+		},
+		{
+			"name": "part",
+			"from": [2, 0, 14],
+			"to": [14, 1, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-1, 0, 13]},
+			"color": 6,
+			"faces": {
+				"north": {"uv": [0, 1, 12, 2], "texture": "#all"},
+				"east": {"uv": [14, 1, 15, 2], "texture": "#all"},
+				"south": {"uv": [3, 1, 15, 2], "texture": "#all"},
+				"west": {"uv": [1, 1, 2, 2], "texture": "#all"},
+				"up": {"uv": [3, 1, 15, 2], "texture": "#all"},
+				"down": {"uv": [3, 14, 15, 15], "texture": "#all"}
+			}
+		}
+	]
+}

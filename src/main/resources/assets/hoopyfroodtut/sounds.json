@@ -1,0 +1,16 @@
+{
+  "sep_field.activate": {
+    "sounds": ["hoopyfroodtut:sep_field_activate"]
+  },
+  "sep_field.deactivate": {
+    "sounds": ["hoopyfroodtut:sep_field_deactivate"]
+  },
+  "bis.collect": {
+    "sounds": [
+      "hoopyfroodtut:bis_collect_0",
+      "hoopyfroodtut:bis_collect_1",
+      "hoopyfroodtut:bis_collect_2",
+      "hoopyfroodtut:bis_collect_3"
+    ]
+  }
+}

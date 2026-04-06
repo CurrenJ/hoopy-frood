@@ -116,6 +116,8 @@ public class BeggingItemScrabblerItem extends BlockItem {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display,
                                 Consumer<Component> components, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, components, flag);
+        components.accept(Component.translatable("item.hoopyfroodtut.begging_item_scrabbler.tooltip.desc")
+                .withStyle(ChatFormatting.GRAY));
 
         int nuggets = getNuggets(stack);
         if (nuggets > 0) {

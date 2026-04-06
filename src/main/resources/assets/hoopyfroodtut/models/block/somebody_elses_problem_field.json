@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "hoopyfroodtut:block/sep_field_full",
   "textures": {
-    "all": "minecraft:block/sea_lantern"
+    "all": "minecraft:block/diamond_block"
   }
 }

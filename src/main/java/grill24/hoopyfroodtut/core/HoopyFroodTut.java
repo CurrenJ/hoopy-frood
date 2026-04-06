@@ -46,6 +46,7 @@ public class HoopyFroodTut {
         HoopyFroodCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         HoopyFroodDataComponents.DATA_COMPONENT_TYPES.register(modEventBus);
         HoopyFroodRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+        HoopyFroodSounds.SOUND_EVENTS.register(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);

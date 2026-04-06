@@ -9,11 +9,13 @@
 
   "block.hoopyfroodtut.disposable_caterpillar": "Disposable Caterpillar",
   "item.hoopyfroodtut.disposable_caterpillar": "Disposable Caterpillar",
+  "item.hoopyfroodtut.disposable_caterpillar.tooltip.desc": "Mines the block it faces on each redstone pulse, then self-destructs.",
   "item.hoopyfroodtut.disposable_caterpillar.charges": "Charges: %s",
   "item.hoopyfroodtut.disposable_caterpillar.torches": "Torches: %s",
 
   "block.hoopyfroodtut.begging_item_scrabbler": "Begging Item Scrabbler",
   "item.hoopyfroodtut.begging_item_scrabbler": "Begging Item Scrabbler",
+  "item.hoopyfroodtut.begging_item_scrabbler.tooltip.desc": "Crawls toward dropped items and delivers them to its linked container.",
   "item.hoopyfroodtut.begging_item_scrabbler.nuggets": "Fuel: %s nuggets",
   "item.hoopyfroodtut.begging_item_scrabbler.no_fuel": "No fuel (right-click with nuggets)",
   "item.hoopyfroodtut.begging_item_scrabbler.slots": "Capacity: %s slots",
@@ -24,6 +26,20 @@
   "item.hoopyfroodtut.begging_item_scrabbler.home_cleared": "Home base cleared.",
 
   "item.hoopyfroodtut.peril_sensitive_sunglasses": "Peril-Sensitive Sunglasses",
+  "item.hoopyfroodtut.peril_sensitive_sunglasses.tooltip.desc": "Hides all hostile mobs from view while worn.",
+  "item.hoopyfroodtut.peril_sensitive_sunglasses.tooltip.note": "Mobs remain active — just invisible to you.",
+
+  "item.hoopyfroodtut.balancer_range_extender.tooltip.desc": "Extends a Balancer Node's scan range.",
+
+  "item.hoopyfroodtut.balancer_node.tooltip.desc": "Pulls from the block behind it; distributes to targets ahead. Round-robin.",
+  "item.hoopyfroodtut.balancer_node.tooltip.hint": "Shift+click: particle preview of source and sinks",
+
+  "item.hoopyfroodtut.infinite_improbability_drive.tooltip.desc": "Converts any inserted item into a completely random one from the full game registry.",
+  "item.hoopyfroodtut.infinite_improbability_drive.tooltip.hint": "More distinct nearby block types = faster conversion",
+
+  "item.hoopyfroodtut.somebody_elses_problem_field.tooltip.desc": "Mobs lose all targets and cannot pathfind into the zone.",
+
+  "item.hoopyfroodtut.brown_brick.tooltip.desc": "Always edible.",
 
   "block.hoopyfroodtut.somebody_elses_problem_field": "Somebody Else's Problem Field",
   "item.hoopyfroodtut.somebody_elses_problem_field": "Somebody Else's Problem Field",

@@ -48,7 +48,7 @@ import java.util.Map;
 public class BalancerNodeBlockEntity extends BlockEntity {
 
     /** Base maximum number of destination blocks scanned in the facing direction. */
-    private static final int MAX_RANGE = 4;
+    public static final int MAX_RANGE = 4;
 
     /** Additional scan range granted by each inserted Balancer Range Extender. */
     public static final int RANGE_PER_EXTENDER = 1;

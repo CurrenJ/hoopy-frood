@@ -3,6 +3,7 @@ package grill24.hoopyfroodtut.datagen;
 import grill24.hoopyfroodtut.block.BalancerNode;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
+import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
@@ -147,19 +148,21 @@ public class BlockModelProvider extends ModelProvider {
     /**
      * Generates the blockstate JSON for the Somebody Else's Problem Field.
      * <p>
-     * No facing or power states — the block is a simple stateless cube.
-     * The model file is hand-authored and references {@code minecraft:block/sea_lantern}
-     * so no custom texture is required.
+     * The block uses {@link net.minecraft.world.level.block.RenderShape#INVISIBLE} so the
+     * blockstate model is never rendered in the world — it is only referenced for the item
+     * model in inventory. Both POWERED states map to the same static full model.
      */
     private static void registerSomebodyElsesProblemField(
             BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
                 "block/somebody_elses_problem_field");
 
+        MultiVariant model = BlockModelGenerators.plainVariant(modelId);
         blockModels.blockStateOutput.accept(
-                BlockModelGenerators.createSimpleBlock(
-                        HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD.get(),
-                        BlockModelGenerators.plainVariant(modelId)));
+                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD.get())
+                        .with(PropertyDispatch.initial(SomebodyElsesProblemField.POWERED)
+                                .select(false, model)
+                                .select(true,  model)));
 
         itemModels.itemModelOutput.accept(
                 HoopyFroodItems.SOMEBODY_ELSES_PROBLEM_FIELD_ITEM.get(),

@@ -2,9 +2,11 @@ package grill24.hoopyfroodtut.blockentity;
 
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
+import grill24.hoopyfroodtut.core.HoopyFroodSounds;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -497,6 +499,7 @@ public class BeggingItemScrabblerBlockEntity extends MovingBlockEntity implement
         addToInventory(be.inventory, stack, level, pos);
         be.targetItemId = null;
         be.cooldown = COLLECT_COOLDOWN;
+        level.playSound(null, pos, HoopyFroodSounds.BIS_COLLECT.get(), SoundSource.BLOCKS, 0.6f + level.getRandom().nextFloat() * 0.3f, 1.0f);
         be.setChanged();
         level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
         level.updateNeighbourForOutputSignal(pos, state.getBlock());
@@ -578,6 +581,12 @@ public class BeggingItemScrabblerBlockEntity extends MovingBlockEntity implement
             newBE.inventory = newInv;
             newBE.setChanged();
         }
+
+        // Clear inventory and nuggets on the old block entity before removing it.
+        // Without this, whatever drop mechanism fires when the block is destroyed
+        // would find items still present and spawn duplicate item entities.
+        be.clearContent();
+        be.nuggets = 0;
 
         // Self-destruct with no drops
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);

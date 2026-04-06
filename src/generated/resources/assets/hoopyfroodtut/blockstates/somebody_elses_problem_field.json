@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "powered=false": {
+      "model": "hoopyfroodtut:block/somebody_elses_problem_field"
+    },
+    "powered=true": {
       "model": "hoopyfroodtut:block/somebody_elses_problem_field"
     }
   }
