@@ -40,6 +40,10 @@ public class HoopyFroodItems {
             ITEMS.registerSimpleBlockItem("infinite_improbability_drive",
                     HoopyFroodTutBlocks.INFINITE_IMPROBABILITY_DRIVE);
 
+    public static final DeferredItem<BlockItem> SOMEBODY_ELSES_PROBLEM_FIELD_ITEM =
+            ITEMS.registerSimpleBlockItem("somebody_elses_problem_field",
+                    HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD);
+
     public static final DeferredItem<PerilSensitiveSunglassesItem> PERIL_SENSITIVE_SUNGLASSES =
             ITEMS.registerItem("peril_sensitive_sunglasses",
                     p -> new PerilSensitiveSunglassesItem(

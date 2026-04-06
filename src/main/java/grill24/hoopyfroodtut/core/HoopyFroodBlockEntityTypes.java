@@ -4,6 +4,7 @@ import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
+import grill24.hoopyfroodtut.blockentity.SomebodyElsesProblemFieldBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -30,4 +31,9 @@ public class HoopyFroodBlockEntityTypes {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BeggingItemScrabblerBlockEntity>> BEGGING_ITEM_SCRABBLER =
             BLOCK_ENTITY_TYPES.register("begging_item_scrabbler",
                     () -> new BlockEntityType<>(BeggingItemScrabblerBlockEntity::new, HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SomebodyElsesProblemFieldBlockEntity>> SOMEBODY_ELSES_PROBLEM_FIELD =
+            BLOCK_ENTITY_TYPES.register("somebody_elses_problem_field",
+                    () -> new BlockEntityType<>(SomebodyElsesProblemFieldBlockEntity::new,
+                            HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD.get()));
 }

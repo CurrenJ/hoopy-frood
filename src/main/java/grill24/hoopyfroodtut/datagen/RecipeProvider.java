@@ -66,6 +66,16 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(this.output);
 
+        // Somebody Else's Problem Field: eye of ender surrounded by 8 glass panes
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD.get())
+                .pattern("GGG")
+                .pattern("GEG")
+                .pattern("GGG")
+                .define('G', Items.GLASS)
+                .define('E', Items.ENDER_EYE)
+                .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
+                .save(this.output);
+
         ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.PERIL_SENSITIVE_SUNGLASSES.get())
                 .pattern("GGG")
                 .pattern("G G")

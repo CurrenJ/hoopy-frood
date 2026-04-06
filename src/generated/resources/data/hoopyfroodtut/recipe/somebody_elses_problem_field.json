@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": "minecraft:ender_eye",
+    "G": "minecraft:glass"
+  },
+  "pattern": [
+    "GGG",
+    "GEG",
+    "GGG"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:somebody_elses_problem_field"
+  }
+}

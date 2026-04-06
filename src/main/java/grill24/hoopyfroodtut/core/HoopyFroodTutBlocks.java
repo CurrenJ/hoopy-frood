@@ -4,6 +4,7 @@ import grill24.hoopyfroodtut.block.BalancerNode;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.InfiniteImprobabilityDrive;
+import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -45,6 +46,11 @@ public class HoopyFroodTutBlocks {
                     .isViewBlocking((_, _, _) -> false)
                     .strength(1.0F, 6.0F)
             ));
+
+    // A field emitter that makes the surrounding area invisible to mob AI and pathfinding.
+    public static final DeferredBlock<SomebodyElsesProblemField> SOMEBODY_ELSES_PROBLEM_FIELD = BLOCKS.registerBlock(
+            "somebody_elses_problem_field",
+            p -> new SomebodyElsesProblemField(p.strength(3.0f, 6.0f).lightLevel(state -> 5)));
 
     // ---- Block Families -----
     public static final Lazy<BlockFamily> BROWN_BRICKS_FAMILY = Lazy.lazy(() -> new BlockFamily.Builder(HoopyFroodTutBlocks.BROWN_BRICKS.get())

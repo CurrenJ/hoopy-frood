@@ -16,6 +16,7 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import grill24.hoopyfroodtut.core.HoopyFroodItems;
 
 public class BlockModelProvider extends ModelProvider {
     public BlockModelProvider(PackOutput output) {
@@ -47,6 +48,7 @@ public class BlockModelProvider extends ModelProvider {
         registerDisposableCaterpillar(blockModels);
         registerBeggingItemScrabbler(blockModels);
         registerInfiniteImprobabilityDrive(blockModels);
+        registerSomebodyElsesProblemField(blockModels, itemModels);
     }
 
     /**
@@ -140,6 +142,28 @@ public class BlockModelProvider extends ModelProvider {
                         BlockModelGenerators.plainVariant(
                                 Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
                                         "block/infinite_improbability_drive"))));
+    }
+
+    /**
+     * Generates the blockstate JSON for the Somebody Else's Problem Field.
+     * <p>
+     * No facing or power states — the block is a simple stateless cube.
+     * The model file is hand-authored and references {@code minecraft:block/sea_lantern}
+     * so no custom texture is required.
+     */
+    private static void registerSomebodyElsesProblemField(
+            BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                "block/somebody_elses_problem_field");
+
+        blockModels.blockStateOutput.accept(
+                BlockModelGenerators.createSimpleBlock(
+                        HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD.get(),
+                        BlockModelGenerators.plainVariant(modelId)));
+
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.SOMEBODY_ELSES_PROBLEM_FIELD_ITEM.get(),
+                ItemModelUtils.plainModel(modelId));
     }
 
     private static void registerBalancerNode(BlockModelGenerators blockModels) {

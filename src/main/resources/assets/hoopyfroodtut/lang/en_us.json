@@ -25,6 +25,9 @@
 
   "item.hoopyfroodtut.peril_sensitive_sunglasses": "Peril-Sensitive Sunglasses",
 
+  "block.hoopyfroodtut.somebody_elses_problem_field": "Somebody Else's Problem Field",
+  "item.hoopyfroodtut.somebody_elses_problem_field": "Somebody Else's Problem Field",
+
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs",

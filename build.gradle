@@ -102,6 +102,7 @@ neoForge {
             sourceSet(sourceSets.main)
         }
     }
+
 }
 
 // Sets up a dependency configuration called 'localRuntime'.
