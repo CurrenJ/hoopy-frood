@@ -6,6 +6,7 @@
   "item.hoopyfroodtut.brown_brick": "Brown Brick",
   "block.hoopyfroodtut.balancer_node": "Balancer Node",
   "item.hoopyfroodtut.balancer_range_extender": "Balancer Range Extender",
+  "item.hoopyfroodtut.balancer_range_extender": "Balancer Range Extender",
 
   "block.hoopyfroodtut.disposable_caterpillar": "Disposable Caterpillar",
   "item.hoopyfroodtut.disposable_caterpillar": "Disposable Caterpillar",
@@ -24,6 +25,11 @@
   "item.hoopyfroodtut.begging_item_scrabbler.home_set": "Home base linked!",
   "item.hoopyfroodtut.begging_item_scrabbler.no_container": "No container found on that block.",
   "item.hoopyfroodtut.begging_item_scrabbler.home_cleared": "Home base cleared.",
+
+  "item.hoopyfroodtut.infinite_improbability_drive": "Infinite Improbability Drive",
+  "block.hoopyfroodtut.infinite_improbability_drive": "Infinite Improbability Drive",
+  "item.hoopyfroodtut.personal_private_item_presenter": "Personal Private Item Presenter",
+  "block.hoopyfroodtut.personal_private_item_presenter": "Personal Private Item Presenter",
 
   "item.hoopyfroodtut.peril_sensitive_sunglasses": "Peril-Sensitive Sunglasses",
   "item.hoopyfroodtut.peril_sensitive_sunglasses.tooltip.desc": "Hides all hostile mobs from view while worn.",

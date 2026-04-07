@@ -4,6 +4,7 @@ import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
+import grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SomebodyElsesProblemFieldBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -36,4 +37,9 @@ public class HoopyFroodBlockEntityTypes {
             BLOCK_ENTITY_TYPES.register("somebody_elses_problem_field",
                     () -> new BlockEntityType<>(SomebodyElsesProblemFieldBlockEntity::new,
                             HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PersonalPrivateItemPresenterBlockEntity>> PERSONAL_PRIVATE_ITEM_PRESENTER =
+            BLOCK_ENTITY_TYPES.register("personal_private_item_presenter",
+                    () -> new BlockEntityType<>(PersonalPrivateItemPresenterBlockEntity::new,
+                            HoopyFroodTutBlocks.PERSONAL_PRIVATE_ITEM_PRESENTER.get()));
 }

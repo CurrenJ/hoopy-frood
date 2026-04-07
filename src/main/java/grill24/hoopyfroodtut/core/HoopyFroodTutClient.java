@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
 import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
 import grill24.hoopyfroodtut.client.renderer.DisposableCaterpillarRenderer;
 import grill24.hoopyfroodtut.client.renderer.InfiniteImprobabilityDriveRenderer;
+import grill24.hoopyfroodtut.client.renderer.PersonalPrivateItemPresenterRenderer;
 import grill24.hoopyfroodtut.client.renderer.SomebodyElsesProblemFieldRenderer;
 import grill24.hoopyfroodtut.core.SepFieldManager;
 import grill24.hoopyfroodtut.item.PerilSensitiveSunglassesItem;
@@ -56,6 +57,9 @@ public class HoopyFroodTutClient {
         event.registerBlockEntityRenderer(
                 HoopyFroodBlockEntityTypes.SOMEBODY_ELSES_PROBLEM_FIELD.get(),
                 SomebodyElsesProblemFieldRenderer::new);
+        event.registerBlockEntityRenderer(
+                HoopyFroodBlockEntityTypes.PERSONAL_PRIVATE_ITEM_PRESENTER.get(),
+                PersonalPrivateItemPresenterRenderer::new);
     }
 
     private static void onRegisterAdditionalModels(ModelEvent.RegisterStandalone event) {
@@ -125,6 +129,10 @@ public class HoopyFroodTutClient {
         event.register(SomebodyElsesProblemFieldRenderer.FLOATER_KEY,
                 SimpleUnbakedStandaloneModel.simpleModelWrapper(
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/sep_field_floater")));
+
+        event.register(PersonalPrivateItemPresenterRenderer.BASE_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/ppip_base")));
     }
 
     @SubscribeEvent

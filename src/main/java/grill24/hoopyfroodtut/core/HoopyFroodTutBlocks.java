@@ -4,6 +4,7 @@ import grill24.hoopyfroodtut.block.BalancerNode;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.InfiniteImprobabilityDrive;
+import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.world.level.block.Block;
@@ -46,6 +47,15 @@ public class HoopyFroodTutBlocks {
                     .isViewBlocking((_, _, _) -> false)
                     .strength(1.0F, 6.0F)
             ));
+
+    // A single-item display block with an animated fluid surface that hides the item from other players.
+    public static final DeferredBlock<PersonalPrivateItemPresenter> PERSONAL_PRIVATE_ITEM_PRESENTER = BLOCKS.registerBlock(
+            "personal_private_item_presenter",
+            p -> new PersonalPrivateItemPresenter(p
+                    .noOcclusion()
+                    .isSuffocating((_, _, _) -> false)
+                    .isViewBlocking((_, _, _) -> false)
+                    .strength(2.0f, 6.0f)));
 
     // A field emitter that makes the surrounding area invisible to mob AI and pathfinding.
     public static final DeferredBlock<SomebodyElsesProblemField> SOMEBODY_ELSES_PROBLEM_FIELD = BLOCKS.registerBlock(

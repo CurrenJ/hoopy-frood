@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.Config;
+import grill24.hoopyfroodtut.command.PpipDebugCommand;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -19,6 +20,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -55,6 +57,9 @@ public class HoopyFroodTut {
         NeoForge.EVENT_BUS.addListener(this::onLivingChangeTarget);
         NeoForge.EVENT_BUS.addListener(this::onEntityTickPost);
         NeoForge.EVENT_BUS.addListener(this::onLevelUnload);
+
+        // Debug commands
+        NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
     }
 
     private void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
@@ -107,6 +112,10 @@ public class HoopyFroodTut {
         if (level instanceof ServerLevel serverLevel) {
             SepFieldManager.clearDimension(serverLevel.dimension());
         }
+    }
+
+    private void onRegisterCommands(RegisterCommandsEvent event) {
+        PpipDebugCommand.register(event.getDispatcher());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

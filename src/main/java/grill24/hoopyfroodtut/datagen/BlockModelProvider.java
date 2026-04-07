@@ -4,6 +4,7 @@ import grill24.hoopyfroodtut.block.BalancerNode;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
+import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
@@ -50,6 +51,7 @@ public class BlockModelProvider extends ModelProvider {
         registerBeggingItemScrabbler(blockModels);
         registerInfiniteImprobabilityDrive(blockModels);
         registerSomebodyElsesProblemField(blockModels, itemModels);
+        registerPersonalPrivateItemPresenter(blockModels, itemModels);
     }
 
     /**
@@ -166,6 +168,32 @@ public class BlockModelProvider extends ModelProvider {
 
         itemModels.itemModelOutput.accept(
                 HoopyFroodItems.SOMEBODY_ELSES_PROBLEM_FIELD_ITEM.get(),
+                ItemModelUtils.plainModel(modelId));
+    }
+
+    /**
+     * Generates the blockstate JSON for the Personal Private Item Presenter.
+     * <p>
+     * The block uses {@link RenderShape#INVISIBLE} so the blockstate model is only consulted
+     * for the inventory item icon; in-world rendering is handled entirely by the BER.
+     * The single static variant points at {@code ppip.json}, a simple basin shape.
+     */
+    private static void registerPersonalPrivateItemPresenter(
+            BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/ppip");
+        MultiVariant model = BlockModelGenerators.plainVariant(modelId);
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.PERSONAL_PRIVATE_ITEM_PRESENTER.get())
+                        .with(PropertyDispatch.initial(PersonalPrivateItemPresenter.SURFACE_TEXTURE)
+                                .select(PersonalPrivateItemPresenter.SurfaceTexture.WATER, model)
+                                .select(PersonalPrivateItemPresenter.SurfaceTexture.LAVA,  model)
+                                .select(PersonalPrivateItemPresenter.SurfaceTexture.SLIME, model)
+                                .select(PersonalPrivateItemPresenter.SurfaceTexture.HONEY, model)
+                                .select(PersonalPrivateItemPresenter.SurfaceTexture.MAGMA, model)));
+
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.PERSONAL_PRIVATE_ITEM_PRESENTER_ITEM.get(),
                 ItemModelUtils.plainModel(modelId));
     }
 
