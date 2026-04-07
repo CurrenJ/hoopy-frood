@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -211,9 +212,10 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos,
                                            CollisionContext context) {
-        // Item entities pass through so thrown items hit the fluid surface rather than
-        // bouncing off the invisible block hitbox.
-        if (context instanceof EntityCollisionContext ecc && ecc.getEntity() instanceof ItemEntity) {
+        // Items and players pass through so they interact with the fluid surface
+        // rather than standing on top of the invisible block hitbox.
+        if (context instanceof EntityCollisionContext ecc
+                && (ecc.getEntity() instanceof ItemEntity || ecc.getEntity() instanceof LivingEntity)) {
             return Shapes.empty();
         }
         return super.getCollisionShape(state, level, pos, context);

@@ -37,6 +37,7 @@ import java.util.Random;
 import java.util.Set;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 
 public class PersonalPrivateItemPresenterRenderer
@@ -483,6 +484,47 @@ public class PersonalPrivateItemPresenterRenderer
                         }
                     }
                 }
+
+                // ── Detect player movement impacts (players are larger, so stronger effect) ──
+                List<LivingEntity> nearbyPlayers = level.getEntitiesOfClass(LivingEntity.class, scanBox);
+                for (LivingEntity player : nearbyPlayers) {
+                    int id = player.getId();
+                    currentIds.add(id);
+                    float localY = (float) (player.getY() - pos.getY());
+                    Float prevY = surf.lastEntityY.get(id);
+                    surf.lastEntityY.put(id, localY);
+
+                    // Detect downward crossing — player feet breaking the surface
+                    if (prevY != null && prevY > IMPACT_DETECTION_THRESHOLD
+                            && localY <= IMPACT_DETECTION_THRESHOLD) {
+                        float localX = Math.max(0.05f, Math.min(0.95f,
+                                (float) (player.getX() - pos.getX())));
+                        float localZ = Math.max(0.05f, Math.min(0.95f,
+                                (float) (player.getZ() - pos.getZ())));
+                        float downSpeed = (float) Math.abs(
+                                Math.min(0.0, player.getDeltaMovement().y()));
+                        if (downSpeed < 0.01f) downSpeed = prevY - localY;
+                        // Players displace more fluid than items — scale strength up
+                        float strength = Math.max(IMPACT_MIN_STRENGTH,
+                                downSpeed * IMPACT_VELOCITY_SCALE) * 3.0f;
+                        surf.pendingImpacts.add(new float[]{localX, localZ, strength});
+                    }
+
+                    // Continuous ripples while player is at or below the surface
+                    if (localY <= IMPACT_DETECTION_THRESHOLD) {
+                        Vec3 vel = player.getDeltaMovement();
+                        float xzSpeed = (float) Math.sqrt(vel.x() * vel.x() + vel.z() * vel.z());
+                        if (xzSpeed > SLIDING_MIN_SPEED) {
+                            float localX = Math.max(0.05f, Math.min(0.95f,
+                                    (float) (player.getX() - pos.getX())));
+                            float localZ = Math.max(0.05f, Math.min(0.95f,
+                                    (float) (player.getZ() - pos.getZ())));
+                            surf.pendingImpacts.add(new float[]{localX, localZ,
+                                    xzSpeed * SLIDING_VELOCITY_SCALE * 2.0f});
+                        }
+                    }
+                }
+
                 surf.lastEntityY.keySet().retainAll(currentIds);
             }
 
