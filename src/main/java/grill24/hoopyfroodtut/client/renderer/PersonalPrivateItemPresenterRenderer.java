@@ -6,8 +6,10 @@ import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
 import grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -46,7 +48,7 @@ public class PersonalPrivateItemPresenterRenderer
     // ── Surface constants ──────────────────────────────────────────────────
 
     /** Resting Y height of the fluid surface, in block-local units (0–1). */
-    private static final float DEFAULT_HEIGHT = 0.75f; // 12/16
+    private static final float DEFAULT_HEIGHT = 0.75f; // 14/16 =
 
     /** Per-column oscillation amplitude at waveAmp = 1. */
     private static final float BASE_AMPLITUDE = 0.025f;
@@ -77,10 +79,10 @@ public class PersonalPrivateItemPresenterRenderer
                     PersonalPrivateItemPresenter.SurfaceTexture.MAGMA, Identifier.parse("minecraft:block/magma")
             ));
 
-    /** Per-texture base tints multiplied with surfaceColor. White = no tint. */
+    /** Per-texture base tints multiplied with surfaceColor. White = no tint.
+     *  WATER is excluded — its tint is sampled per-frame from the biome water color. */
     private static final Map<PersonalPrivateItemPresenter.SurfaceTexture, Integer> TEXTURE_TINTS =
             new EnumMap<>(Map.of(
-                    PersonalPrivateItemPresenter.SurfaceTexture.WATER, 0xFF3DBBFF,
                     PersonalPrivateItemPresenter.SurfaceTexture.LAVA,  0xFFFFFFFF,
                     PersonalPrivateItemPresenter.SurfaceTexture.SLIME, 0xFFFFFFFF,
                     PersonalPrivateItemPresenter.SurfaceTexture.HONEY, 0xFFFFFFFF,
@@ -421,6 +423,15 @@ public class PersonalPrivateItemPresenterRenderer
             renderState.gameTime = (level.getGameTime() + partialTick) * 0.05f;
         }
 
+        // Sample biome-blended water color when in water texture mode.
+        if (renderState.surfaceTexture == PersonalPrivateItemPresenter.SurfaceTexture.WATER
+                && level instanceof BlockAndTintGetter tintGetter) {
+            int waterRgb = BiomeColors.getAverageWaterColor(tintGetter, blockEntity.getBlockPos());
+            renderState.biomeWaterColor = 0xFF000000 | waterRgb;
+        } else {
+            renderState.biomeWaterColor = 0xFFFFFFFF;
+        }
+
         // Advance the surface wave simulation and snapshot heights into the render state.
         // When physics is disabled the render state heights array is cleared so the render
         // methods fall back to the mathematical wave function.
@@ -592,8 +603,10 @@ public class PersonalPrivateItemPresenterRenderer
             SubmitNodeCollector collector,
             CameraRenderState camera) {
 
-        int surfColor = state.isPrivate ? DISABLED_COLOR : multiplyColors(
-                state.surfaceColor, TEXTURE_TINTS.getOrDefault(state.surfaceTexture, 0xFFFFFFFF));
+        int textureTint = state.surfaceTexture == PersonalPrivateItemPresenter.SurfaceTexture.WATER
+                ? state.biomeWaterColor
+                : TEXTURE_TINTS.getOrDefault(state.surfaceTexture, 0xFFFFFFFF);
+        int surfColor = state.isPrivate ? DISABLED_COLOR : multiplyColors(state.surfaceColor, textureTint);
 
         // 1. Opaque base (bottom only — walls drawn below with surface texture)
         BlockStateModelPart basePart = Minecraft.getInstance()

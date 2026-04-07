@@ -12,7 +12,9 @@ public class PersonalPrivateItemPresenterRenderState extends BlockEntityRenderSt
     /** Continuous client-side time used to drive all animations (game-time + partial tick). */
     public float gameTime = 0f;
     /** ARGB tint applied to the fluid surface. */
-    public int surfaceColor = 0xFF3DBBFF;
+    public int surfaceColor = 0xFFFFFFFF;
+    /** Biome-blended ARGB water color sampled at this block's position (water texture only). */
+    public int biomeWaterColor = 0xFFFFFFFF;
     /** N×N column grid — higher values give a more detailed ripple. */
     public int gridSize = 8;
     /** Amplitude multiplier for the wave motion. */
