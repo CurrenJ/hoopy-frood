@@ -28,6 +28,7 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.BEGGING_ITEM_SCRABBLER_ITEM.get());
                 output.accept(HoopyFroodItems.SOMEBODY_ELSES_PROBLEM_FIELD_ITEM.get());
                 output.accept(HoopyFroodItems.PERSONAL_PRIVATE_ITEM_PRESENTER_ITEM.get());
+                output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());
             }).build());
 
     // Add the example block item to the building blocks tab

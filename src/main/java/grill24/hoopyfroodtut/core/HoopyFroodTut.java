@@ -68,6 +68,11 @@ public class HoopyFroodTut {
                 HoopyFroodBlockEntityTypes.BEGGING_ITEM_SCRABBLER.get(),
                 (be, direction) -> VanillaContainerWrapper.of(be)
         );
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
+                HoopyFroodBlockEntityTypes.BANISHING_BIN.get(),
+                (be, direction) -> VanillaContainerWrapper.of(be)
+        );
     }
 
     // -------------------------------------------------------------------------

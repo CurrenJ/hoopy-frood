@@ -31,6 +31,10 @@
   "item.hoopyfroodtut.personal_private_item_presenter": "Personal Private Item Presenter",
   "block.hoopyfroodtut.personal_private_item_presenter": "Personal Private Item Presenter",
 
+  "block.hoopyfroodtut.banishing_bin": "Banishing Bin",
+  "item.hoopyfroodtut.banishing_bin": "Banishing Bin",
+  "item.hoopyfroodtut.banishing_bin.tooltip.desc": "Banishes inserted items to a fixed, impossibly remote coordinate. Permanently.",
+
   "item.hoopyfroodtut.peril_sensitive_sunglasses": "Peril-Sensitive Sunglasses",
   "item.hoopyfroodtut.peril_sensitive_sunglasses.tooltip.desc": "Hides all hostile mobs from view while worn.",
   "item.hoopyfroodtut.peril_sensitive_sunglasses.tooltip.note": "Mobs remain active — just invisible to you.",

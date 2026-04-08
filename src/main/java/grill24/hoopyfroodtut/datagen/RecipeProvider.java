@@ -76,6 +76,19 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(this.output);
 
+        // Banishing Bin: Eye of Ender at centre, Blaze Rod below it, Iron Bars + Copper + Obsidian on sides
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.BANISHING_BIN.get())
+                .pattern("ICI")
+                .pattern("OEO")
+                .pattern("IBI")
+                .define('I', Items.IRON_BARS)
+                .define('C', Items.COPPER_INGOT)
+                .define('O', Items.OBSIDIAN)
+                .define('E', Items.ENDER_EYE)
+                .define('B', Items.BLAZE_ROD)
+                .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
+                .save(this.output);
+
         ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.PERIL_SENSITIVE_SUNGLASSES.get())
                 .pattern("GGG")
                 .pattern("G G")

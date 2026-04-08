@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:blaze_rod",
+    "C": "minecraft:copper_ingot",
+    "E": "minecraft:ender_eye",
+    "I": "minecraft:iron_bars",
+    "O": "minecraft:obsidian"
+  },
+  "pattern": [
+    "ICI",
+    "OEO",
+    "IBI"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:banishing_bin"
+  }
+}

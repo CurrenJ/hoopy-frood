@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.datagen;
 
 import grill24.hoopyfroodtut.block.BalancerNode;
+import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
@@ -52,6 +53,7 @@ public class BlockModelProvider extends ModelProvider {
         registerInfiniteImprobabilityDrive(blockModels);
         registerSomebodyElsesProblemField(blockModels, itemModels);
         registerPersonalPrivateItemPresenter(blockModels, itemModels);
+        registerBanishingBin(blockModels, itemModels);
     }
 
     /**
@@ -194,6 +196,24 @@ public class BlockModelProvider extends ModelProvider {
 
         itemModels.itemModelOutput.accept(
                 HoopyFroodItems.PERSONAL_PRIVATE_ITEM_PRESENTER_ITEM.get(),
+                ItemModelUtils.plainModel(modelId));
+    }
+
+    /**
+     * Generates the blockstate JSON for the Banishing Bin.
+     * The block uses RenderShape.INVISIBLE so the blockstate model is only needed for the
+     * inventory item icon; in-world rendering is handled by the BER.
+     */
+    private static void registerBanishingBin(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/banishing_bin");
+        MultiVariant model = BlockModelGenerators.plainVariant(modelId);
+
+        blockModels.blockStateOutput.accept(
+                BlockModelGenerators.createSimpleBlock(
+                        HoopyFroodTutBlocks.BANISHING_BIN.get(), model));
+
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.BANISHING_BIN_ITEM.get(),
                 ItemModelUtils.plainModel(modelId));
     }
 

@@ -48,6 +48,9 @@ public class HoopyFroodItems {
             ITEMS.registerSimpleBlockItem("personal_private_item_presenter",
                     HoopyFroodTutBlocks.PERSONAL_PRIVATE_ITEM_PRESENTER);
 
+    public static final DeferredItem<BlockItem> BANISHING_BIN_ITEM =
+            ITEMS.registerSimpleBlockItem("banishing_bin", HoopyFroodTutBlocks.BANISHING_BIN);
+
     public static final DeferredItem<PerilSensitiveSunglassesItem> PERIL_SENSITIVE_SUNGLASSES =
             ITEMS.registerItem("peril_sensitive_sunglasses",
                     p -> new PerilSensitiveSunglassesItem(

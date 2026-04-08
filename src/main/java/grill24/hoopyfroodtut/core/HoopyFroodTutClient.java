@@ -2,6 +2,7 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
+import grill24.hoopyfroodtut.client.renderer.BanishingBinRenderer;
 import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
 import grill24.hoopyfroodtut.client.renderer.DisposableCaterpillarRenderer;
 import grill24.hoopyfroodtut.client.renderer.InfiniteImprobabilityDriveRenderer;
@@ -60,6 +61,9 @@ public class HoopyFroodTutClient {
         event.registerBlockEntityRenderer(
                 HoopyFroodBlockEntityTypes.PERSONAL_PRIVATE_ITEM_PRESENTER.get(),
                 PersonalPrivateItemPresenterRenderer::new);
+        event.registerBlockEntityRenderer(
+                HoopyFroodBlockEntityTypes.BANISHING_BIN.get(),
+                BanishingBinRenderer::new);
     }
 
     private static void onRegisterAdditionalModels(ModelEvent.RegisterStandalone event) {
@@ -133,6 +137,10 @@ public class HoopyFroodTutClient {
         event.register(PersonalPrivateItemPresenterRenderer.BASE_KEY,
                 SimpleUnbakedStandaloneModel.simpleModelWrapper(
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/ppip_base")));
+
+        event.register(BanishingBinRenderer.BASE_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/banishing_bin_base")));
     }
 
     @SubscribeEvent

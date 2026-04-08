@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
+import grill24.hoopyfroodtut.blockentity.BanishingBinBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
@@ -42,4 +43,9 @@ public class HoopyFroodBlockEntityTypes {
             BLOCK_ENTITY_TYPES.register("personal_private_item_presenter",
                     () -> new BlockEntityType<>(PersonalPrivateItemPresenterBlockEntity::new,
                             HoopyFroodTutBlocks.PERSONAL_PRIVATE_ITEM_PRESENTER.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BanishingBinBlockEntity>> BANISHING_BIN =
+            BLOCK_ENTITY_TYPES.register("banishing_bin",
+                    () -> new BlockEntityType<>(BanishingBinBlockEntity::new,
+                            HoopyFroodTutBlocks.BANISHING_BIN.get()));
 }

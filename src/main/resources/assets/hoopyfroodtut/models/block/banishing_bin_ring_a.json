@@ -1,0 +1,62 @@
+{
+	"comment": "Ring A — equatorial, iron. A square loop in the XZ plane centered at (8,8,8).",
+	"parent": "block/block",
+	"textures": {
+		"all": "minecraft:block/iron_block",
+		"particle": "minecraft:block/iron_block"
+	},
+	"elements": [
+		{
+			"comment": "North arm",
+			"from": [4, 7, 4],
+			"to": [12, 9, 5],
+			"faces": {
+				"north": {"uv": [4, 7, 12, 9], "texture": "#all"},
+				"east":  {"uv": [4, 7,  5, 9], "texture": "#all"},
+				"south": {"uv": [4, 7, 12, 9], "texture": "#all"},
+				"west":  {"uv": [4, 7,  5, 9], "texture": "#all"},
+				"up":    {"uv": [4, 4, 12, 5], "texture": "#all"},
+				"down":  {"uv": [4, 4, 12, 5], "texture": "#all"}
+			}
+		},
+		{
+			"comment": "South arm",
+			"from": [4, 7, 11],
+			"to": [12, 9, 12],
+			"faces": {
+				"north": {"uv": [4, 7, 12, 9], "texture": "#all"},
+				"east":  {"uv": [4, 7,  5, 9], "texture": "#all"},
+				"south": {"uv": [4, 7, 12, 9], "texture": "#all"},
+				"west":  {"uv": [4, 7,  5, 9], "texture": "#all"},
+				"up":    {"uv": [4, 11, 12, 12], "texture": "#all"},
+				"down":  {"uv": [4, 11, 12, 12], "texture": "#all"}
+			}
+		},
+		{
+			"comment": "West arm",
+			"from": [4, 7, 5],
+			"to": [5, 9, 11],
+			"faces": {
+				"north": {"uv": [4, 7,  5, 9], "texture": "#all"},
+				"east":  {"uv": [5, 7, 11, 9], "texture": "#all"},
+				"south": {"uv": [4, 7,  5, 9], "texture": "#all"},
+				"west":  {"uv": [5, 7, 11, 9], "texture": "#all"},
+				"up":    {"uv": [4, 5,  5, 11], "texture": "#all"},
+				"down":  {"uv": [4, 5,  5, 11], "texture": "#all"}
+			}
+		},
+		{
+			"comment": "East arm",
+			"from": [11, 7, 5],
+			"to": [12, 9, 11],
+			"faces": {
+				"north": {"uv": [11, 7, 12, 9], "texture": "#all"},
+				"east":  {"uv": [ 5, 7, 11, 9], "texture": "#all"},
+				"south": {"uv": [11, 7, 12, 9], "texture": "#all"},
+				"west":  {"uv": [ 5, 7, 11, 9], "texture": "#all"},
+				"up":    {"uv": [11, 5, 12, 11], "texture": "#all"},
+				"down":  {"uv": [11, 5, 12, 11], "texture": "#all"}
+			}
+		}
+	]
+}
