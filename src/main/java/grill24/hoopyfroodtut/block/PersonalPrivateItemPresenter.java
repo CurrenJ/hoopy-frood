@@ -13,6 +13,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -101,6 +102,22 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
 
         if (level.getBlockEntity(pos) instanceof PersonalPrivateItemPresenterBlockEntity be) {
+            // Pink petals / leaf litter configure the surface particle type (not stored as items)
+            if (stack.is(Items.PINK_PETALS)) {
+                var next = be.getSurfaceParticleType() == PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.PINK_PETALS
+                        ? PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.NONE
+                        : PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.PINK_PETALS;
+                be.setSurfaceParticleType(next);
+                return InteractionResult.SUCCESS_SERVER;
+            }
+            if (stack.is(Items.LEAF_LITTER)) {
+                var next = be.getSurfaceParticleType() == PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.LEAF_LITTER
+                        ? PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.NONE
+                        : PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.LEAF_LITTER;
+                be.setSurfaceParticleType(next);
+                return InteractionResult.SUCCESS_SERVER;
+            }
+
             ItemStack stored = be.getStoredItem();
             // Take one item from the held stack (respects creative mode)
             ItemStack toStore = stack.copyWithCount(1);

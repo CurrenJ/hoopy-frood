@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.client.renderer;
 
 import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
+import grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.world.item.ItemStack;
 
@@ -48,4 +49,16 @@ public class PersonalPrivateItemPresenterRenderState extends BlockEntityRenderSt
      * in which case render methods use the mathematical wave function instead.
      */
     public float[] physicsHeights = null;
+    /** Leaf particles drifting on the fluid surface. Non-null only when physics is active. */
+    public float[] leafX        = null;
+    public float[] leafZ        = null;
+    public float[] leafY        = null;
+    public float[] leafAngle    = null;
+    public int[]   leafQuadrant = null;
+    public int     leafCount    = 0;
+    /** Which particle type to render on the surface. */
+    public PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType surfaceParticleType
+            = PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.NONE;
+    /** Biome dry-foliage ARGB color, used to tint leaf-litter particles. */
+    public int dryFoliageColor = 0xFFFFFFFF;
 }

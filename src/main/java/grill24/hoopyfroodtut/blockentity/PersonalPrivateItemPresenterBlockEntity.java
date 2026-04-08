@@ -56,6 +56,29 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
     private boolean spinItem = false;
     private boolean voxelMode = false;
     private boolean physicsEnabled = false;
+    private SurfaceParticleType surfaceParticleType = SurfaceParticleType.NONE;
+
+    // ── Surface particle type ──────────────────────────────────────────────
+
+    public enum SurfaceParticleType {
+        NONE, PINK_PETALS, LEAF_LITTER;
+
+        public String toSerializedName() {
+            return switch (this) {
+                case PINK_PETALS -> "pink_petals";
+                case LEAF_LITTER -> "leaf_litter";
+                default          -> "none";
+            };
+        }
+
+        public static SurfaceParticleType fromString(String s) {
+            return switch (s) {
+                case "pink_petals" -> PINK_PETALS;
+                case "leaf_litter" -> LEAF_LITTER;
+                default            -> NONE;
+            };
+        }
+    }
 
     // ── Constructor ────────────────────────────────────────────────────────
 
@@ -122,6 +145,7 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
     public boolean isSpinItem()        { return spinItem; }
     public boolean isVoxelMode()       { return voxelMode; }
     public boolean isPhysicsEnabled()  { return physicsEnabled; }
+    public SurfaceParticleType getSurfaceParticleType() { return surfaceParticleType; }
 
     // ── Setters (sync on set) ──────────────────────────────────────────────
 
@@ -134,6 +158,12 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
     public void setSpinItem(boolean v)   { this.spinItem = v;      markChangedAndSync(); }
     public void setVoxelMode(boolean v)  { this.voxelMode = v;     markChangedAndSync(); }
     public void setPhysicsEnabled(boolean v) { this.physicsEnabled = v; markChangedAndSync(); }
+    public void setSurfaceParticleType(SurfaceParticleType v) {
+        this.surfaceParticleType = v;
+        // Particles require physics to be meaningful; auto-enable when activating
+        if (v != SurfaceParticleType.NONE) this.physicsEnabled = true;
+        markChangedAndSync();
+    }
 
     /** Reset all display/physics fields to their defaults. */
     public void resetToDefaults() {
@@ -143,9 +173,10 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
         this.bobAmp        = 0.08f;
         this.bobSpeed      = 1.0f;
         this.surfaceColor  = 0xFFFFFFFF;
-        this.spinItem      = false;
-        this.voxelMode     = false;
-        this.physicsEnabled = false;
+        this.spinItem           = false;
+        this.voxelMode          = false;
+        this.physicsEnabled     = false;
+        this.surfaceParticleType = SurfaceParticleType.NONE;
         markChangedAndSync();
     }
 
@@ -173,7 +204,9 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
         this.surfaceColor = input.getIntOr("SurfaceColor", 0xFFFFFFFF);
         this.spinItem = input.getBooleanOr("SpinItem", false);
         this.voxelMode = input.getBooleanOr("VoxelMode", false);
-        this.physicsEnabled = input.getBooleanOr("PhysicsEnabled", false);
+        this.physicsEnabled      = input.getBooleanOr("PhysicsEnabled", false);
+        this.surfaceParticleType = SurfaceParticleType.fromString(
+                input.getStringOr("SurfaceParticleType", "none"));
     }
 
     @Override
@@ -193,6 +226,7 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
         output.putBoolean("SpinItem", spinItem);
         output.putBoolean("VoxelMode", voxelMode);
         output.putBoolean("PhysicsEnabled", physicsEnabled);
+        output.putString("SurfaceParticleType", surfaceParticleType.toSerializedName());
     }
 
     // ── Client sync ────────────────────────────────────────────────────────

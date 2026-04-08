@@ -93,6 +93,10 @@ public class PersonalPrivateItemPresenterRenderer
     private final Map<PersonalPrivateItemPresenter.SurfaceTexture, TextureAtlasSprite> spriteCache =
             new EnumMap<>(PersonalPrivateItemPresenter.SurfaceTexture.class);
 
+    /** Lazily loaded sprites for each surface particle type. */
+    private TextureAtlasSprite pinkPetalsSprite = null;
+    private TextureAtlasSprite leafLitterSprite  = null;
+
     // ── Surface wave physics constants ────────────────────────────────────────
 
     /** Wave propagation speed c (units: surface-widths per game-time-second). */
@@ -139,6 +143,37 @@ public class PersonalPrivateItemPresenterRenderer
     /** Scales the item entity's horizontal speed (blocks/tick) into a sliding ripple impulse. */
     private static final float SLIDING_VELOCITY_SCALE      = 4.0f;
 
+    // ── Surface leaf particle constants ────────────────────────────────────
+    /** Number of leaf particles drifting on the fluid surface. */
+    private static final int    LEAF_COUNT              = 12;
+    /** Visual half-size of each leaf quad (block units). */
+    private static final float  LEAF_SCALE              = 0.06f;
+    /** Repulsion begins when two leaves are closer than this (surface fractions). */
+    private static final float  LEAF_REPULSION_RADIUS   = 0.13f;
+    /** Peak repulsion acceleration at zero separation (frac/s²). */
+    private static final float  LEAF_REPULSION_STRENGTH = 1.8f;
+    /** Multiplier converting normalised wave slope to horizontal leaf acceleration. */
+    private static final float  LEAF_WAVE_PUSH          = 1.5f;
+    /** Exponential velocity damping base per second (fraction retained). */
+    private static final double LEAF_DAMPING_BASE       = 0.35;
+    /** Exponential angular-velocity damping base per second. */
+    private static final double LEAF_SPIN_DAMPING_BASE  = 0.25;
+    /** Converts leaf lateral speed (frac/s) to target angular velocity (rad/s). */
+    private static final float  LEAF_SPEED_TO_SPIN      = 6.0f;
+    /** Keeps leaves away from the block edges (surface fractions). */
+    private static final float  LEAF_WALL_MARGIN        = 0.07f;
+    /** Random nudge amplitude applied each step to keep leaves organically drifting. */
+    private static final float  LEAF_BROWNIAN           = 0.15f;
+    /** Weak spring constant pulling each particle back toward its jittered-grid home position.
+     *  At this strength, a displaced particle drifts home over ~30–60 s of calm. */
+    private static final float  LEAF_HOME_SPRING        = 0.02f;
+    /** Grid layout for home positions: 3 columns × 4 rows = 12 zones. */
+    private static final int    LEAF_HOME_COLS          = 3;
+    private static final int    LEAF_HOME_ROWS          = 4;
+    /** Sprites used for surface particles — sampled from the block-texture atlas. */
+    private static final Identifier PINK_PETALS_SPRITE = Identifier.parse("minecraft:block/pink_petals");
+    private static final Identifier LEAF_LITTER_SPRITE  = Identifier.parse("minecraft:block/leaf_litter");
+
     // ── Surface physics state ──────────────────────────────────────────────
 
     /** Per-block persistent surface physics state. Keyed by BlockPos. */
@@ -166,6 +201,17 @@ public class PersonalPrivateItemPresenterRenderer
         final Map<Integer, Float> lastEntityY = new HashMap<>();
         /** Splash impulses queued by in-world ItemEntity impacts; drained at the end of stepSurface. */
         final List<float[]> pendingImpacts = new ArrayList<>();
+        // ── Leaf particle state ─────────────────────────────────────────────
+        float[] leafX      = new float[LEAF_COUNT];
+        float[] leafZ      = new float[LEAF_COUNT];
+        float[] leafVX     = new float[LEAF_COUNT];
+        float[] leafVZ     = new float[LEAF_COUNT];
+        float[] leafAngle    = new float[LEAF_COUNT];
+        float[] leafAngleV   = new float[LEAF_COUNT];
+        int[]   leafQuadrant = new int[LEAF_COUNT]; // 0=TL, 1=TR, 2=BL, 3=BR
+        float[] leafHomeX    = new float[LEAF_COUNT]; // jittered-grid equilibrium position
+        float[] leafHomeZ    = new float[LEAF_COUNT];
+        boolean leavesInitialized = false;
 
         SurfacePhysicsState(BlockPos pos) {
             this.gridSize = 0;
@@ -183,6 +229,7 @@ public class PersonalPrivateItemPresenterRenderer
                 h     = new float[n];
                 hNext = new float[n];
                 v     = new float[n];
+                leavesInitialized = false; // re-scatter on next step
             }
         }
 
@@ -377,6 +424,133 @@ public class PersonalPrivateItemPresenterRenderer
 
         // ── Apply splash impulses from in-world ItemEntity collisions ──────────
         applyPendingImpacts(s, G);
+
+        // ── Step leaf particles (wave-driven surface drift) ────────────────
+        stepLeaves(s, G, dt);
+    }
+
+    /**
+     * Advances leaf particle physics for one wave-sim step.
+     * <p>
+     * Each leaf is advected by the wave-height gradient (leaves slide down slopes),
+     * jostled by a small Brownian nudge, and pushed apart by pairwise repulsion.
+     * Angular velocity is driven by lateral speed so leaves spin as they slosh.
+     */
+    private static void stepLeaves(SurfacePhysicsState s, int G, float dt) {
+        // Scatter leaves uniformly on first call or after grid resize
+        if (!s.leavesInitialized) {
+            for (int i = 0; i < LEAF_COUNT; i++) {
+                // Jittered-grid home position: divide the interior into COLS×ROWS zones,
+                // place each particle's home randomly within its own zone so the equilibrium
+                // distribution looks natural but covers the surface evenly.
+                int   zoneCol  = i % LEAF_HOME_COLS;
+                int   zoneRow  = i / LEAF_HOME_COLS;
+                float zoneW    = (1f - 2 * LEAF_WALL_MARGIN) / LEAF_HOME_COLS;
+                float zoneH    = (1f - 2 * LEAF_WALL_MARGIN) / LEAF_HOME_ROWS;
+                s.leafHomeX[i] = LEAF_WALL_MARGIN + (zoneCol + 0.1f + s.rng.nextFloat() * 0.8f) * zoneW;
+                s.leafHomeZ[i] = LEAF_WALL_MARGIN + (zoneRow + 0.1f + s.rng.nextFloat() * 0.8f) * zoneH;
+                // Start each particle at its home so they're well-spread from the first frame
+                s.leafX[i]        = s.leafHomeX[i];
+                s.leafZ[i]        = s.leafHomeZ[i];
+                s.leafAngle[i]    = s.rng.nextFloat() * (float) (2 * Math.PI);
+                s.leafAngleV[i]   = (s.rng.nextFloat() * 2f - 1f) * 0.3f;
+                s.leafQuadrant[i] = s.rng.nextInt(4);
+            }
+            s.leavesInitialized = true;
+        }
+
+        // Pre-compute per-step damping factors from the per-second bases
+        float velDamping  = (float) Math.pow(LEAF_DAMPING_BASE,      dt);
+        float spinDamping = (float) Math.pow(LEAF_SPIN_DAMPING_BASE, dt);
+        // invTwoDx normalises the central-difference into a dimensionless slope
+        float invTwoDx = G * 0.5f; // 1 / (2 * (1/G))
+
+        for (int i = 0; i < LEAF_COUNT; i++) {
+            float px = s.leafX[i], pz = s.leafZ[i];
+
+            // ── 1. Wave gradient: leaves slide down wave slopes ─────────────
+            // Sample central difference at the nearest interior vertex
+            int colC = Math.min(G - 1, Math.max(1, Math.round(px * G)));
+            int rowC = Math.min(G - 1, Math.max(1, Math.round(pz * G)));
+            float gx = (s.h[s.idx(colC + 1, rowC)] - s.h[s.idx(colC - 1, rowC)]) * invTwoDx;
+            float gz = (s.h[s.idx(colC, rowC + 1)] - s.h[s.idx(colC, rowC - 1)]) * invTwoDx;
+            s.leafVX[i] -= LEAF_WAVE_PUSH * gx * dt;
+            s.leafVZ[i] -= LEAF_WAVE_PUSH * gz * dt;
+
+            // ── 2. Brownian drift ───────────────────────────────────────────
+            s.leafVX[i] += (s.rng.nextFloat() * 2f - 1f) * LEAF_BROWNIAN * dt;
+            s.leafVZ[i] += (s.rng.nextFloat() * 2f - 1f) * LEAF_BROWNIAN * dt;
+
+            // ── 3. Very weak home-spring: slowly restores even distribution ──
+            // Negligible against wave forces; only dominates when the surface is calm.
+            s.leafVX[i] += LEAF_HOME_SPRING * (s.leafHomeX[i] - px) * dt;
+            s.leafVZ[i] += LEAF_HOME_SPRING * (s.leafHomeZ[i] - pz) * dt;
+        }
+
+        // ── 4. Pairwise repulsion (O(n²), cheap for n=12) ──────────────────
+        for (int i = 0; i < LEAF_COUNT; i++) {
+            for (int j = i + 1; j < LEAF_COUNT; j++) {
+                float ddx  = s.leafX[i] - s.leafX[j];
+                float ddz  = s.leafZ[i] - s.leafZ[j];
+                float dist2 = ddx * ddx + ddz * ddz;
+                float rr    = LEAF_REPULSION_RADIUS * LEAF_REPULSION_RADIUS;
+                if (dist2 < rr && dist2 > 1e-7f) {
+                    float dist  = (float) Math.sqrt(dist2);
+                    float force = LEAF_REPULSION_STRENGTH * (LEAF_REPULSION_RADIUS - dist)
+                                  / LEAF_REPULSION_RADIUS * dt;
+                    float fx = (ddx / dist) * force;
+                    float fz = (ddz / dist) * force;
+                    s.leafVX[i] += fx;  s.leafVZ[i] += fz;
+                    s.leafVX[j] -= fx;  s.leafVZ[j] -= fz;
+                }
+            }
+        }
+
+        for (int i = 0; i < LEAF_COUNT; i++) {
+            // ── 5. Velocity damping ─────────────────────────────────────────
+            s.leafVX[i] *= velDamping;
+            s.leafVZ[i] *= velDamping;
+
+            // ── 6. Spin: angular velocity tracks lateral speed ──────────────
+            float speed    = (float) Math.sqrt(s.leafVX[i] * s.leafVX[i] + s.leafVZ[i] * s.leafVZ[i]);
+            float targetAV = speed * LEAF_SPEED_TO_SPIN;
+            s.leafAngleV[i] += (targetAV - s.leafAngleV[i]) * dt * 3.0f;
+            s.leafAngleV[i] *= spinDamping;
+            s.leafAngle[i]  += s.leafAngleV[i] * dt;
+
+            // ── 7. Integrate position with soft wall bounce ─────────────────
+            float nx = s.leafX[i] + s.leafVX[i] * dt;
+            float nz = s.leafZ[i] + s.leafVZ[i] * dt;
+            if (nx < LEAF_WALL_MARGIN)      { nx = LEAF_WALL_MARGIN;      s.leafVX[i] =  Math.abs(s.leafVX[i]) * 0.4f; }
+            if (nx > 1f - LEAF_WALL_MARGIN) { nx = 1f - LEAF_WALL_MARGIN; s.leafVX[i] = -Math.abs(s.leafVX[i]) * 0.4f; }
+            if (nz < LEAF_WALL_MARGIN)      { nz = LEAF_WALL_MARGIN;      s.leafVZ[i] =  Math.abs(s.leafVZ[i]) * 0.4f; }
+            if (nz > 1f - LEAF_WALL_MARGIN) { nz = 1f - LEAF_WALL_MARGIN; s.leafVZ[i] = -Math.abs(s.leafVZ[i]) * 0.4f; }
+            s.leafX[i] = nx;
+            s.leafZ[i] = nz;
+        }
+    }
+
+    /**
+     * Bilinearly samples the absolute block-local Y of the physics surface at (px,pz) ∈ [0,1]².
+     * Returns {@link #DEFAULT_HEIGHT} when the height array is uninitialised.
+     */
+    private static float sampleSurfaceHeight(SurfacePhysicsState s, int G, float px, float pz) {
+        if (s.h.length == 0) return DEFAULT_HEIGHT;
+        int   N   = G + 1;
+        float gx  = px * G, gz = pz * G;
+        int   col = Math.max(0, Math.min(G - 1, (int) gx));
+        int   row = Math.max(0, Math.min(G - 1, (int) gz));
+        float tx  = Math.max(0f, Math.min(1f, gx - col));
+        float tz  = Math.max(0f, Math.min(1f, gz - row));
+        float h00 = s.h[col * N + row];
+        float h10 = s.h[(col + 1) * N + row];
+        float h01 = s.h[col * N + (row + 1)];
+        float h11 = s.h[(col + 1) * N + (row + 1)];
+        return DEFAULT_HEIGHT
+                + h00 * (1 - tx) * (1 - tz)
+                + h10 * tx       * (1 - tz)
+                + h01 * (1 - tx) * tz
+                + h11 * tx       * tz;
     }
 
     // ── Constructor ────────────────────────────────────────────────────────
@@ -407,9 +581,10 @@ public class PersonalPrivateItemPresenterRenderer
         renderState.waveSpeed    = blockEntity.getWaveSpeed();
         renderState.bobAmp       = blockEntity.getBobAmp();
         renderState.bobSpeed     = blockEntity.getBobSpeed();
-        renderState.spinItem        = blockEntity.isSpinItem();
-        renderState.voxelMode       = blockEntity.isVoxelMode();
-        renderState.physicsEnabled  = blockEntity.isPhysicsEnabled();
+        renderState.spinItem             = blockEntity.isSpinItem();
+        renderState.voxelMode            = blockEntity.isVoxelMode();
+        renderState.physicsEnabled       = blockEntity.isPhysicsEnabled();
+        renderState.surfaceParticleType  = blockEntity.getSurfaceParticleType();
         renderState.surfaceTexture = blockEntity.getBlockState()
                 .getValue(PersonalPrivateItemPresenter.SURFACE_TEXTURE);
 
@@ -430,6 +605,16 @@ public class PersonalPrivateItemPresenterRenderer
             renderState.biomeWaterColor = 0xFF000000 | waterRgb;
         } else {
             renderState.biomeWaterColor = 0xFFFFFFFF;
+        }
+
+        // Sample biome dry-foliage color for leaf-litter particles.
+        if (renderState.surfaceParticleType
+                == grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.LEAF_LITTER
+                && level instanceof BlockAndTintGetter tintGetter) {
+            int dryFoliage = BiomeColors.getAverageDryFoliageColor(tintGetter, blockEntity.getBlockPos());
+            renderState.dryFoliageColor = 0xFF000000 | dryFoliage;
+        } else {
+            renderState.dryFoliageColor = 0xFFFFFFFF;
         }
 
         // Advance the surface wave simulation and snapshot heights into the render state.
@@ -585,6 +770,23 @@ public class PersonalPrivateItemPresenterRenderer
                 renderState.physicsHeights = new float[n];
             }
             System.arraycopy(surf.h, 0, renderState.physicsHeights, 0, n);
+
+            // Snapshot leaf particle positions, heights, and angles for the render thread
+            renderState.leafCount = LEAF_COUNT;
+            if (renderState.leafX == null || renderState.leafX.length != LEAF_COUNT) {
+                renderState.leafX        = new float[LEAF_COUNT];
+                renderState.leafZ        = new float[LEAF_COUNT];
+                renderState.leafY        = new float[LEAF_COUNT];
+                renderState.leafAngle    = new float[LEAF_COUNT];
+                renderState.leafQuadrant = new int[LEAF_COUNT];
+            }
+            for (int i = 0; i < LEAF_COUNT; i++) {
+                renderState.leafX[i]        = surf.leafX[i];
+                renderState.leafZ[i]        = surf.leafZ[i];
+                renderState.leafY[i]        = sampleSurfaceHeight(surf, G, surf.leafX[i], surf.leafZ[i]);
+                renderState.leafAngle[i]    = surf.leafAngle[i];
+                renderState.leafQuadrant[i] = surf.leafQuadrant[i];
+            }
         } else {
             renderState.hasNeighborNorth = false;
             renderState.hasNeighborSouth = false;
@@ -593,6 +795,7 @@ public class PersonalPrivateItemPresenterRenderer
             renderState.itemX = 0.5f;
             renderState.itemZ = 0.5f;
             renderState.physicsHeights = null;
+            renderState.leafCount = 0;
         }
     }
 
@@ -626,6 +829,12 @@ public class PersonalPrivateItemPresenterRenderer
         // 3. Floating item (suppressed when private)
         if (!state.storedItem.isEmpty()) {
             renderFloatingItem(state, poseStack, collector);
+        }
+
+        // 4. Surface particles drifting on the fluid surface (physics only, when configured)
+        if (state.leafCount > 0 && state.leafX != null && state.physicsHeights != null
+                && state.surfaceParticleType != grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.NONE) {
+            renderLeafParticles(state, poseStack, collector);
         }
     }
 
@@ -1025,6 +1234,94 @@ public class PersonalPrivateItemPresenterRenderer
                 state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
         poseStack.popPose();
+    }
+
+    // ── Leaf particles ─────────────────────────────────────────────────────
+
+    /**
+     * Renders each surface particle as a small flat quad sitting just above the wave surface.
+     * Sprite and tint are chosen based on {@code state.surfaceParticleType}.
+     */
+    private void renderLeafParticles(
+            PersonalPrivateItemPresenterRenderState state,
+            PoseStack poseStack,
+            SubmitNodeCollector collector) {
+
+        var particleType = state.surfaceParticleType;
+
+        // Resolve sprite lazily per type
+        TextureAtlasSprite spr;
+        if (particleType == grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.PINK_PETALS) {
+            if (pinkPetalsSprite == null) {
+                pinkPetalsSprite = Minecraft.getInstance()
+                        .getAtlasManager().getAtlasOrThrow(AtlasIds.BLOCKS)
+                        .getSprite(PINK_PETALS_SPRITE);
+            }
+            spr = pinkPetalsSprite;
+        } else { // LEAF_LITTER
+            if (leafLitterSprite == null) {
+                leafLitterSprite = Minecraft.getInstance()
+                        .getAtlasManager().getAtlasOrThrow(AtlasIds.BLOCKS)
+                        .getSprite(LEAF_LITTER_SPRITE);
+            }
+            spr = leafLitterSprite;
+        }
+        if (spr == null) return;
+
+        // Tint: pink-petals are naturally coloured; leaf-litter needs biome dry-foliage tint
+        final int tint = (particleType == grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.LEAF_LITTER)
+                ? state.dryFoliageColor : 0xFFFFFFFF;
+        final int r = (tint >> 16) & 0xFF;
+        final int g = (tint >>  8) & 0xFF;
+        final int b =  tint        & 0xFF;
+        final int a = 220;
+
+        final float[]            lx    = state.leafX;
+        final float[]            lz    = state.leafZ;
+        final float[]            ly    = state.leafY;
+        final float[]            lang  = state.leafAngle;
+        final int[]              lquad = state.leafQuadrant;
+        final int                count = state.leafCount;
+        final int                light = state.lightCoords;
+        final float half = LEAF_SCALE * 0.5f;
+        // Precompute per-quadrant UV bounds: [quadrant][u0, u1, v0, v1]
+        final float fu0 = spr.getU0(), fu1 = spr.getU1(), fum = (fu0 + fu1) * 0.5f;
+        final float fv0 = spr.getV0(), fv1 = spr.getV1(), fvm = (fv0 + fv1) * 0.5f;
+        final float[][] quadUV = {
+            { fu0, fum, fv0, fvm }, // 0 = top-left
+            { fum, fu1, fv0, fvm }, // 1 = top-right
+            { fu0, fum, fvm, fv1 }, // 2 = bottom-left
+            { fum, fu1, fvm, fv1 }, // 3 = bottom-right
+        };
+
+        collector.submitCustomGeometry(poseStack, Sheets.translucentBlockSheet(),
+                (pose, buffer) -> {
+                    Matrix4f mat    = pose.pose();
+                    Vector3f upNorm = pose.transformNormal(0, 1, 0, new Vector3f());
+
+                    for (int i = 0; i < count; i++) {
+                        float ox   = lx[i];
+                        float oy   = ly[i] + 0.008f; // clearance above the surface, large enough to avoid z-fighting on disturbed waves
+                        float oz   = lz[i];
+                        float cosH = (float) Math.cos(lang[i]) * half;
+                        float sinH = (float) Math.sin(lang[i]) * half;
+
+                        float[] uv  = quadUV[lquad[i]];
+                        float su0i = uv[0], su1i = uv[1], sv0i = uv[2], sv1i = uv[3];
+
+                        // Flat quad rotated by lang[i] around Y, CCW-from-above winding.
+                        // Corners (unrotated): A(-h,-h), B(-h,+h), C(+h,+h), D(+h,-h)
+                        float ax = ox - cosH + sinH, az = oz - sinH - cosH;
+                        float bx = ox - cosH - sinH, bz = oz - sinH + cosH;
+                        float cx = ox + cosH - sinH, cz = oz + sinH + cosH;
+                        float dx = ox + cosH + sinH, dz = oz + sinH - cosH;
+
+                        emitVertex(mat, buffer, ax, oy, az, r, g, b, a, su0i, sv0i, light, upNorm);
+                        emitVertex(mat, buffer, bx, oy, bz, r, g, b, a, su0i, sv1i, light, upNorm);
+                        emitVertex(mat, buffer, cx, oy, cz, r, g, b, a, su1i, sv1i, light, upNorm);
+                        emitVertex(mat, buffer, dx, oy, dz, r, g, b, a, su1i, sv0i, light, upNorm);
+                    }
+                });
     }
 
     // ── Helpers ────────────────────────────────────────────────────────────
