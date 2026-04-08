@@ -31,9 +31,9 @@
   "item.hoopyfroodtut.personal_private_item_presenter": "Personal Private Item Presenter",
   "block.hoopyfroodtut.personal_private_item_presenter": "Personal Private Item Presenter",
 
-  "block.hoopyfroodtut.banishing_bin": "Banishing Bin",
-  "item.hoopyfroodtut.banishing_bin": "Banishing Bin",
-  "item.hoopyfroodtut.banishing_bin.tooltip.desc": "Banishes inserted items to a fixed, impossibly remote coordinate. Permanently.",
+  "block.hoopyfroodtut.banishing_bin": "Sentimental Banishing Bin",
+  "item.hoopyfroodtut.banishing_bin": "Sentimental Banishing Bin",
+  "item.hoopyfroodtut.banishing_bin.tooltip.desc": "Deletes items by teleporting them very very far away. Misses them dearly.",
 
   "item.hoopyfroodtut.peril_sensitive_sunglasses": "Peril-Sensitive Sunglasses",
   "item.hoopyfroodtut.peril_sensitive_sunglasses.tooltip.desc": "Hides all hostile mobs from view while worn.",

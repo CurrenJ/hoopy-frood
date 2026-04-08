@@ -205,7 +205,7 @@ public class BlockModelProvider extends ModelProvider {
      * inventory item icon; in-world rendering is handled by the BER.
      */
     private static void registerBanishingBin(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/banishing_bin");
+        Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/banishing_bin_base");
         MultiVariant model = BlockModelGenerators.plainVariant(modelId);
 
         blockModels.blockStateOutput.accept(

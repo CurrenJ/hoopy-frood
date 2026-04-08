@@ -66,7 +66,7 @@ public class BanishingBin extends BaseEntityBlock {
     }
 
     private static final VoxelShape OUTLINE_SHAPE = Shapes.box(3.0 / 16.0, 0, 3.0 / 16.0,
-            13.0 / 16.0, 1.0, 13.0 / 16.0);
+            13.0 / 16.0, 3.0 / 16.0, 13.0 / 16.0);
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos,

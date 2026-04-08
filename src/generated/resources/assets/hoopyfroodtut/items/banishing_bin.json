@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "hoopyfroodtut:block/banishing_bin"
+    "model": "hoopyfroodtut:block/banishing_bin_base"
   }
 }

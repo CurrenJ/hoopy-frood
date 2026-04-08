@@ -50,7 +50,7 @@ public class BanishingBinRenderer
     // ── Animation tuning ──────────────────────────────────────────────────────
 
     /** Converts game ticks to seconds for animation calculations. */
-    private static final float ANIM_SPEED = 0.2f / 20.0f;
+    private static final float ANIM_SPEED = 0.4f / 20.0f;
 
     /** Duration of the active↔inactive transition in seconds. */
     private static final float TRANSITION_DURATION = 1.5f;
@@ -64,6 +64,7 @@ public class BanishingBinRenderer
     private static final float RING_C_SPEED_ACTIVE = 1.3f;
 
     /** Tilt angles (radians) for rings B and C at full activity. */
+    private static final float RING_A_TILT = (float) Math.toRadians(90.0);
     private static final float RING_B_TILT = (float) Math.toRadians(60.0);
     private static final float RING_C_TILT = (float) Math.toRadians(-60.0);
 
@@ -74,7 +75,7 @@ public class BanishingBinRenderer
     /** Y center of all rings when fully inactive (sunken position). */
     private static final float RING_Y_INACTIVE = 4.0f / 16.0f;
     /** Y center of all rings when fully active. */
-    private static final float RING_Y_ACTIVE = 0.5f;
+    private static final float RING_Y_ACTIVE = 10.0f / 16.0f;
 
     // ── Ring item configuration ───────────────────────────────────────────────
 
@@ -88,6 +89,18 @@ public class BanishingBinRenderer
 
     /** How fast each ring item spins on its own axis as it orbits (multiplier on orbit angle). */
     private static final float RING_ITEM_SELF_SPIN = 2.5f;
+
+    // ── Breathing animation ───────────────────────────────────────────────────
+
+    /** Breathing oscillation frequency (rad per animTime unit). ~0.22 Hz at current ANIM_SPEED. */
+    private static final float BREATHE_FREQ = 7.0f;
+    /** Max scale deviation from base (±8%). */
+    private static final float BREATHE_AMP = 0.08f;
+    /**
+     * Per-item phase offset (radians). Golden-ratio-based so adjacent items
+     * never share a similar phase regardless of ring size.
+     */
+    private static final float BREATHE_PHASE_STEP = (float) (Math.PI * 0.618);
 
     // ── Banished item orbit configuration ────────────────────────────────────
 
@@ -226,6 +239,7 @@ public class BanishingBinRenderer
         float angleB = state.ringPhaseB;
         float angleC = state.ringPhaseC;
 
+        float tiltA = RING_A_TILT * prog;
         float tiltB = RING_B_TILT * prog;
         float tiltC = RING_C_TILT * prog;
         float precB = state.precPhaseB;
@@ -249,22 +263,22 @@ public class BanishingBinRenderer
         // ── Ring A — equatorial (no tilt), memory items ───────────────────────
         renderItemRing(state.memoryRing0,
                 RING_A_RADIUS, RING_ITEM_SCALE,
-                angleA, 0f, 0f, ringCenterY, poseStack, nodes, state, resolver);
+                angleA, tiltA, 0f, ringCenterY, t, poseStack, nodes, state, resolver);
 
         // ── Ring B — tilted +60°, memory items ────────────────────────────────
         renderItemRing(state.memoryRing1,
                 RING_B_RADIUS, RING_ITEM_SCALE,
-                angleB, tiltB, precB, ringCenterY, poseStack, nodes, state, resolver);
+                angleB, tiltB, precB, ringCenterY, t, poseStack, nodes, state, resolver);
 
         // ── Ring C — tilted −60°, memory items ────────────────────────────────
         renderItemRing(state.memoryRing2,
                 RING_C_RADIUS, RING_ITEM_SCALE,
-                angleC, tiltC, precC, ringCenterY, poseStack, nodes, state, resolver);
+                angleC, tiltC, precC, ringCenterY, t, poseStack, nodes, state, resolver);
 
         // ── Queued items orbiting prior to banishment ─────────────────────────
-        renderBanishedItems(state.ring0Items, angleA, 0f,    0f,    ringCenterY, poseStack, nodes, state, resolver);
-        renderBanishedItems(state.ring1Items, angleB, tiltB, precB, ringCenterY, poseStack, nodes, state, resolver);
-        renderBanishedItems(state.ring2Items, angleC, tiltC, precC, ringCenterY, poseStack, nodes, state, resolver);
+        renderBanishedItems(state.ring0Items, angleA, 0f,    0f,    ringCenterY, t, poseStack, nodes, state, resolver);
+        renderBanishedItems(state.ring1Items, angleB, tiltB, precB, ringCenterY, t, poseStack, nodes, state, resolver);
+        renderBanishedItems(state.ring2Items, angleC, tiltC, precC, ringCenterY, t, poseStack, nodes, state, resolver);
     }
 
     /**
@@ -280,6 +294,7 @@ public class BanishingBinRenderer
             float tiltX,
             float precAngle,
             float centerY,
+            float t,
             PoseStack poseStack,
             SubmitNodeCollector nodes,
             BanishingBinRenderState state,
@@ -311,11 +326,16 @@ public class BanishingBinRenderer
             float worldX = rotX * cosP - tiltedZ * sinP;
             float worldZ = rotX * sinP + tiltedZ * cosP;
 
+            float itemPhase = i * BREATHE_PHASE_STEP;
+            float sx = scale * (1f + BREATHE_AMP * (float) Math.sin(t * BREATHE_FREQ           + itemPhase));
+            float sy = scale * (1f + BREATHE_AMP * (float) Math.sin(t * BREATHE_FREQ * 1.3f    + itemPhase + Math.PI * 2f / 3f));
+            float sz = scale * (1f + BREATHE_AMP * (float) Math.sin(t * BREATHE_FREQ * 0.77f   + itemPhase + Math.PI * 4f / 3f));
+
             poseStack.pushPose();
             poseStack.translate(0.5f + worldX, centerY + worldY, 0.5f + worldZ);
             // Self-spin around Y so items tumble as they orbit
             poseStack.mulPose(Axis.YP.rotation(theta * RING_ITEM_SELF_SPIN));
-            poseStack.scale(scale, scale, scale);
+            poseStack.scale(sx, sy, sz);
 
             ItemStackRenderState itemState = new ItemStackRenderState();
             resolver.updateForTopItem(itemState, items.get(i), ItemDisplayContext.FIXED, null, null, 0);
@@ -335,6 +355,7 @@ public class BanishingBinRenderer
             float tiltX,
             float precAngle,
             float centerY,
+            float t,
             PoseStack poseStack,
             SubmitNodeCollector nodes,
             BanishingBinRenderState state,
@@ -363,10 +384,15 @@ public class BanishingBinRenderer
             float worldX = rotX * cosP - tiltedZ * sinP;
             float worldZ = rotX * sinP + tiltedZ * cosP;
 
+            float itemPhase = i * BREATHE_PHASE_STEP;
+            float sx = BANISH_ITEM_SCALE * (1f + BREATHE_AMP * (float) Math.sin(t * BREATHE_FREQ           + itemPhase));
+            float sy = BANISH_ITEM_SCALE * (1f + BREATHE_AMP * (float) Math.sin(t * BREATHE_FREQ * 1.3f    + itemPhase + Math.PI * 2f / 3f));
+            float sz = BANISH_ITEM_SCALE * (1f + BREATHE_AMP * (float) Math.sin(t * BREATHE_FREQ * 0.77f   + itemPhase + Math.PI * 4f / 3f));
+
             poseStack.pushPose();
             poseStack.translate(0.5f + worldX, centerY + worldY, 0.5f + worldZ);
             poseStack.mulPose(Axis.YP.rotation(theta));
-            poseStack.scale(BANISH_ITEM_SCALE, BANISH_ITEM_SCALE, BANISH_ITEM_SCALE);
+            poseStack.scale(sx, sy, sz);
 
             ItemStackRenderState itemState = new ItemStackRenderState();
             resolver.updateForTopItem(itemState, items.get(i), ItemDisplayContext.FIXED, null, null, 0);

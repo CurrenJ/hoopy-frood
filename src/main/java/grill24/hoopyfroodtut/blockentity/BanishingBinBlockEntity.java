@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.AABB;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
@@ -32,11 +31,7 @@ import java.util.Random;
 /**
  * Block entity for the Banishing Bin.
  *
- * <p>Items are accepted via:
- * <ul>
- *   <li>Hopper insertion into the {@link Container} slot.</li>
- *   <li>Thrown {@link ItemEntity} entities within a ~1-block radius of the bin's center.</li>
- * </ul>
+ * <p>Items are accepted via hopper insertion into the {@link Container} slot.
  *
  * Each item is assigned to one of three rings (round-robin) and scheduled for banishment
  * after {@link #ORBIT_TICKS} ticks. Banishment teleports the item to a deterministic,
@@ -120,18 +115,6 @@ public class BanishingBinBlockEntity extends BlockEntity implements Container {
 
         long gameTime = level.getGameTime();
         boolean changed = false;
-
-        // Absorb nearby thrown item entities
-        if (gameTime % 2 == 0) { // check every other tick to save performance
-            AABB box = new AABB(pos).inflate(1.0);
-            List<ItemEntity> nearby = level.getEntitiesOfClass(ItemEntity.class, box,
-                    e -> e.isAlive() && !e.getItem().isEmpty() && e.hasPickUpDelay() || !e.hasPickUpDelay());
-            for (ItemEntity entity : nearby) {
-                be.enqueueItem(entity.getItem().copy(), gameTime);
-                entity.discard();
-                changed = true;
-            }
-        }
 
         // Process banishments
         var iter = be.queue.iterator();
