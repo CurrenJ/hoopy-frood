@@ -2,6 +2,8 @@ package grill24.hoopyfroodtut.blockentity;
 
 import grill24.hoopyfroodtut.Config;
 import grill24.hoopyfroodtut.block.BalancerNode;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import net.minecraft.core.BlockPos;
@@ -69,6 +71,24 @@ public class BalancerNodeBlockEntity extends BlockEntity {
     /** Number of Balancer Range Extender items currently stored in this node. */
     private int storedExtenders = 0;
 
+    /** Server-side: last game tick on which at least one item was successfully transferred. */
+    long lastActiveTick = -1L;
+
+    // -------------------------------------------------------------------------
+    // Client-side animation state (not persisted, not synced — driven by POWERED blockstate)
+    // -------------------------------------------------------------------------
+
+    /** Accumulated "spin time" in ticks; ranges [0, 3 * SPIN_UP_DURATION_TICKS]. */
+    public float clientSpinTime = 0f;
+    /** Accumulated rotation angle for element 0 (back plate), in radians. */
+    public float clientPhase0 = 0f;
+    /** Accumulated rotation angle for element 1 (middle, spins opposite), in radians. */
+    public float clientPhase1 = 0f;
+    /** Accumulated rotation angle for element 2 (front), in radians. */
+    public float clientPhase2 = 0f;
+    /** Game time (ticks + partial tick) recorded last frame; -1 before first frame. */
+    public float clientLastAnimTime = -1f;
+
     public BalancerNodeBlockEntity(BlockPos pos, BlockState state) {
         super(HoopyFroodBlockEntityTypes.BALANCER_NODE.get(), pos, state);
     }
@@ -128,13 +148,14 @@ public class BalancerNodeBlockEntity extends BlockEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, BalancerNodeBlockEntity entity) {
         if (level.getGameTime() % Config.BALANCER_TICK_RATE.get() != 0) return;
 
+        long now = level.getGameTime();
         Direction facing = state.getValue(BalancerNode.FACING);
 
         // --- Source ---
         BlockPos sourcePos = pos.relative(facing.getOpposite());
         ResourceHandler<ItemResource> source = getHandlerFromAnySide(level, sourcePos);
         if (source == null) {
-            setPowered(level, pos, state, false);
+            setPowered(level, pos, state, isRecentlyActive(entity, now));
             return;
         }
 
@@ -149,12 +170,20 @@ public class BalancerNodeBlockEntity extends BlockEntity {
         }
 
         if (destinations.isEmpty()) {
-            setPowered(level, pos, state, false);
+            setPowered(level, pos, state, isRecentlyActive(entity, now));
             return;
         }
 
         boolean transferred = entity.distributeItems(source, destinations);
-        setPowered(level, pos, state, transferred);
+        if (transferred) {
+            entity.lastActiveTick = now;
+        }
+        setPowered(level, pos, state, isRecentlyActive(entity, now));
+    }
+
+    private static boolean isRecentlyActive(BalancerNodeBlockEntity entity, long gameTime) {
+        return entity.lastActiveTick >= 0
+                && (gameTime - entity.lastActiveTick) <= Config.BALANCER_ACTIVITY_COOLDOWN.get();
     }
 
     // -------------------------------------------------------------------------

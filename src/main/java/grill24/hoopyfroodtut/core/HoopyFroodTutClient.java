@@ -2,6 +2,7 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
+import grill24.hoopyfroodtut.client.renderer.BalancerNodeRenderer;
 import grill24.hoopyfroodtut.client.renderer.BanishingBinRenderer;
 import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
 import grill24.hoopyfroodtut.client.renderer.DisposableCaterpillarRenderer;
@@ -47,6 +48,9 @@ public class HoopyFroodTutClient {
 
     private static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(
+                HoopyFroodBlockEntityTypes.BALANCER_NODE.get(),
+                BalancerNodeRenderer::new);
+        event.registerBlockEntityRenderer(
                 HoopyFroodBlockEntityTypes.DISPOSABLE_CATERPILLAR.get(),
                 DisposableCaterpillarRenderer::new);
         event.registerBlockEntityRenderer(
@@ -67,6 +71,16 @@ public class HoopyFroodTutClient {
     }
 
     private static void onRegisterAdditionalModels(ModelEvent.RegisterStandalone event) {
+        event.register(BalancerNodeRenderer.ELEM0_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/balancer_node_elem0")));
+        event.register(BalancerNodeRenderer.ELEM1_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/balancer_node_elem1")));
+        event.register(BalancerNodeRenderer.ELEM2_KEY,
+                SimpleUnbakedStandaloneModel.simpleModelWrapper(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/balancer_node_elem2")));
+
         event.register(DisposableCaterpillarRenderer.FULL_MODEL_KEY,
                 SimpleUnbakedStandaloneModel.simpleModelWrapper(
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,

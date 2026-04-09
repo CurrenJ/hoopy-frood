@@ -13,6 +13,10 @@ public class Config {
             .comment("Maximum items sent to each destination per transfer attempt.")
             .defineInRange("balancerBatchSize", 4, 1, Integer.MAX_VALUE);
 
+    public static final ModConfigSpec.IntValue BALANCER_ACTIVITY_COOLDOWN = BUILDER
+            .comment("Ticks of inactivity before the Balancer Node animations spin down. Lower = snappier idle transition.")
+            .defineInRange("balancerActivityCooldown", 60, 1, Integer.MAX_VALUE);
+
     // ── Wobbly Water ──────────────────────────────────────────────────────────
     static { BUILDER.push("wobblyWater"); }
 
