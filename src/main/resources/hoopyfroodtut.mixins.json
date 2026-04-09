@@ -8,7 +8,8 @@
     "PathNavigationMixin"
   ],
   "client": [
-    "FluidRendererMixin"
+    "FluidRendererMixin",
+    "ParticleEngineAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

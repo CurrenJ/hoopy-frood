@@ -100,7 +100,7 @@ public class WobblyWaterRenderer
     // ── Surface wave physics constants ────────────────────────────────────────
 
     /** Wave propagation speed c (units: surface-widths per game-time-second). */
-    private static final float WAVE_SPEED              = 1.8f;
+    private static final float WAVE_SPEED              = 1.6f;
     /** Linear velocity damping coefficient γ in the wave equation a = c²∇²h − 2γv. */
     private static final float WAVE_DAMPING            = 1f;
     /** Soft restoring term −κh that prevents the DC (zero-eigenvalue) mode from accumulating
@@ -142,6 +142,13 @@ public class WobblyWaterRenderer
     private static final float SLIDING_MIN_SPEED           = 0.003f;
     /** Scales the item entity's horizontal speed (blocks/tick) into a sliding ripple impulse. */
     private static final float SLIDING_VELOCITY_SCALE      = 4.0f;
+
+    // ── In-world Particle impact constants ────────────────────────────────────
+
+    /** Minimum impulse from a falling particle hitting the surface. */
+    private static final float PARTICLE_IMPACT_MIN_STRENGTH    = 0.15f;
+    /** Scales downward displacement (blocks per frame) into a surface impulse for particles. */
+    private static final float PARTICLE_IMPACT_VELOCITY_SCALE  = 16.0f;
 
     // ── Surface leaf particle constants ────────────────────────────────────
     /** Number of leaf particles drifting on the fluid surface. */
@@ -197,9 +204,13 @@ public class WobblyWaterRenderer
         float itemVx = 0f,  itemVz = 0f;
         float lastGameTime = -1f;
         final Random rng;
-        /** Block-local Y of each nearby ItemEntity from the previous render frame, keyed by entity ID. */
+        /** Block-local Y of each nearby ItemEntity/LivingEntity from the previous render frame, keyed by entity ID. */
         final Map<Integer, Float> lastEntityY = new HashMap<>();
-        /** Splash impulses queued by in-world ItemEntity impacts; drained at the end of stepSurface. */
+        /** Block-local Y of each nearby MC Particle from the previous render frame.
+         *  WeakHashMap so entries are automatically reclaimed when the particle is removed. */
+        final java.util.WeakHashMap<net.minecraft.client.particle.Particle, Float> lastParticleY
+                = new java.util.WeakHashMap<>();
+        /** Splash impulses queued by in-world ItemEntity/Particle impacts; drained at the end of stepSurface. */
         final List<float[]> pendingImpacts = new ArrayList<>();
         // ── Leaf particle state ─────────────────────────────────────────────
         float[] leafX      = new float[LEAF_COUNT];
@@ -211,6 +222,8 @@ public class WobblyWaterRenderer
         int[]   leafQuadrant = new int[LEAF_COUNT]; // 0=TL, 1=TR, 2=BL, 3=BR
         float[] leafHomeX    = new float[LEAF_COUNT]; // jittered-grid equilibrium position
         float[] leafHomeZ    = new float[LEAF_COUNT];
+        /** Normalised size factor (0–1) per particle; actual size = sizeMin + scale*(sizeMax-sizeMin). */
+        float[] leafScale    = new float[LEAF_COUNT];
         boolean leavesInitialized = false;
 
         SurfacePhysicsState(BlockPos pos) {
@@ -455,6 +468,7 @@ public class WobblyWaterRenderer
                 s.leafAngle[i]    = s.rng.nextFloat() * (float) (2 * Math.PI);
                 s.leafAngleV[i]   = (s.rng.nextFloat() * 2f - 1f) * 0.3f;
                 s.leafQuadrant[i] = s.rng.nextInt(4);
+                s.leafScale[i]    = s.rng.nextFloat();
             }
             s.leavesInitialized = true;
         }
@@ -576,7 +590,8 @@ public class WobblyWaterRenderer
 
         renderState.isPrivate    = blockEntity.isPrivate();
         renderState.surfaceColor = blockEntity.getSurfaceColor();
-        renderState.gridSize     = blockEntity.getGridSize();
+        renderState.gridSize     = Math.min(blockEntity.getGridSize(),
+                grill24.hoopyfroodtut.Config.WOBBLY_WATER_MAX_GRID_SIZE.getAsInt());
         renderState.waveAmp      = blockEntity.getWaveAmp();
         renderState.waveSpeed    = blockEntity.getWaveSpeed();
         renderState.bobAmp       = blockEntity.getBobAmp();
@@ -585,6 +600,8 @@ public class WobblyWaterRenderer
         renderState.voxelMode            = blockEntity.isVoxelMode();
         renderState.physicsEnabled       = blockEntity.isPhysicsEnabled();
         renderState.surfaceParticleType  = blockEntity.getSurfaceParticleType();
+        renderState.particleSizeMin      = blockEntity.getParticleSizeMin();
+        renderState.particleSizeMax      = blockEntity.getParticleSizeMax();
         renderState.surfaceTexture = blockEntity.getBlockState()
                 .getValue(WobblyWater.SURFACE_TEXTURE);
 
@@ -635,7 +652,7 @@ public class WobblyWaterRenderer
             // Items fall through the block (no collision shape for ItemEntity), so we
             // track each entity's block-local Y frame-to-frame and queue an impulse
             // when it crosses the visual fluid surface threshold.
-            if (level != null) {
+            if (level != null && grill24.hoopyfroodtut.Config.WOBBLY_WATER_ENTITY_IMPACTS.getAsBoolean()) {
                 AABB scanBox = new AABB(
                         pos.getX() - 0.1, pos.getY() + 0.0, pos.getZ() - 0.1,
                         pos.getX() + 1.1, pos.getY() + 2.5, pos.getZ() + 1.1);
@@ -724,6 +741,43 @@ public class WobblyWaterRenderer
                 surf.lastEntityY.keySet().retainAll(currentIds);
             }
 
+            // ── Detect in-world Particle impacts and queue splash impulses ────────
+            // Scan the particle engine for visual particles falling through the fluid
+            // surface. Uses a WeakHashMap so entries for expired particles are reclaimed
+            // automatically without any explicit cleanup step.
+            // Gated behind a config option — can be disabled on lower-end machines.
+            if (grill24.hoopyfroodtut.Config.WOBBLY_WATER_PARTICLE_IMPACTS.getAsBoolean()) {
+                var particleEngine = net.minecraft.client.Minecraft.getInstance().particleEngine;
+                var particlesMap = ((grill24.hoopyfroodtut.mixin.ParticleEngineAccessor) particleEngine)
+                        .hoopyfrood_getParticles();
+                double minX = pos.getX() - 0.05, maxX = pos.getX() + 1.05;
+                double minY = pos.getY() + 0.0,  maxY = pos.getY() + 2.5;
+                double minZ = pos.getZ() - 0.05, maxZ = pos.getZ() + 1.05;
+                for (var group : particlesMap.values()) {
+                    for (var particle : group.getAll()) {
+                        net.minecraft.world.phys.Vec3 p = particle.getPos();
+                        if (p.x() < minX || p.x() > maxX
+                                || p.y() < minY || p.y() > maxY
+                                || p.z() < minZ || p.z() > maxZ) continue;
+
+                        float localY = (float) (p.y() - pos.getY());
+                        Float prevY  = surf.lastParticleY.get(particle);
+                        surf.lastParticleY.put(particle, localY);
+
+                        if (prevY != null && prevY > IMPACT_DETECTION_THRESHOLD
+                                && localY <= IMPACT_DETECTION_THRESHOLD) {
+                            float localX = Math.max(0.05f, Math.min(0.95f,
+                                    (float) (p.x() - pos.getX())));
+                            float localZ = Math.max(0.05f, Math.min(0.95f,
+                                    (float) (p.z() - pos.getZ())));
+                            float strength = Math.max(PARTICLE_IMPACT_MIN_STRENGTH,
+                                    (prevY - localY) * PARTICLE_IMPACT_VELOCITY_SCALE);
+                            surf.pendingImpacts.add(new float[]{localX, localZ, strength});
+                        }
+                    }
+                }
+            }
+
             // ── Adjacent Wobbly Water boundary coupling ────────────────────────────
             // For each cardinal neighbour that is also a physics-enabled Wobbly Water block with the
             // same gridSize, we collect it here and — after our own step — copy its
@@ -772,20 +826,26 @@ public class WobblyWaterRenderer
             System.arraycopy(surf.h, 0, renderState.physicsHeights, 0, n);
 
             // Snapshot leaf particle positions, heights, and angles for the render thread
-            renderState.leafCount = LEAF_COUNT;
-            if (renderState.leafX == null || renderState.leafX.length != LEAF_COUNT) {
-                renderState.leafX        = new float[LEAF_COUNT];
-                renderState.leafZ        = new float[LEAF_COUNT];
-                renderState.leafY        = new float[LEAF_COUNT];
-                renderState.leafAngle    = new float[LEAF_COUNT];
-                renderState.leafQuadrant = new int[LEAF_COUNT];
-            }
-            for (int i = 0; i < LEAF_COUNT; i++) {
-                renderState.leafX[i]        = surf.leafX[i];
-                renderState.leafZ[i]        = surf.leafZ[i];
-                renderState.leafY[i]        = sampleSurfaceHeight(surf, G, surf.leafX[i], surf.leafZ[i]);
-                renderState.leafAngle[i]    = surf.leafAngle[i];
-                renderState.leafQuadrant[i] = surf.leafQuadrant[i];
+            if (grill24.hoopyfroodtut.Config.WOBBLY_WATER_SURFACE_PARTICLES.getAsBoolean()) {
+                renderState.leafCount = LEAF_COUNT;
+                if (renderState.leafX == null || renderState.leafX.length != LEAF_COUNT) {
+                    renderState.leafX        = new float[LEAF_COUNT];
+                    renderState.leafZ        = new float[LEAF_COUNT];
+                    renderState.leafY        = new float[LEAF_COUNT];
+                    renderState.leafAngle    = new float[LEAF_COUNT];
+                    renderState.leafQuadrant = new int[LEAF_COUNT];
+                    renderState.leafScale    = new float[LEAF_COUNT];
+                }
+                for (int i = 0; i < LEAF_COUNT; i++) {
+                    renderState.leafX[i]        = surf.leafX[i];
+                    renderState.leafZ[i]        = surf.leafZ[i];
+                    renderState.leafY[i]        = sampleSurfaceHeight(surf, G, surf.leafX[i], surf.leafZ[i]);
+                    renderState.leafAngle[i]    = surf.leafAngle[i];
+                    renderState.leafQuadrant[i] = surf.leafQuadrant[i];
+                    renderState.leafScale[i]    = surf.leafScale[i];
+                }
+            } else {
+                renderState.leafCount = 0;
             }
         } else {
             renderState.hasNeighborNorth = false;
@@ -1276,14 +1336,16 @@ public class WobblyWaterRenderer
         final int b =  tint        & 0xFF;
         final int a = 220;
 
-        final float[]            lx    = state.leafX;
-        final float[]            lz    = state.leafZ;
-        final float[]            ly    = state.leafY;
-        final float[]            lang  = state.leafAngle;
-        final int[]              lquad = state.leafQuadrant;
-        final int                count = state.leafCount;
-        final int                light = state.lightCoords;
-        final float half = LEAF_SCALE * 0.5f;
+        final float[]            lx     = state.leafX;
+        final float[]            lz     = state.leafZ;
+        final float[]            ly     = state.leafY;
+        final float[]            lang   = state.leafAngle;
+        final int[]              lquad  = state.leafQuadrant;
+        final float[]            lscale = state.leafScale;
+        final int                count  = state.leafCount;
+        final int                light  = state.lightCoords;
+        final float sizeMin = state.particleSizeMin;
+        final float sizeRange = Math.max(0f, state.particleSizeMax - sizeMin);
         // Precompute per-quadrant UV bounds: [quadrant][u0, u1, v0, v1]
         final float fu0 = spr.getU0(), fu1 = spr.getU1(), fum = (fu0 + fu1) * 0.5f;
         final float fv0 = spr.getV0(), fv1 = spr.getV1(), fvm = (fv0 + fv1) * 0.5f;
@@ -1300,6 +1362,7 @@ public class WobblyWaterRenderer
                     Vector3f upNorm = pose.transformNormal(0, 1, 0, new Vector3f());
 
                     for (int i = 0; i < count; i++) {
+                        float half = (sizeMin + (lscale != null ? lscale[i] : 0.5f) * sizeRange) * 0.5f;
                         float ox   = lx[i];
                         float oy   = ly[i] + 0.008f; // clearance above the surface, large enough to avoid z-fighting on disturbed waves
                         float oz   = lz[i];

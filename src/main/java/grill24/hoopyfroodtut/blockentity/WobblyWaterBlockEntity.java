@@ -56,6 +56,8 @@ public class WobblyWaterBlockEntity extends BlockEntity {
     private boolean voxelMode = true;
     private boolean physicsEnabled = true;
     private SurfaceParticleType surfaceParticleType = SurfaceParticleType.NONE;
+    private float particleSizeMin = 0.04f;
+    private float particleSizeMax = 0.08f;
 
     // ── Surface particle type ──────────────────────────────────────────────
 
@@ -145,6 +147,8 @@ public class WobblyWaterBlockEntity extends BlockEntity {
     public boolean isVoxelMode()       { return voxelMode; }
     public boolean isPhysicsEnabled()  { return physicsEnabled; }
     public SurfaceParticleType getSurfaceParticleType() { return surfaceParticleType; }
+    public float getParticleSizeMin() { return particleSizeMin; }
+    public float getParticleSizeMax() { return particleSizeMax; }
 
     // ── Setters (sync on set) ──────────────────────────────────────────────
 
@@ -157,6 +161,8 @@ public class WobblyWaterBlockEntity extends BlockEntity {
     public void setSpinItem(boolean v)   { this.spinItem = v;      markChangedAndSync(); }
     public void setVoxelMode(boolean v)  { this.voxelMode = v;     markChangedAndSync(); }
     public void setPhysicsEnabled(boolean v) { this.physicsEnabled = v; markChangedAndSync(); }
+    public void setParticleSizeMin(float v) { this.particleSizeMin = Math.max(0f, v); markChangedAndSync(); }
+    public void setParticleSizeMax(float v) { this.particleSizeMax = Math.max(0f, v); markChangedAndSync(); }
     public void setSurfaceParticleType(SurfaceParticleType v) {
         this.surfaceParticleType = v;
         // Particles require physics to be meaningful; auto-enable when activating
@@ -176,6 +182,8 @@ public class WobblyWaterBlockEntity extends BlockEntity {
         this.voxelMode          = true;
         this.physicsEnabled     = true;
         this.surfaceParticleType = SurfaceParticleType.NONE;
+        this.particleSizeMin     = 0.04f;
+        this.particleSizeMax     = 0.08f;
         markChangedAndSync();
     }
 
@@ -206,6 +214,8 @@ public class WobblyWaterBlockEntity extends BlockEntity {
         this.physicsEnabled      = input.getBooleanOr("PhysicsEnabled", true);
         this.surfaceParticleType = SurfaceParticleType.fromString(
                 input.getStringOr("SurfaceParticleType", "none"));
+        this.particleSizeMin = input.getFloatOr("ParticleSizeMin", 0.04f);
+        this.particleSizeMax = input.getFloatOr("ParticleSizeMax", 0.08f);
     }
 
     @Override
@@ -226,6 +236,8 @@ public class WobblyWaterBlockEntity extends BlockEntity {
         output.putBoolean("VoxelMode", voxelMode);
         output.putBoolean("PhysicsEnabled", physicsEnabled);
         output.putString("SurfaceParticleType", surfaceParticleType.toSerializedName());
+        output.putFloat("ParticleSizeMin", particleSizeMin);
+        output.putFloat("ParticleSizeMax", particleSizeMax);
     }
 
     // ── Client sync ────────────────────────────────────────────────────────

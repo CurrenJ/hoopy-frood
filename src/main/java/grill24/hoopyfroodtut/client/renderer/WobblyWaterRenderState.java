@@ -61,4 +61,9 @@ public class WobblyWaterRenderState extends BlockEntityRenderState {
             = WobblyWaterBlockEntity.SurfaceParticleType.NONE;
     /** Biome dry-foliage ARGB color, used to tint leaf-litter particles. */
     public int dryFoliageColor = 0xFFFFFFFF;
+    /** Per-particle size scale factors (0–1); actual size = sizeMin + scale * (sizeMax - sizeMin). */
+    public float[] leafScale = null;
+    /** Configured size range for surface particles (block units). */
+    public float particleSizeMin = 0.04f;
+    public float particleSizeMax = 0.08f;
 }

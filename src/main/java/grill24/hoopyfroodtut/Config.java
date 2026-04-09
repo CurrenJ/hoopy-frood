@@ -1,38 +1,9 @@
 package grill24.hoopyfroodtut;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-// An example config class. This is not required, but it's a good idea to have one to keep your config organized.
-// Demonstrates how to use Neo's config APIs
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
-
-    public static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
-
-    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
-
-    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
-
-    // a list of strings that are treated as resource locations for items
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
-            .comment("A list of items to log on common setup.")
-            .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), () -> "", Config::validateItemName);
 
     public static final ModConfigSpec.IntValue BALANCER_TICK_RATE = BUILDER
             .comment("How many game ticks between each Balancer Node transfer attempt. Lower = faster.")
@@ -42,9 +13,34 @@ public class Config {
             .comment("Maximum items sent to each destination per transfer attempt.")
             .defineInRange("balancerBatchSize", 4, 1, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec SPEC = BUILDER.build();
+    // ── Wobbly Water ──────────────────────────────────────────────────────────
+    static { BUILDER.push("wobblyWater"); }
 
-    private static boolean validateItemName(final Object obj) {
-        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(Identifier.parse(itemName));
-    }
+    public static final ModConfigSpec.BooleanValue WOBBLY_WATER_ENTITY_IMPACTS = BUILDER
+            .comment("When enabled, nearby items and players that cross a Wobbly Water surface",
+                     "generate splash ripples. Scans entities each frame per block.",
+                     "Disable on lower-end machines if Wobbly Water causes lag near entities.")
+            .define("entityImpacts", true);
+
+    public static final ModConfigSpec.BooleanValue WOBBLY_WATER_PARTICLE_IMPACTS = BUILDER
+            .comment("When enabled, in-world particles (rain, splashes, etc.) that fall through",
+                     "a Wobbly Water surface generate small displacement ripples.",
+                     "Disable on lower-end machines if the extra particle scanning causes lag.")
+            .define("particleImpacts", true);
+
+    public static final ModConfigSpec.BooleanValue WOBBLY_WATER_SURFACE_PARTICLES = BUILDER
+            .comment("When enabled, Wobbly Water blocks configured with surface particles",
+                     "(pink petals, leaf litter) will render them.",
+                     "Disable to skip particle rendering on all Wobbly Water blocks.")
+            .define("surfaceParticles", true);
+
+    public static final ModConfigSpec.IntValue WOBBLY_WATER_MAX_GRID_SIZE = BUILDER
+            .comment("Global cap on the physics/render grid resolution for all Wobbly Water blocks.",
+                     "Physics simulation cost is O(n²) — halving this value gives a ~4x speedup.",
+                     "Per-block grid sizes above this value are silently clamped down.")
+            .defineInRange("maxGridSize", 32, 1, 32);
+
+    static { BUILDER.pop(); }
+
+    public static final ModConfigSpec SPEC = BUILDER.build();
 }

@@ -35,8 +35,10 @@ import java.util.function.Function;
  *   /ww color       &lt;AARRGGBB hex, e.g. FFFF3D00&gt;
  *   /ww spin        &lt;true|false&gt;
  *   /ww voxel       &lt;true|false&gt;
- *   /ww physics     &lt;true|false&gt;
- *   /ww texture     &lt;water|lava|slime|honey|magma&gt;
+ *   /ww physics          &lt;true|false&gt;
+ *   /ww particle_size_min &lt;0–2&gt;
+ *   /ww particle_size_max &lt;0–2&gt;
+ *   /ww texture          &lt;water|lava|slime|honey|magma&gt;
  *   /ww reset
  * </pre>
  *
@@ -143,6 +145,24 @@ public class WobblyWaterDebugCommand {
                         return "physicsEnabled → " + v;
                     }))))
 
+            // ── particle_size_min ────────────────────────────────────────────
+            .then(Commands.literal("particle_size_min")
+                .then(Commands.argument("value", FloatArgumentType.floatArg(0f, 2f))
+                    .executes(ctx -> modifyBE(ctx.getSource(), be -> {
+                        float v = FloatArgumentType.getFloat(ctx, "value");
+                        be.setParticleSizeMin(v);
+                        return "particleSizeMin → " + v;
+                    }))))
+
+            // ── particle_size_max ────────────────────────────────────────────
+            .then(Commands.literal("particle_size_max")
+                .then(Commands.argument("value", FloatArgumentType.floatArg(0f, 2f))
+                    .executes(ctx -> modifyBE(ctx.getSource(), be -> {
+                        float v = FloatArgumentType.getFloat(ctx, "value");
+                        be.setParticleSizeMax(v);
+                        return "particleSizeMax → " + v;
+                    }))))
+
             // ── texture (block-state property) ───────────────────────────────
             .then(Commands.literal("texture")
                 .then(Commands.argument("name", StringArgumentType.word())
@@ -177,6 +197,8 @@ public class WobblyWaterDebugCommand {
                     "  spinItem="      + be.isSpinItem()     + "\n" +
                     "  voxelMode="     + be.isVoxelMode()    + "\n" +
                     "  physicsEnabled="+ be.isPhysicsEnabled() + "\n" +
+                    "  particleSizeMin="+ be.getParticleSizeMin() + "\n" +
+                    "  particleSizeMax="+ be.getParticleSizeMax() + "\n" +
                     "  surfaceTexture="+ level.getBlockState(pos)
                             .getValue(WobblyWater.SURFACE_TEXTURE).getSerializedName()
             ), false);
