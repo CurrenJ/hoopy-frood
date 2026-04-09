@@ -2,6 +2,7 @@ package grill24.hoopyfroodtut.item;
 
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
+import grill24.hoopyfroodtut.core.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -63,15 +64,17 @@ public class DisposableCaterpillarItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> components, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, components, flag);
-        components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.tooltip.desc")
-                .withStyle(ChatFormatting.GRAY));
-        int charges = getCharges(stack);
-        components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.charges", charges)
-                .withStyle(ChatFormatting.GRAY));
-        int torches = getTorches(stack);
-        if (torches > 0) {
-            components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.torches", torches)
-                    .withStyle(ChatFormatting.YELLOW));
-        }
+        Util.appendShiftableTooltip(components, () -> {
+            components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.tooltip.desc")
+                    .withStyle(ChatFormatting.GRAY));
+            int charges = getCharges(stack);
+            components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.charges", charges)
+                    .withStyle(ChatFormatting.GRAY));
+            int torches = getTorches(stack);
+            if (torches > 0) {
+                components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.torches", torches)
+                        .withStyle(ChatFormatting.YELLOW));
+            }
+        });
     }
 }

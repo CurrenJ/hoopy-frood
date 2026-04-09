@@ -2,6 +2,7 @@ package grill24.hoopyfroodtut.item;
 
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
+import grill24.hoopyfroodtut.core.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -116,36 +117,38 @@ public class BeggingItemScrabblerItem extends BlockItem {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display,
                                 Consumer<Component> components, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, components, flag);
-        components.accept(Component.translatable("item.hoopyfroodtut.begging_item_scrabbler.tooltip.desc")
-                .withStyle(ChatFormatting.GRAY));
-
-        int nuggets = getNuggets(stack);
-        if (nuggets > 0) {
-            components.accept(Component.translatable(
-                    "item.hoopyfroodtut.begging_item_scrabbler.nuggets", nuggets)
+        Util.appendShiftableTooltip(components, () -> {
+            components.accept(Component.translatable("item.hoopyfroodtut.begging_item_scrabbler.tooltip.desc")
                     .withStyle(ChatFormatting.GRAY));
-        } else {
-            components.accept(Component.translatable(
-                    "item.hoopyfroodtut.begging_item_scrabbler.no_fuel")
-                    .withStyle(ChatFormatting.DARK_RED));
-        }
 
-        int slots = stack.getOrDefault(HoopyFroodDataComponents.SCRABBLER_SLOTS.get(),
-                BeggingItemScrabblerBlockEntity.DEFAULT_INVENTORY_SIZE);
-        components.accept(Component.translatable(
-                "item.hoopyfroodtut.begging_item_scrabbler.slots", slots)
-                .withStyle(ChatFormatting.GRAY));
+            int nuggets = getNuggets(stack);
+            if (nuggets > 0) {
+                components.accept(Component.translatable(
+                        "item.hoopyfroodtut.begging_item_scrabbler.nuggets", nuggets)
+                        .withStyle(ChatFormatting.GRAY));
+            } else {
+                components.accept(Component.translatable(
+                        "item.hoopyfroodtut.begging_item_scrabbler.no_fuel")
+                        .withStyle(ChatFormatting.DARK_RED));
+            }
 
-        BlockPos home = stack.get(HoopyFroodDataComponents.SCRABBLER_HOME.get());
-        if (home != null) {
+            int slots = stack.getOrDefault(HoopyFroodDataComponents.SCRABBLER_SLOTS.get(),
+                    BeggingItemScrabblerBlockEntity.DEFAULT_INVENTORY_SIZE);
             components.accept(Component.translatable(
-                    "item.hoopyfroodtut.begging_item_scrabbler.home_linked",
-                    home.getX(), home.getY(), home.getZ())
-                    .withStyle(ChatFormatting.AQUA));
-        } else {
-            components.accept(Component.translatable(
-                    "item.hoopyfroodtut.begging_item_scrabbler.no_home")
-                    .withStyle(ChatFormatting.DARK_GRAY));
-        }
+                    "item.hoopyfroodtut.begging_item_scrabbler.slots", slots)
+                    .withStyle(ChatFormatting.GRAY));
+
+            BlockPos home = stack.get(HoopyFroodDataComponents.SCRABBLER_HOME.get());
+            if (home != null) {
+                components.accept(Component.translatable(
+                        "item.hoopyfroodtut.begging_item_scrabbler.home_linked",
+                        home.getX(), home.getY(), home.getZ())
+                        .withStyle(ChatFormatting.AQUA));
+            } else {
+                components.accept(Component.translatable(
+                        "item.hoopyfroodtut.begging_item_scrabbler.no_home")
+                        .withStyle(ChatFormatting.DARK_GRAY));
+            }
+        });
     }
 }

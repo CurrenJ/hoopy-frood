@@ -158,48 +158,88 @@ public class HoopyFroodTutClient {
         Item item = event.getItemStack().getItem();
         List<Component> tip = event.getToolTip();
 
+        Component holdShift = Component.translatable("tooltip.hoopyfroodtut.hold_shift")
+                .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC);
+
         if (item == HoopyFroodItems.BALANCER_NODE_ITEM.get()) {
-            tip.add(1, Component.translatable("item.hoopyfroodtut.balancer_node.tooltip.desc")
-                    .withStyle(ChatFormatting.GRAY));
-            tip.add(2, Component.empty()
-                    .append(Component.literal("Range: ").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(String.valueOf(BalancerNodeBlockEntity.MAX_RANGE)).withStyle(ChatFormatting.AQUA))
-                    .append(Component.literal(" blocks base  (+").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(String.valueOf(BalancerNodeBlockEntity.RANGE_PER_EXTENDER)).withStyle(ChatFormatting.GREEN))
-                    .append(Component.literal(" per Range Extender)").withStyle(ChatFormatting.GRAY)));
-            tip.add(3, Component.translatable("item.hoopyfroodtut.balancer_node.tooltip.hint")
-                    .withStyle(ChatFormatting.DARK_GRAY));
+            if (Minecraft.getInstance().hasShiftDown()) {
+                tip.add(1, Component.translatable("item.hoopyfroodtut.balancer_node.tooltip.desc")
+                        .withStyle(ChatFormatting.GRAY));
+                tip.add(2, Component.empty()
+                        .append(Component.literal("Range: ").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal(String.valueOf(BalancerNodeBlockEntity.MAX_RANGE)).withStyle(ChatFormatting.AQUA))
+                        .append(Component.literal(" blocks base  (+").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal(String.valueOf(BalancerNodeBlockEntity.RANGE_PER_EXTENDER)).withStyle(ChatFormatting.GREEN))
+                        .append(Component.literal(" per Range Extender)").withStyle(ChatFormatting.GRAY)));
+                tip.add(3, Component.translatable("item.hoopyfroodtut.balancer_node.tooltip.hint")
+                        .withStyle(ChatFormatting.DARK_GRAY));
+            } else {
+                tip.add(1, holdShift);
+            }
 
         } else if (item == HoopyFroodItems.INFINITE_IMPROBABILITY_DRIVE_ITEM.get()) {
-            tip.add(1, Component.translatable("item.hoopyfroodtut.infinite_improbability_drive.tooltip.desc")
-                    .withStyle(ChatFormatting.GRAY));
-            tip.add(2, Component.empty()
-                    .append(Component.literal("Base: ").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(InfiniteImprobabilityDriveBlockEntity.BASE_CONVERSION_TICKS / 20 + " s").withStyle(ChatFormatting.YELLOW))
-                    .append(Component.literal("  →  min ").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(InfiniteImprobabilityDriveBlockEntity.MIN_CONVERSION_TICKS / 20 + " s").withStyle(ChatFormatting.YELLOW))
-                    .append(Component.literal("  |  scan radius: ").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(String.valueOf(InfiniteImprobabilityDriveBlockEntity.SCAN_RADIUS)).withStyle(ChatFormatting.AQUA))
-                    .append(Component.literal(" blocks").withStyle(ChatFormatting.GRAY)));
-            tip.add(3, Component.translatable("item.hoopyfroodtut.infinite_improbability_drive.tooltip.hint")
-                    .withStyle(ChatFormatting.DARK_GRAY));
+            if (Minecraft.getInstance().hasShiftDown()) {
+                tip.add(1, Component.translatable("item.hoopyfroodtut.infinite_improbability_drive.tooltip.desc")
+                        .withStyle(ChatFormatting.GRAY));
+                tip.add(2, Component.empty()
+                        .append(Component.literal("Base: ").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal(InfiniteImprobabilityDriveBlockEntity.BASE_CONVERSION_TICKS / 20 + " s").withStyle(ChatFormatting.YELLOW))
+                        .append(Component.literal("  →  min ").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal(InfiniteImprobabilityDriveBlockEntity.MIN_CONVERSION_TICKS / 20 + " s").withStyle(ChatFormatting.YELLOW))
+                        .append(Component.literal("  |  scan radius: ").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal(String.valueOf(InfiniteImprobabilityDriveBlockEntity.SCAN_RADIUS)).withStyle(ChatFormatting.AQUA))
+                        .append(Component.literal(" blocks").withStyle(ChatFormatting.GRAY)));
+                tip.add(3, Component.translatable("item.hoopyfroodtut.infinite_improbability_drive.tooltip.hint")
+                        .withStyle(ChatFormatting.DARK_GRAY));
+            } else {
+                tip.add(1, holdShift);
+            }
 
         } else if (item == HoopyFroodItems.SOMEBODY_ELSES_PROBLEM_FIELD_ITEM.get()) {
-            tip.add(1, Component.translatable("item.hoopyfroodtut.somebody_elses_problem_field.tooltip.desc")
-                    .withStyle(ChatFormatting.GRAY));
-            tip.add(2, Component.empty()
-                    .append(Component.literal("Radius: ").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(String.valueOf(SepFieldManager.FIELD_RADIUS)).withStyle(ChatFormatting.AQUA))
-                    .append(Component.literal(" blocks").withStyle(ChatFormatting.GRAY)));
+            if (Minecraft.getInstance().hasShiftDown()) {
+                tip.add(1, Component.translatable("item.hoopyfroodtut.somebody_elses_problem_field.tooltip.desc")
+                        .withStyle(ChatFormatting.GRAY));
+                tip.add(2, Component.empty()
+                        .append(Component.literal("Radius: ").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal(String.valueOf(SepFieldManager.FIELD_RADIUS)).withStyle(ChatFormatting.AQUA))
+                        .append(Component.literal(" blocks").withStyle(ChatFormatting.GRAY)));
+            } else {
+                tip.add(1, holdShift);
+            }
 
         } else if (item == HoopyFroodItems.BROWN_BRICK.get()) {
-            tip.add(1, Component.translatable("item.hoopyfroodtut.brown_brick.tooltip.desc")
-                    .withStyle(ChatFormatting.GRAY));
-            tip.add(2, Component.empty()
-                    .append(Component.literal("Nutrition: ").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal("1").withStyle(ChatFormatting.YELLOW))
-                    .append(Component.literal("  |  Saturation: ").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal("2").withStyle(ChatFormatting.YELLOW)));
+            if (Minecraft.getInstance().hasShiftDown()) {
+                tip.add(1, Component.translatable("item.hoopyfroodtut.brown_brick.tooltip.desc")
+                        .withStyle(ChatFormatting.GRAY));
+                tip.add(2, Component.empty()
+                        .append(Component.literal("Nutrition: ").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal("1").withStyle(ChatFormatting.YELLOW))
+                        .append(Component.literal("  |  Saturation: ").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal("2").withStyle(ChatFormatting.YELLOW)));
+            } else {
+                tip.add(1, holdShift);
+            }
+
+        } else if (item == HoopyFroodItems.BANISHING_BIN_ITEM.get()) {
+            if (Minecraft.getInstance().hasShiftDown()) {
+                tip.add(1, Component.translatable("item.hoopyfroodtut.banishing_bin.tooltip.desc")
+                        .withStyle(ChatFormatting.GRAY));
+            } else {
+                tip.add(1, holdShift);
+            }
+
+        } else if (item == HoopyFroodItems.WOBBLY_WATER_ITEM.get()
+                || item == HoopyFroodItems.WOBBLY_WATER_BUCKET.get()
+                || item == HoopyFroodItems.WOBBLY_LAVA_BUCKET.get()
+                || item == HoopyFroodItems.WOBBLY_SLIME_BUCKET.get()
+                || item == HoopyFroodItems.WOBBLY_HONEY_BUCKET.get()
+                || item == HoopyFroodItems.WOBBLY_MAGMA_BUCKET.get()) {
+            if (Minecraft.getInstance().hasShiftDown()) {
+                tip.add(1, Component.translatable("item.hoopyfroodtut.wobbly_water.tooltip.desc")
+                        .withStyle(ChatFormatting.GRAY));
+            } else {
+                tip.add(1, holdShift);
+            }
         }
     }
 

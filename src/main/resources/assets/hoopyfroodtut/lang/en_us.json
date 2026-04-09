@@ -35,6 +35,7 @@
   "item.hoopyfroodtut.wobbly_honey_bucket": "Wobbly Honey Bucket",
   "item.hoopyfroodtut.wobbly_magma_bucket": "Wobbly Magma Bucket",
   "block.hoopyfroodtut.wobbly_water": "Wobbly Water",
+  "item.hoopyfroodtut.wobbly_water.tooltip.desc": "A fluid block with an animated, wobbly surface. Right-click with pink petals or leaf litter to configure surface particles.",
 
   "block.hoopyfroodtut.banishing_bin": "Sentimental Banishing Bin",
   "item.hoopyfroodtut.banishing_bin": "Sentimental Banishing Bin",
@@ -58,6 +59,8 @@
 
   "block.hoopyfroodtut.somebody_elses_problem_field": "Somebody Else's Problem Field",
   "item.hoopyfroodtut.somebody_elses_problem_field": "Somebody Else's Problem Field",
+
+  "tooltip.hoopyfroodtut.hold_shift": "Hold Shift for details",
 
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",

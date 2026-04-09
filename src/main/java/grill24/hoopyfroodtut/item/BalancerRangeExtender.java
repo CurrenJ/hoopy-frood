@@ -1,6 +1,7 @@
 package grill24.hoopyfroodtut.item;
 
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
+import grill24.hoopyfroodtut.core.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -20,11 +21,13 @@ public class BalancerRangeExtender extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display,
                                 Consumer<Component> components, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, components, flag);
-        components.accept(Component.translatable("item.hoopyfroodtut.balancer_range_extender.tooltip.desc")
-                .withStyle(ChatFormatting.GRAY));
-        components.accept(Component.empty()
-                .append(Component.literal("Right-click a node to insert  ·  ").withStyle(ChatFormatting.GRAY))
-                .append(Component.literal("+" + BalancerNodeBlockEntity.RANGE_PER_EXTENDER + " block").withStyle(ChatFormatting.AQUA))
-                .append(Component.literal(" scan range per extender").withStyle(ChatFormatting.GRAY)));
+        Util.appendShiftableTooltip(components, () -> {
+            components.accept(Component.translatable("item.hoopyfroodtut.balancer_range_extender.tooltip.desc")
+                    .withStyle(ChatFormatting.GRAY));
+            components.accept(Component.empty()
+                    .append(Component.literal("Right-click a node to insert  ·  ").withStyle(ChatFormatting.GRAY))
+                    .append(Component.literal("+" + BalancerNodeBlockEntity.RANGE_PER_EXTENDER + " block").withStyle(ChatFormatting.AQUA))
+                    .append(Component.literal(" scan range per extender").withStyle(ChatFormatting.GRAY)));
+        });
     }
 }
