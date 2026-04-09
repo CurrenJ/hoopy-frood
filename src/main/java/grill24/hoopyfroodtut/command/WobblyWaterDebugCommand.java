@@ -5,8 +5,8 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
-import grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity;
+import grill24.hoopyfroodtut.block.WobblyWater;
+import grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -23,30 +23,30 @@ import net.minecraft.world.phys.HitResult;
 import java.util.function.Function;
 
 /**
- * Debug command for tweaking all PPIP display and physics properties at runtime.
+ * Debug command for tweaking all Wobbly Water display and physics properties at runtime.
  *
  * <pre>
- *   /ppip get
- *   /ppip grid        &lt;1–32&gt;
- *   /ppip wave_amp    &lt;0–10&gt;
- *   /ppip wave_speed  &lt;0–10&gt;
- *   /ppip bob_amp     &lt;0–2&gt;
- *   /ppip bob_speed   &lt;0–10&gt;
- *   /ppip color       &lt;AARRGGBB hex, e.g. FFFF3D00&gt;
- *   /ppip spin        &lt;true|false&gt;
- *   /ppip voxel       &lt;true|false&gt;
- *   /ppip physics     &lt;true|false&gt;
- *   /ppip texture     &lt;water|lava|slime|honey|magma&gt;
- *   /ppip reset
+ *   /ww get
+ *   /ww grid        &lt;1–32&gt;
+ *   /ww wave_amp    &lt;0–10&gt;
+ *   /ww wave_speed  &lt;0–10&gt;
+ *   /ww bob_amp     &lt;0–2&gt;
+ *   /ww bob_speed   &lt;0–10&gt;
+ *   /ww color       &lt;AARRGGBB hex, e.g. FFFF3D00&gt;
+ *   /ww spin        &lt;true|false&gt;
+ *   /ww voxel       &lt;true|false&gt;
+ *   /ww physics     &lt;true|false&gt;
+ *   /ww texture     &lt;water|lava|slime|honey|magma&gt;
+ *   /ww reset
  * </pre>
  *
- * All subcommands target the PPIP block the executing player is looking at (up to 5 blocks away).
+ * All subcommands target the Wobbly Water block the executing player is looking at (up to 5 blocks away).
  * Requires permission level 2 (op).
  */
-public class PpipDebugCommand {
+public class WobblyWaterDebugCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("ppip")
+        dispatcher.register(Commands.literal("ww")
             .requires(src -> src.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
 
             // ── get ──────────────────────────────────────────────────────────
@@ -147,8 +147,8 @@ public class PpipDebugCommand {
             .then(Commands.literal("texture")
                 .then(Commands.argument("name", StringArgumentType.word())
                     .suggests((ctx, builder) -> {
-                        for (PersonalPrivateItemPresenter.SurfaceTexture t
-                                : PersonalPrivateItemPresenter.SurfaceTexture.values()) {
+                        for (WobblyWater.SurfaceTexture t
+                                : WobblyWater.SurfaceTexture.values()) {
                             builder.suggest(t.getSerializedName());
                         }
                         return builder.buildFuture();
@@ -167,7 +167,7 @@ public class PpipDebugCommand {
     private static int get(CommandSourceStack source) {
         return withTarget(source, (pos, be, level) -> {
             source.sendSuccess(() -> Component.literal(
-                    "[PPIP @ " + pos.toShortString() + "]\n" +
+                    "[WW @ " + pos.toShortString() + "]\n" +
                     "  gridSize="      + be.getGridSize()    + "\n" +
                     "  waveAmp="       + be.getWaveAmp()     + "\n" +
                     "  waveSpeed="     + be.getWaveSpeed()   + "\n" +
@@ -178,16 +178,16 @@ public class PpipDebugCommand {
                     "  voxelMode="     + be.isVoxelMode()    + "\n" +
                     "  physicsEnabled="+ be.isPhysicsEnabled() + "\n" +
                     "  surfaceTexture="+ level.getBlockState(pos)
-                            .getValue(PersonalPrivateItemPresenter.SURFACE_TEXTURE).getSerializedName()
+                            .getValue(WobblyWater.SURFACE_TEXTURE).getSerializedName()
             ), false);
             return 1;
         });
     }
 
     private static int setTexture(CommandSourceStack source, String name) {
-        PersonalPrivateItemPresenter.SurfaceTexture texture = null;
-        for (PersonalPrivateItemPresenter.SurfaceTexture t
-                : PersonalPrivateItemPresenter.SurfaceTexture.values()) {
+        WobblyWater.SurfaceTexture texture = null;
+        for (WobblyWater.SurfaceTexture t
+                : WobblyWater.SurfaceTexture.values()) {
             if (t.getSerializedName().equalsIgnoreCase(name)) {
                 texture = t;
                 break;
@@ -198,12 +198,12 @@ public class PpipDebugCommand {
                 "Unknown texture '" + name + "'. Valid: water, lava, slime, honey, magma"));
             return 0;
         }
-        final PersonalPrivateItemPresenter.SurfaceTexture finalTexture = texture;
+        final WobblyWater.SurfaceTexture finalTexture = texture;
         return withTarget(source, (pos, be, level) -> {
             BlockState state = level.getBlockState(pos);
-            level.setBlock(pos, state.setValue(PersonalPrivateItemPresenter.SURFACE_TEXTURE, finalTexture),
+            level.setBlock(pos, state.setValue(WobblyWater.SURFACE_TEXTURE, finalTexture),
                     Block.UPDATE_ALL);
-            source.sendSuccess(() -> Component.literal("[PPIP] surfaceTexture → " + finalTexture.getSerializedName()), false);
+            source.sendSuccess(() -> Component.literal("[WW] surfaceTexture → " + finalTexture.getSerializedName()), false);
             return 1;
         });
     }
@@ -213,9 +213,9 @@ public class PpipDebugCommand {
             be.resetToDefaults();
             // Also reset block state texture
             BlockState state = level.getBlockState(pos);
-            level.setBlock(pos, state.setValue(PersonalPrivateItemPresenter.SURFACE_TEXTURE,
-                    PersonalPrivateItemPresenter.SurfaceTexture.WATER), Block.UPDATE_ALL);
-            source.sendSuccess(() -> Component.literal("[PPIP] Reset to defaults."), false);
+            level.setBlock(pos, state.setValue(WobblyWater.SURFACE_TEXTURE,
+                    WobblyWater.SurfaceTexture.WATER), Block.UPDATE_ALL);
+            source.sendSuccess(() -> Component.literal("[WW] Reset to defaults."), false);
             return 1;
         });
     }
@@ -223,25 +223,25 @@ public class PpipDebugCommand {
     // ── Utility helpers ────────────────────────────────────────────────────
 
     /**
-     * Finds the PPIP block the player is looking at, applies {@code action} to its block entity,
+     * Finds the Wobbly Water block the player is looking at, applies {@code action} to its block entity,
      * and returns the command result code.
      */
     private static int modifyBE(CommandSourceStack source,
-                                 Function<PersonalPrivateItemPresenterBlockEntity, String> action) {
+                                 Function<WobblyWaterBlockEntity, String> action) {
         return withTarget(source, (pos, be, level) -> {
             String msg = action.apply(be);
-            source.sendSuccess(() -> Component.literal("[PPIP] " + msg), false);
+            source.sendSuccess(() -> Component.literal("[WW] " + msg), false);
             return 1;
         });
     }
 
     @FunctionalInterface
     private interface TargetAction {
-        int run(BlockPos pos, PersonalPrivateItemPresenterBlockEntity be, ServerLevel level);
+        int run(BlockPos pos, WobblyWaterBlockEntity be, ServerLevel level);
     }
 
     /**
-     * Resolves the PPIP block the executing player is looking at (up to 5 blocks away)
+     * Resolves the Wobbly Water block the executing player is looking at (up to 5 blocks away)
      * and calls {@code action}. Returns 0 on failure with an appropriate chat message.
      */
     private static int withTarget(CommandSourceStack source, TargetAction action) {
@@ -249,13 +249,13 @@ public class PpipDebugCommand {
             ServerPlayer player = source.getPlayerOrException();
             HitResult hit = player.pick(5.0, 0f, false);
             if (hit.getType() != HitResult.Type.BLOCK) {
-                source.sendFailure(Component.literal("Look at a PPIP block first (within 5 blocks)."));
+                source.sendFailure(Component.literal("Look at a Wobbly Water block first (within 5 blocks)."));
                 return 0;
             }
             BlockPos pos = ((BlockHitResult) hit).getBlockPos();
             ServerLevel level = source.getLevel();
-            if (!(level.getBlockEntity(pos) instanceof PersonalPrivateItemPresenterBlockEntity be)) {
-                source.sendFailure(Component.literal("That block is not a Personal Private Item Presenter."));
+            if (!(level.getBlockEntity(pos) instanceof WobblyWaterBlockEntity be)) {
+                source.sendFailure(Component.literal("That block is not a Wobbly Water."));
                 return 0;
             }
             return action.run(pos, be, level);

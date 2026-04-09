@@ -1,7 +1,7 @@
 package grill24.hoopyfroodtut.block;
 
 import com.mojang.serialization.MapCodec;
-import grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity;
+import grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import net.minecraft.core.BlockPos;
@@ -43,11 +43,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Personal Private Item Presenter — a single-item display block whose animated fluid
- * surface hides the stored item (and switches to a disabled visual state) whenever any
- * player who is NOT the original depositer comes within range.
+ * Wobbly Water — a physics fluid simulation block with an animated spring-mass
+ * water surface. Supports multiple surface textures (water, lava, slime, honey, magma)
+ * and leaf/petal particles drifting on the surface.
  */
-public class PersonalPrivateItemPresenter extends BaseEntityBlock {
+public class WobblyWater extends BaseEntityBlock {
 
     // ── Surface texture variants (cycled with the debug stick) ────────────
 
@@ -70,10 +70,10 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
 
     // ── Codec / registration ───────────────────────────────────────────────
 
-    public static final MapCodec<PersonalPrivateItemPresenter> CODEC =
-            simpleCodec(PersonalPrivateItemPresenter::new);
+    public static final MapCodec<WobblyWater> CODEC =
+            simpleCodec(WobblyWater::new);
 
-    public PersonalPrivateItemPresenter(Properties properties) {
+    public WobblyWater(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(SURFACE_TEXTURE, SurfaceTexture.WATER));
     }
@@ -89,11 +89,13 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
     }
 
     // -------------------------------------------------------------------------
-    // Player interaction
+    // Player interaction — surface particle configuration only
+    // (Item storage is disabled; code kept below for future use)
     // -------------------------------------------------------------------------
 
     /**
-     * Right-click with an item in hand: store it (if slot empty) or swap with stored item.
+     * Right-click with pink petals or leaf litter configures surface particles.
+     * Item storage is disabled — use the /ww command to adjust physics settings.
      */
     @Override
     protected InteractionResult useItemOn(
@@ -101,60 +103,59 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
 
-        if (level.getBlockEntity(pos) instanceof PersonalPrivateItemPresenterBlockEntity be) {
-            // Pink petals / leaf litter configure the surface particle type (not stored as items)
+        if (level.getBlockEntity(pos) instanceof WobblyWaterBlockEntity be) {
+            // Pink petals / leaf litter configure the surface particle type
             if (stack.is(Items.PINK_PETALS)) {
-                var next = be.getSurfaceParticleType() == PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.PINK_PETALS
-                        ? PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.NONE
-                        : PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.PINK_PETALS;
+                var next = be.getSurfaceParticleType() == WobblyWaterBlockEntity.SurfaceParticleType.PINK_PETALS
+                        ? WobblyWaterBlockEntity.SurfaceParticleType.NONE
+                        : WobblyWaterBlockEntity.SurfaceParticleType.PINK_PETALS;
                 be.setSurfaceParticleType(next);
                 return InteractionResult.SUCCESS_SERVER;
             }
             if (stack.is(Items.LEAF_LITTER)) {
-                var next = be.getSurfaceParticleType() == PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.LEAF_LITTER
-                        ? PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.NONE
-                        : PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.LEAF_LITTER;
+                var next = be.getSurfaceParticleType() == WobblyWaterBlockEntity.SurfaceParticleType.LEAF_LITTER
+                        ? WobblyWaterBlockEntity.SurfaceParticleType.NONE
+                        : WobblyWaterBlockEntity.SurfaceParticleType.LEAF_LITTER;
                 be.setSurfaceParticleType(next);
                 return InteractionResult.SUCCESS_SERVER;
             }
 
-            ItemStack stored = be.getStoredItem();
-            // Take one item from the held stack (respects creative mode)
-            ItemStack toStore = stack.copyWithCount(1);
-            if (!player.isCreative()) stack.shrink(1);
-
-            if (stored.isEmpty()) {
-                be.setStoredItem(toStore, player.getUUID());
-            } else {
-                // Swap: return stored item to player, then store the new item
-                if (!player.getInventory().add(stored.copy())) {
-                    player.drop(stored.copy(), false);
-                }
-                be.setStoredItem(toStore, player.getUUID());
-            }
-            return InteractionResult.SUCCESS_SERVER;
+            // ── Item storage (disabled — keep for future use) ────────────────
+            // ItemStack stored = be.getStoredItem();
+            // ItemStack toStore = stack.copyWithCount(1);
+            // if (!player.isCreative()) stack.shrink(1);
+            // if (stored.isEmpty()) {
+            //     be.setStoredItem(toStore, player.getUUID());
+            // } else {
+            //     if (!player.getInventory().add(stored.copy())) {
+            //         player.drop(stored.copy(), false);
+            //     }
+            //     be.setStoredItem(toStore, player.getUUID());
+            // }
+            // return InteractionResult.SUCCESS_SERVER;
         }
         return InteractionResult.PASS;
     }
 
     /**
-     * Right-click with empty hand: eject the stored item back into the player's inventory.
+     * Right-click with empty hand — item retrieval is disabled.
+     * (Code kept for future use.)
      */
     @Override
     protected InteractionResult useWithoutItem(
             BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
-
-        if (level.getBlockEntity(pos) instanceof PersonalPrivateItemPresenterBlockEntity be) {
-            ItemStack stored = be.getStoredItem();
-            if (!stored.isEmpty()) {
-                if (!player.getInventory().add(stored.copy())) {
-                    player.drop(stored.copy(), false);
-                }
-                be.setStoredItem(ItemStack.EMPTY, null);
-                return InteractionResult.SUCCESS_SERVER;
-            }
-        }
+        // ── Item retrieval (disabled — keep for future use) ──────────────────
+        // if (level.isClientSide()) return InteractionResult.SUCCESS;
+        // if (level.getBlockEntity(pos) instanceof WobblyWaterBlockEntity be) {
+        //     ItemStack stored = be.getStoredItem();
+        //     if (!stored.isEmpty()) {
+        //         if (!player.getInventory().add(stored.copy())) {
+        //             player.drop(stored.copy(), false);
+        //         }
+        //         be.setStoredItem(ItemStack.EMPTY, null);
+        //         return InteractionResult.SUCCESS_SERVER;
+        //     }
+        // }
         return InteractionResult.PASS;
     }
 
@@ -166,15 +167,16 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         BlockEntity be = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         List<ItemStack> drops = new ArrayList<>();
-        drops.add(new ItemStack(HoopyFroodItems.PERSONAL_PRIVATE_ITEM_PRESENTER_ITEM.get()));
-        if (be instanceof PersonalPrivateItemPresenterBlockEntity ppip) {
-            ItemStack stored = ppip.getStoredItem();
+        drops.add(new ItemStack(HoopyFroodItems.WOBBLY_WATER_ITEM.get()));
+        if (be instanceof WobblyWaterBlockEntity ww) {
+            ItemStack stored = ww.getStoredItem();
             if (!stored.isEmpty()) {
                 drops.add(stored.copy());
             }
         }
         return drops;
     }
+
 
     // -------------------------------------------------------------------------
     // Redstone — 0 when empty, 15 when item present
@@ -187,7 +189,7 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
 
     @Override
     protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
-        if (level.getBlockEntity(pos) instanceof PersonalPrivateItemPresenterBlockEntity be) {
+        if (level.getBlockEntity(pos) instanceof WobblyWaterBlockEntity be) {
             return be.getStoredItem().isEmpty() ? 0 : 15;
         }
         return 0;
@@ -200,7 +202,7 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
     @Override
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new PersonalPrivateItemPresenterBlockEntity(pos, state);
+        return new WobblyWaterBlockEntity(pos, state);
     }
 
     @Override
@@ -209,8 +211,8 @@ public class PersonalPrivateItemPresenter extends BaseEntityBlock {
             Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide()) return null;
         return createTickerHelper(type,
-                HoopyFroodBlockEntityTypes.PERSONAL_PRIVATE_ITEM_PRESENTER.get(),
-                PersonalPrivateItemPresenterBlockEntity::tick);
+                HoopyFroodBlockEntityTypes.WOBBLY_WATER.get(),
+                WobblyWaterBlockEntity::tick);
     }
 
     // -------------------------------------------------------------------------

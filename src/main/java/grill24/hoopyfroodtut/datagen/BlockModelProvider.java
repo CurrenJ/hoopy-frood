@@ -5,7 +5,7 @@ import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
-import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
+import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
@@ -52,7 +52,7 @@ public class BlockModelProvider extends ModelProvider {
         registerBeggingItemScrabbler(blockModels);
         registerInfiniteImprobabilityDrive(blockModels);
         registerSomebodyElsesProblemField(blockModels, itemModels);
-        registerPersonalPrivateItemPresenter(blockModels, itemModels);
+        registerWobblyWater(blockModels, itemModels);
         registerBanishingBin(blockModels, itemModels);
     }
 
@@ -174,29 +174,31 @@ public class BlockModelProvider extends ModelProvider {
     }
 
     /**
-     * Generates the blockstate JSON for the Personal Private Item Presenter.
+     * Generates the blockstate JSON for Wobbly Water.
      * <p>
      * The block uses {@link RenderShape#INVISIBLE} so the blockstate model is only consulted
      * for the inventory item icon; in-world rendering is handled entirely by the BER.
-     * The single static variant points at {@code ppip.json}, a simple basin shape.
+     * The single static variant points at {@code wobbly_water.json}, a basin shape with water top.
+     * The item model points at {@code wobbly_water_base.json} (same standalone model used by the BER).
      */
-    private static void registerPersonalPrivateItemPresenter(
+    private static void registerWobblyWater(
             BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/ppip");
-        MultiVariant model = BlockModelGenerators.plainVariant(modelId);
+        Identifier blockModelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/wobbly_water");
+        Identifier itemModelId  = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/wobbly_water_base");
+        MultiVariant model = BlockModelGenerators.plainVariant(blockModelId);
 
         blockModels.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.PERSONAL_PRIVATE_ITEM_PRESENTER.get())
-                        .with(PropertyDispatch.initial(PersonalPrivateItemPresenter.SURFACE_TEXTURE)
-                                .select(PersonalPrivateItemPresenter.SurfaceTexture.WATER, model)
-                                .select(PersonalPrivateItemPresenter.SurfaceTexture.LAVA,  model)
-                                .select(PersonalPrivateItemPresenter.SurfaceTexture.SLIME, model)
-                                .select(PersonalPrivateItemPresenter.SurfaceTexture.HONEY, model)
-                                .select(PersonalPrivateItemPresenter.SurfaceTexture.MAGMA, model)));
+                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.WOBBLY_WATER.get())
+                        .with(PropertyDispatch.initial(WobblyWater.SURFACE_TEXTURE)
+                                .select(WobblyWater.SurfaceTexture.WATER, model)
+                                .select(WobblyWater.SurfaceTexture.LAVA,  model)
+                                .select(WobblyWater.SurfaceTexture.SLIME, model)
+                                .select(WobblyWater.SurfaceTexture.HONEY, model)
+                                .select(WobblyWater.SurfaceTexture.MAGMA, model)));
 
         itemModels.itemModelOutput.accept(
-                HoopyFroodItems.PERSONAL_PRIVATE_ITEM_PRESENTER_ITEM.get(),
-                ItemModelUtils.plainModel(modelId));
+                HoopyFroodItems.WOBBLY_WATER_ITEM.get(),
+                ItemModelUtils.plainModel(itemModelId));
     }
 
     /**

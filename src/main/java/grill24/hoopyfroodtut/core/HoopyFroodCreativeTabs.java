@@ -27,7 +27,7 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get());
                 output.accept(HoopyFroodItems.BEGGING_ITEM_SCRABBLER_ITEM.get());
                 output.accept(HoopyFroodItems.SOMEBODY_ELSES_PROBLEM_FIELD_ITEM.get());
-                output.accept(HoopyFroodItems.PERSONAL_PRIVATE_ITEM_PRESENTER_ITEM.get());
+                output.accept(HoopyFroodItems.WOBBLY_WATER_ITEM.get());
                 output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());
             }).build());
 

@@ -6,7 +6,7 @@ import grill24.hoopyfroodtut.client.renderer.BanishingBinRenderer;
 import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
 import grill24.hoopyfroodtut.client.renderer.DisposableCaterpillarRenderer;
 import grill24.hoopyfroodtut.client.renderer.InfiniteImprobabilityDriveRenderer;
-import grill24.hoopyfroodtut.client.renderer.PersonalPrivateItemPresenterRenderer;
+import grill24.hoopyfroodtut.client.renderer.WobblyWaterRenderer;
 import grill24.hoopyfroodtut.client.renderer.SomebodyElsesProblemFieldRenderer;
 import grill24.hoopyfroodtut.core.SepFieldManager;
 import grill24.hoopyfroodtut.item.PerilSensitiveSunglassesItem;
@@ -59,8 +59,8 @@ public class HoopyFroodTutClient {
                 HoopyFroodBlockEntityTypes.SOMEBODY_ELSES_PROBLEM_FIELD.get(),
                 SomebodyElsesProblemFieldRenderer::new);
         event.registerBlockEntityRenderer(
-                HoopyFroodBlockEntityTypes.PERSONAL_PRIVATE_ITEM_PRESENTER.get(),
-                PersonalPrivateItemPresenterRenderer::new);
+                HoopyFroodBlockEntityTypes.WOBBLY_WATER.get(),
+                WobblyWaterRenderer::new);
         event.registerBlockEntityRenderer(
                 HoopyFroodBlockEntityTypes.BANISHING_BIN.get(),
                 BanishingBinRenderer::new);
@@ -134,9 +134,9 @@ public class HoopyFroodTutClient {
                 SimpleUnbakedStandaloneModel.simpleModelWrapper(
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/sep_field_floater")));
 
-        event.register(PersonalPrivateItemPresenterRenderer.BASE_KEY,
+        event.register(WobblyWaterRenderer.BASE_KEY,
                 SimpleUnbakedStandaloneModel.simpleModelWrapper(
-                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/ppip_base")));
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/wobbly_water_base")));
 
         event.register(BanishingBinRenderer.BASE_KEY,
                 SimpleUnbakedStandaloneModel.simpleModelWrapper(

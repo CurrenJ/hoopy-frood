@@ -1,7 +1,7 @@
 package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.Config;
-import grill24.hoopyfroodtut.command.PpipDebugCommand;
+import grill24.hoopyfroodtut.command.WobblyWaterDebugCommand;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -120,7 +120,7 @@ public class HoopyFroodTut {
     }
 
     private void onRegisterCommands(RegisterCommandsEvent event) {
-        PpipDebugCommand.register(event.getDispatcher());
+        WobblyWaterDebugCommand.register(event.getDispatcher());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

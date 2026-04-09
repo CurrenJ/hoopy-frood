@@ -5,7 +5,7 @@ import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.InfiniteImprobabilityDrive;
-import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
+import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.world.level.block.Block;
@@ -49,10 +49,10 @@ public class HoopyFroodTutBlocks {
                     .strength(1.0F, 6.0F)
             ));
 
-    // A single-item display block with an animated fluid surface that hides the item from other players.
-    public static final DeferredBlock<PersonalPrivateItemPresenter> PERSONAL_PRIVATE_ITEM_PRESENTER = BLOCKS.registerBlock(
-            "personal_private_item_presenter",
-            p -> new PersonalPrivateItemPresenter(p
+    // A physics fluid simulation block with an animated spring-mass water surface.
+    public static final DeferredBlock<WobblyWater> WOBBLY_WATER = BLOCKS.registerBlock(
+            "wobbly_water",
+            p -> new WobblyWater(p
                     .noOcclusion()
                     .isSuffocating((_, _, _) -> false)
                     .isViewBlocking((_, _, _) -> false)

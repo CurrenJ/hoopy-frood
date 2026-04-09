@@ -22,14 +22,13 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Stores a single item on an animated fluid surface.
+ * Block entity for Wobbly Water — drives the physics fluid simulation and
+ * stores display/physics configuration.
  * <p>
- * Server tick checks whether any player other than the depositer is within
- * {@link #PRIVACY_RADIUS} blocks. When such a player is detected, {@code isPrivate}
- * is set to {@code true}, which instructs the renderer to hide the item and show a
- * disabled visual state.
+ * Item storage fields ({@code storedItem}, {@code depositerUUID}, privacy logic) are
+ * retained for potential future use but are not exposed via player interaction.
  */
-public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
+public class WobblyWaterBlockEntity extends BlockEntity {
 
     public static final double PRIVACY_RADIUS = 8.0;
     private static final int PRIVACY_CHECK_INTERVAL = 10; // ticks between scans
@@ -46,16 +45,16 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
     /** Server-computed flag; synced to client every time it changes. */
     private boolean isPrivate = false;
 
-    // Display configuration (stored in NBT, adjustable per-block)
-    private int gridSize = 12;
+    // Display configuration (stored in NBT, adjustable per-block via /ww command)
+    private int gridSize = 16;
     private float waveAmp = 1.0f;
     private float waveSpeed = 1.0f;
     private float bobAmp = 0.08f;
     private float bobSpeed = 1.0f;
     private int surfaceColor = 0xFFFFFFFF;
     private boolean spinItem = false;
-    private boolean voxelMode = false;
-    private boolean physicsEnabled = false;
+    private boolean voxelMode = true;
+    private boolean physicsEnabled = true;
     private SurfaceParticleType surfaceParticleType = SurfaceParticleType.NONE;
 
     // ── Surface particle type ──────────────────────────────────────────────
@@ -82,14 +81,14 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
 
     // ── Constructor ────────────────────────────────────────────────────────
 
-    public PersonalPrivateItemPresenterBlockEntity(BlockPos pos, BlockState state) {
-        super(HoopyFroodBlockEntityTypes.PERSONAL_PRIVATE_ITEM_PRESENTER.get(), pos, state);
+    public WobblyWaterBlockEntity(BlockPos pos, BlockState state) {
+        super(HoopyFroodBlockEntityTypes.WOBBLY_WATER.get(), pos, state);
     }
 
     // ── Server tick ────────────────────────────────────────────────────────
 
     public static void tick(Level level, BlockPos pos, BlockState state,
-                             PersonalPrivateItemPresenterBlockEntity be) {
+                             WobblyWaterBlockEntity be) {
         if (level.isClientSide()) return;
         if (level.getGameTime() % PRIVACY_CHECK_INTERVAL != 0) return;
 
@@ -167,15 +166,15 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
 
     /** Reset all display/physics fields to their defaults. */
     public void resetToDefaults() {
-        this.gridSize      = 12;
+        this.gridSize      = 16;
         this.waveAmp       = 1.0f;
         this.waveSpeed     = 1.0f;
         this.bobAmp        = 0.08f;
         this.bobSpeed      = 1.0f;
         this.surfaceColor  = 0xFFFFFFFF;
         this.spinItem           = false;
-        this.voxelMode          = false;
-        this.physicsEnabled     = false;
+        this.voxelMode          = true;
+        this.physicsEnabled     = true;
         this.surfaceParticleType = SurfaceParticleType.NONE;
         markChangedAndSync();
     }
@@ -196,15 +195,15 @@ public class PersonalPrivateItemPresenterBlockEntity extends BlockEntity {
         String uuidStr = input.getStringOr("DepositerUUID", "");
         this.depositerUUID = uuidStr.isEmpty() ? null : UUID.fromString(uuidStr);
         this.isPrivate = input.getBooleanOr("IsPrivate", false);
-        this.gridSize = Math.max(1, Math.min(16, input.getIntOr("GridSize", 8)));
+        this.gridSize = Math.max(1, Math.min(32, input.getIntOr("GridSize", 16)));
         this.waveAmp = input.getFloatOr("WaveAmp", 1.0f);
         this.waveSpeed = input.getFloatOr("WaveSpeed", 1.0f);
         this.bobAmp = input.getFloatOr("BobAmp", 0.08f);
         this.bobSpeed = input.getFloatOr("BobSpeed", 1.0f);
         this.surfaceColor = input.getIntOr("SurfaceColor", 0xFFFFFFFF);
         this.spinItem = input.getBooleanOr("SpinItem", false);
-        this.voxelMode = input.getBooleanOr("VoxelMode", false);
-        this.physicsEnabled      = input.getBooleanOr("PhysicsEnabled", false);
+        this.voxelMode = input.getBooleanOr("VoxelMode", true);
+        this.physicsEnabled      = input.getBooleanOr("PhysicsEnabled", true);
         this.surfaceParticleType = SurfaceParticleType.fromString(
                 input.getStringOr("SurfaceParticleType", "none"));
     }

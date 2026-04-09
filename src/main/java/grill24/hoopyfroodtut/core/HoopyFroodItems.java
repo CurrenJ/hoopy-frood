@@ -44,9 +44,9 @@ public class HoopyFroodItems {
             ITEMS.registerSimpleBlockItem("somebody_elses_problem_field",
                     HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD);
 
-    public static final DeferredItem<BlockItem> PERSONAL_PRIVATE_ITEM_PRESENTER_ITEM =
-            ITEMS.registerSimpleBlockItem("personal_private_item_presenter",
-                    HoopyFroodTutBlocks.PERSONAL_PRIVATE_ITEM_PRESENTER);
+    public static final DeferredItem<BlockItem> WOBBLY_WATER_ITEM =
+            ITEMS.registerSimpleBlockItem("wobbly_water",
+                    HoopyFroodTutBlocks.WOBBLY_WATER);
 
     public static final DeferredItem<BlockItem> BANISHING_BIN_ITEM =
             ITEMS.registerSimpleBlockItem("banishing_bin", HoopyFroodTutBlocks.BANISHING_BIN);

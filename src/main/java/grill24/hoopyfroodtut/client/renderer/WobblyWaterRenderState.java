@@ -1,11 +1,11 @@
 package grill24.hoopyfroodtut.client.renderer;
 
-import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
-import grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity;
+import grill24.hoopyfroodtut.block.WobblyWater;
+import grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.world.item.ItemStack;
 
-public class PersonalPrivateItemPresenterRenderState extends BlockEntityRenderState {
+public class WobblyWaterRenderState extends BlockEntityRenderState {
     /** Whether a non-depositer player is nearby; hides item and dims surface when true. */
     public boolean isPrivate = false;
     /** Item currently on display (EMPTY when none stored or when isPrivate). */
@@ -31,14 +31,14 @@ public class PersonalPrivateItemPresenterRenderState extends BlockEntityRenderSt
     /** When true, each grid cell is rendered as a flat-topped voxel column instead of a smooth mesh. */
     public boolean voxelMode = false;
     /** Which texture is used for the animated fluid surface. */
-    public PersonalPrivateItemPresenter.SurfaceTexture surfaceTexture = PersonalPrivateItemPresenter.SurfaceTexture.WATER;
+    public WobblyWater.SurfaceTexture surfaceTexture = WobblyWater.SurfaceTexture.WATER;
     /** Physics-simulated item position on the surface (block-local, 0–1). */
     public float itemX = 0.5f;
     public float itemY = 0f;
     public float itemZ = 0.5f;
     /** When true, physics drives item position and the wave pattern is suppressed. */
     public boolean physicsEnabled = false;
-    /** Which cardinal sides have an adjacent coupled PPIP; suppresses walls/skirts on those sides. */
+    /** Which cardinal sides have an adjacent coupled Wobbly Water block; suppresses walls/skirts on those sides. */
     public boolean hasNeighborNorth = false;
     public boolean hasNeighborSouth = false;
     public boolean hasNeighborWest  = false;
@@ -57,8 +57,8 @@ public class PersonalPrivateItemPresenterRenderState extends BlockEntityRenderSt
     public int[]   leafQuadrant = null;
     public int     leafCount    = 0;
     /** Which particle type to render on the surface. */
-    public PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType surfaceParticleType
-            = PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.NONE;
+    public WobblyWaterBlockEntity.SurfaceParticleType surfaceParticleType
+            = WobblyWaterBlockEntity.SurfaceParticleType.NONE;
     /** Biome dry-foliage ARGB color, used to tint leaf-litter particles. */
     public int dryFoliageColor = 0xFFFFFFFF;
 }

@@ -46,7 +46,7 @@ public class BanishingBinBlockEntity extends BlockEntity implements Container {
     public static final int ORBIT_TICKS = 15;
 
     /** Ticks after the last item received before the bin returns to inactive. (2 s) */
-    public static final int ACTIVITY_WINDOW = 40;
+    public static final int ACTIVITY_WINDOW = 200;
 
     /** Maximum number of unique item types the bin will remember. */
     public static final int MAX_BANISHED_TYPES = 64;

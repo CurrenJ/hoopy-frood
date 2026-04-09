@@ -1,6 +1,6 @@
 package grill24.hoopyfroodtut.mixin;
 
-import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
+import grill24.hoopyfroodtut.block.WobblyWater;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.FluidRenderer;
 import net.minecraft.core.BlockPos;
@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Suppresses vanilla fluid mesh generation for PPIP blocks in water texture mode.
- * The PPIP block returns a live water {@link FluidState} so entities get swimming
+ * Suppresses vanilla fluid mesh generation for Wobbly Water blocks in water texture mode.
+ * The block returns a live water {@link FluidState} so entities get swimming
  * physics and biome-color lookups work, but the custom BER handles all water
  * rendering — vanilla should not also tessellate water quads into the chunk mesh.
  */
@@ -21,16 +21,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FluidRendererMixin {
 
     @Inject(method = "tesselate", at = @At("HEAD"), cancellable = true)
-    private void ppip_skipWaterForPpip(
+    private void ww_skipWaterForWobblyWater(
             BlockAndTintGetter level,
             BlockPos pos,
             FluidRenderer.Output output,
             BlockState blockState,
             FluidState fluidState,
             CallbackInfo ci) {
-        if (blockState.getBlock() instanceof PersonalPrivateItemPresenter
-                && blockState.getValue(PersonalPrivateItemPresenter.SURFACE_TEXTURE)
-                        == PersonalPrivateItemPresenter.SurfaceTexture.WATER) {
+        if (blockState.getBlock() instanceof WobblyWater
+                && blockState.getValue(WobblyWater.SURFACE_TEXTURE)
+                        == WobblyWater.SurfaceTexture.WATER) {
             ci.cancel();
         }
     }

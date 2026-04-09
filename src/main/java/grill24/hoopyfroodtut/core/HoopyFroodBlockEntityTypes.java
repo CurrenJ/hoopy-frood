@@ -5,7 +5,7 @@ import grill24.hoopyfroodtut.blockentity.BanishingBinBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
-import grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity;
+import grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SomebodyElsesProblemFieldBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -39,10 +39,10 @@ public class HoopyFroodBlockEntityTypes {
                     () -> new BlockEntityType<>(SomebodyElsesProblemFieldBlockEntity::new,
                             HoopyFroodTutBlocks.SOMEBODY_ELSES_PROBLEM_FIELD.get()));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PersonalPrivateItemPresenterBlockEntity>> PERSONAL_PRIVATE_ITEM_PRESENTER =
-            BLOCK_ENTITY_TYPES.register("personal_private_item_presenter",
-                    () -> new BlockEntityType<>(PersonalPrivateItemPresenterBlockEntity::new,
-                            HoopyFroodTutBlocks.PERSONAL_PRIVATE_ITEM_PRESENTER.get()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WobblyWaterBlockEntity>> WOBBLY_WATER =
+            BLOCK_ENTITY_TYPES.register("wobbly_water",
+                    () -> new BlockEntityType<>(WobblyWaterBlockEntity::new,
+                            HoopyFroodTutBlocks.WOBBLY_WATER.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BanishingBinBlockEntity>> BANISHING_BIN =
             BLOCK_ENTITY_TYPES.register("banishing_bin",

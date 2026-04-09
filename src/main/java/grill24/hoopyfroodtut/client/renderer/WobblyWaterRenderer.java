@@ -2,8 +2,8 @@ package grill24.hoopyfroodtut.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import grill24.hoopyfroodtut.block.PersonalPrivateItemPresenter;
-import grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity;
+import grill24.hoopyfroodtut.block.WobblyWater;
+import grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
@@ -42,8 +42,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 
-public class PersonalPrivateItemPresenterRenderer
-        implements BlockEntityRenderer<PersonalPrivateItemPresenterBlockEntity, PersonalPrivateItemPresenterRenderState> {
+public class WobblyWaterRenderer
+        implements BlockEntityRenderer<WobblyWaterBlockEntity, WobblyWaterRenderState> {
 
     // ── Surface constants ──────────────────────────────────────────────────
 
@@ -66,32 +66,32 @@ public class PersonalPrivateItemPresenterRenderer
 
     @SuppressWarnings("unchecked")
     public static final StandaloneModelKey<BlockStateModelPart> BASE_KEY =
-            new StandaloneModelKey<>(() -> HoopyFroodTut.MODID + ":ppip_base");
+            new StandaloneModelKey<>(() -> HoopyFroodTut.MODID + ":wobbly_water_base");
 
     // ── Sprite cache ───────────────────────────────────────────────────────
 
-    private static final Map<PersonalPrivateItemPresenter.SurfaceTexture, Identifier> SPRITE_IDS =
+    private static final Map<WobblyWater.SurfaceTexture, Identifier> SPRITE_IDS =
             new EnumMap<>(Map.of(
-                    PersonalPrivateItemPresenter.SurfaceTexture.WATER, Identifier.parse("minecraft:block/water_still"),
-                    PersonalPrivateItemPresenter.SurfaceTexture.LAVA,  Identifier.parse("minecraft:block/lava_still"),
-                    PersonalPrivateItemPresenter.SurfaceTexture.SLIME, Identifier.parse("minecraft:block/slime_block"),
-                    PersonalPrivateItemPresenter.SurfaceTexture.HONEY, Identifier.parse("minecraft:block/honey_block_top"),
-                    PersonalPrivateItemPresenter.SurfaceTexture.MAGMA, Identifier.parse("minecraft:block/magma")
+                    WobblyWater.SurfaceTexture.WATER, Identifier.parse("minecraft:block/water_still"),
+                    WobblyWater.SurfaceTexture.LAVA,  Identifier.parse("minecraft:block/lava_still"),
+                    WobblyWater.SurfaceTexture.SLIME, Identifier.parse("minecraft:block/slime_block"),
+                    WobblyWater.SurfaceTexture.HONEY, Identifier.parse("minecraft:block/honey_block_top"),
+                    WobblyWater.SurfaceTexture.MAGMA, Identifier.parse("minecraft:block/magma")
             ));
 
     /** Per-texture base tints multiplied with surfaceColor. White = no tint.
      *  WATER is excluded — its tint is sampled per-frame from the biome water color. */
-    private static final Map<PersonalPrivateItemPresenter.SurfaceTexture, Integer> TEXTURE_TINTS =
+    private static final Map<WobblyWater.SurfaceTexture, Integer> TEXTURE_TINTS =
             new EnumMap<>(Map.of(
-                    PersonalPrivateItemPresenter.SurfaceTexture.LAVA,  0xFFFFFFFF,
-                    PersonalPrivateItemPresenter.SurfaceTexture.SLIME, 0xFFFFFFFF,
-                    PersonalPrivateItemPresenter.SurfaceTexture.HONEY, 0xFFFFFFFF,
-                    PersonalPrivateItemPresenter.SurfaceTexture.MAGMA, 0xFFFFFFFF
+                    WobblyWater.SurfaceTexture.LAVA,  0xFFFFFFFF,
+                    WobblyWater.SurfaceTexture.SLIME, 0xFFFFFFFF,
+                    WobblyWater.SurfaceTexture.HONEY, 0xFFFFFFFF,
+                    WobblyWater.SurfaceTexture.MAGMA, 0xFFFFFFFF
             ));
 
     /** Lazy-initialised sprites, one per texture variant. */
-    private final Map<PersonalPrivateItemPresenter.SurfaceTexture, TextureAtlasSprite> spriteCache =
-            new EnumMap<>(PersonalPrivateItemPresenter.SurfaceTexture.class);
+    private final Map<WobblyWater.SurfaceTexture, TextureAtlasSprite> spriteCache =
+            new EnumMap<>(WobblyWater.SurfaceTexture.class);
 
     /** Lazily loaded sprites for each surface particle type. */
     private TextureAtlasSprite pinkPetalsSprite = null;
@@ -555,19 +555,19 @@ public class PersonalPrivateItemPresenterRenderer
 
     // ── Constructor ────────────────────────────────────────────────────────
 
-    public PersonalPrivateItemPresenterRenderer(BlockEntityRendererProvider.Context context) {}
+    public WobblyWaterRenderer(BlockEntityRendererProvider.Context context) {}
 
     // ── BlockEntityRenderer ────────────────────────────────────────────────
 
     @Override
-    public PersonalPrivateItemPresenterRenderState createRenderState() {
-        return new PersonalPrivateItemPresenterRenderState();
+    public WobblyWaterRenderState createRenderState() {
+        return new WobblyWaterRenderState();
     }
 
     @Override
     public void extractRenderState(
-            PersonalPrivateItemPresenterBlockEntity blockEntity,
-            PersonalPrivateItemPresenterRenderState renderState,
+            WobblyWaterBlockEntity blockEntity,
+            WobblyWaterRenderState renderState,
             float partialTick,
             Vec3 cameraPos,
             ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
@@ -586,7 +586,7 @@ public class PersonalPrivateItemPresenterRenderer
         renderState.physicsEnabled       = blockEntity.isPhysicsEnabled();
         renderState.surfaceParticleType  = blockEntity.getSurfaceParticleType();
         renderState.surfaceTexture = blockEntity.getBlockState()
-                .getValue(PersonalPrivateItemPresenter.SURFACE_TEXTURE);
+                .getValue(WobblyWater.SURFACE_TEXTURE);
 
         // Copy item — hide it from the render state when private so no item-render pass fires
         renderState.storedItem = renderState.isPrivate
@@ -599,7 +599,7 @@ public class PersonalPrivateItemPresenterRenderer
         }
 
         // Sample biome-blended water color when in water texture mode.
-        if (renderState.surfaceTexture == PersonalPrivateItemPresenter.SurfaceTexture.WATER
+        if (renderState.surfaceTexture == WobblyWater.SurfaceTexture.WATER
                 && level instanceof BlockAndTintGetter tintGetter) {
             int waterRgb = BiomeColors.getAverageWaterColor(tintGetter, blockEntity.getBlockPos());
             renderState.biomeWaterColor = 0xFF000000 | waterRgb;
@@ -609,7 +609,7 @@ public class PersonalPrivateItemPresenterRenderer
 
         // Sample biome dry-foliage color for leaf-litter particles.
         if (renderState.surfaceParticleType
-                == grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.LEAF_LITTER
+                == grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity.SurfaceParticleType.LEAF_LITTER
                 && level instanceof BlockAndTintGetter tintGetter) {
             int dryFoliage = BiomeColors.getAverageDryFoliageColor(tintGetter, blockEntity.getBlockPos());
             renderState.dryFoliageColor = 0xFF000000 | dryFoliage;
@@ -724,8 +724,8 @@ public class PersonalPrivateItemPresenterRenderer
                 surf.lastEntityY.keySet().retainAll(currentIds);
             }
 
-            // ── Adjacent PPIP boundary coupling ───────────────────────────────────
-            // For each cardinal neighbour that is also a physics-enabled PPIP with the
+            // ── Adjacent Wobbly Water boundary coupling ────────────────────────────
+            // For each cardinal neighbour that is also a physics-enabled Wobbly Water block with the
             // same gridSize, we collect it here and — after our own step — copy its
             // nearest interior row/column into our boundary vertices (ghost-cell method).
             // The written values persist in s.h until the next step's Laplacian reads
@@ -735,7 +735,7 @@ public class PersonalPrivateItemPresenterRenderer
             if (level != null) {
                 for (Direction dir : Direction.Plane.HORIZONTAL) {
                     BlockPos nPos = pos.relative(dir);
-                    if (level.getBlockEntity(nPos) instanceof PersonalPrivateItemPresenterBlockEntity nBE
+                    if (level.getBlockEntity(nPos) instanceof WobblyWaterBlockEntity nBE
                             && nBE.isPhysicsEnabled() && nBE.getGridSize() == G) {
                         SurfacePhysicsState ns = SURFACE_PHYSICS_CACHE.get(nPos);
                         if (ns != null && ns.gridSize == G)
@@ -801,12 +801,12 @@ public class PersonalPrivateItemPresenterRenderer
 
     @Override
     public void submit(
-            PersonalPrivateItemPresenterRenderState state,
+            WobblyWaterRenderState state,
             PoseStack poseStack,
             SubmitNodeCollector collector,
             CameraRenderState camera) {
 
-        int textureTint = state.surfaceTexture == PersonalPrivateItemPresenter.SurfaceTexture.WATER
+        int textureTint = state.surfaceTexture == WobblyWater.SurfaceTexture.WATER
                 ? state.biomeWaterColor
                 : TEXTURE_TINTS.getOrDefault(state.surfaceTexture, 0xFFFFFFFF);
         int surfColor = state.isPrivate ? DISABLED_COLOR : multiplyColors(state.surfaceColor, textureTint);
@@ -833,7 +833,7 @@ public class PersonalPrivateItemPresenterRenderer
 
         // 4. Surface particles drifting on the fluid surface (physics only, when configured)
         if (state.leafCount > 0 && state.leafX != null && state.physicsHeights != null
-                && state.surfaceParticleType != grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.NONE) {
+                && state.surfaceParticleType != grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity.SurfaceParticleType.NONE) {
             renderLeafParticles(state, poseStack, collector);
         }
     }
@@ -841,7 +841,7 @@ public class PersonalPrivateItemPresenterRenderer
     // ── Base walls ─────────────────────────────────────────────────────────
 
     private void renderBaseWalls(
-            PersonalPrivateItemPresenterRenderState state,
+            WobblyWaterRenderState state,
             PoseStack poseStack,
             SubmitNodeCollector collector,
             int argbColor) {
@@ -904,7 +904,7 @@ public class PersonalPrivateItemPresenterRenderer
     // ── Fluid surface ──────────────────────────────────────────────────────
 
     private void renderFluidSurface(
-            PersonalPrivateItemPresenterRenderState state,
+            WobblyWaterRenderState state,
             PoseStack poseStack,
             SubmitNodeCollector collector,
             int argbColor) {
@@ -916,7 +916,7 @@ public class PersonalPrivateItemPresenterRenderer
     }
 
     private void renderFluidSurfaceSmooth(
-            PersonalPrivateItemPresenterRenderState state,
+            WobblyWaterRenderState state,
             PoseStack poseStack,
             SubmitNodeCollector collector,
             int argbColor) {
@@ -1065,7 +1065,7 @@ public class PersonalPrivateItemPresenterRenderer
     }
 
     private void renderFluidSurfaceVoxel(
-            PersonalPrivateItemPresenterRenderState state,
+            WobblyWaterRenderState state,
             PoseStack poseStack,
             SubmitNodeCollector collector,
             int argbColor) {
@@ -1212,7 +1212,7 @@ public class PersonalPrivateItemPresenterRenderer
     // ── Floating item ──────────────────────────────────────────────────────
 
     private static void renderFloatingItem(
-            PersonalPrivateItemPresenterRenderState state,
+            WobblyWaterRenderState state,
             PoseStack poseStack,
             SubmitNodeCollector collector) {
 
@@ -1243,7 +1243,7 @@ public class PersonalPrivateItemPresenterRenderer
      * Sprite and tint are chosen based on {@code state.surfaceParticleType}.
      */
     private void renderLeafParticles(
-            PersonalPrivateItemPresenterRenderState state,
+            WobblyWaterRenderState state,
             PoseStack poseStack,
             SubmitNodeCollector collector) {
 
@@ -1251,7 +1251,7 @@ public class PersonalPrivateItemPresenterRenderer
 
         // Resolve sprite lazily per type
         TextureAtlasSprite spr;
-        if (particleType == grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.PINK_PETALS) {
+        if (particleType == grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity.SurfaceParticleType.PINK_PETALS) {
             if (pinkPetalsSprite == null) {
                 pinkPetalsSprite = Minecraft.getInstance()
                         .getAtlasManager().getAtlasOrThrow(AtlasIds.BLOCKS)
@@ -1269,7 +1269,7 @@ public class PersonalPrivateItemPresenterRenderer
         if (spr == null) return;
 
         // Tint: pink-petals are naturally coloured; leaf-litter needs biome dry-foliage tint
-        final int tint = (particleType == grill24.hoopyfroodtut.blockentity.PersonalPrivateItemPresenterBlockEntity.SurfaceParticleType.LEAF_LITTER)
+        final int tint = (particleType == grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity.SurfaceParticleType.LEAF_LITTER)
                 ? state.dryFoliageColor : 0xFFFFFFFF;
         final int r = (tint >> 16) & 0xFF;
         final int g = (tint >>  8) & 0xFF;
@@ -1335,7 +1335,7 @@ public class PersonalPrivateItemPresenterRenderer
         return (alpha << 24) | (r << 16) | (g << 8) | bl;
     }
 
-    private TextureAtlasSprite getSurfaceSprite(PersonalPrivateItemPresenter.SurfaceTexture variant) {
+    private TextureAtlasSprite getSurfaceSprite(WobblyWater.SurfaceTexture variant) {
         return spriteCache.computeIfAbsent(variant, v -> Minecraft.getInstance()
                 .getAtlasManager()
                 .getAtlasOrThrow(AtlasIds.BLOCKS)

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "surface_texture=honey": {
+      "model": "hoopyfroodtut:block/wobbly_water"
+    },
+    "surface_texture=lava": {
+      "model": "hoopyfroodtut:block/wobbly_water"
+    },
+    "surface_texture=magma": {
+      "model": "hoopyfroodtut:block/wobbly_water"
+    },
+    "surface_texture=slime": {
+      "model": "hoopyfroodtut:block/wobbly_water"
+    },
+    "surface_texture=water": {
+      "model": "hoopyfroodtut:block/wobbly_water"
+    }
+  }
+}
