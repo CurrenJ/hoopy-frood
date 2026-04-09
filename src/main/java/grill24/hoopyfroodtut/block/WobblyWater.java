@@ -10,16 +10,21 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -41,13 +46,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Wobbly Water — a physics fluid simulation block with an animated spring-mass
  * water surface. Supports multiple surface textures (water, lava, slime, honey, magma)
  * and leaf/petal particles drifting on the surface.
  */
-public class WobblyWater extends BaseEntityBlock {
+public class WobblyWater extends BaseEntityBlock implements BucketPickup {
 
     // ── Surface texture variants (cycled with the debug stick) ────────────
 
@@ -160,6 +166,30 @@ public class WobblyWater extends BaseEntityBlock {
     }
 
     // -------------------------------------------------------------------------
+    // Pick-block — middle-click returns the bucket, not the block item
+    // -------------------------------------------------------------------------
+
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, net.minecraft.world.entity.player.Player player) {
+        return new ItemStack(HoopyFroodItems.WOBBLY_WATER_BUCKET.get());
+    }
+
+    // -------------------------------------------------------------------------
+    // Bucket pickup — empty bucket can collect Wobbly Water
+    // -------------------------------------------------------------------------
+
+    @Override
+    public ItemStack pickupBlock(@Nullable LivingEntity user, LevelAccessor level, BlockPos pos, BlockState state) {
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+        return new ItemStack(HoopyFroodItems.WOBBLY_WATER_BUCKET.get());
+    }
+
+    @Override
+    public Optional<SoundEvent> getPickupSound() {
+        return Optional.of(SoundEvents.BUCKET_FILL);
+    }
+
+    // -------------------------------------------------------------------------
     // Drops
     // -------------------------------------------------------------------------
 
@@ -167,7 +197,7 @@ public class WobblyWater extends BaseEntityBlock {
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         BlockEntity be = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         List<ItemStack> drops = new ArrayList<>();
-        drops.add(new ItemStack(HoopyFroodItems.WOBBLY_WATER_ITEM.get()));
+        drops.add(new ItemStack(HoopyFroodItems.WOBBLY_WATER_BUCKET.get()));
         if (be instanceof WobblyWaterBlockEntity ww) {
             ItemStack stored = ww.getStoredItem();
             if (!stored.isEmpty()) {

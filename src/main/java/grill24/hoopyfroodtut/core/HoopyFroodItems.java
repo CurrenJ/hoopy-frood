@@ -4,10 +4,12 @@ import grill24.hoopyfroodtut.item.BalancerRangeExtender;
 import grill24.hoopyfroodtut.item.BeggingItemScrabblerItem;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
 import grill24.hoopyfroodtut.item.PerilSensitiveSunglassesItem;
+import grill24.hoopyfroodtut.item.WobblyWaterBucketItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -47,6 +49,10 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> WOBBLY_WATER_ITEM =
             ITEMS.registerSimpleBlockItem("wobbly_water",
                     HoopyFroodTutBlocks.WOBBLY_WATER);
+
+    public static final DeferredItem<WobblyWaterBucketItem> WOBBLY_WATER_BUCKET =
+            ITEMS.registerItem("wobbly_water_bucket",
+                    p -> new WobblyWaterBucketItem(p.craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final DeferredItem<BlockItem> BANISHING_BIN_ITEM =
             ITEMS.registerSimpleBlockItem("banishing_bin", HoopyFroodTutBlocks.BANISHING_BIN);

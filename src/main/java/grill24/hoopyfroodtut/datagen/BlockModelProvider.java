@@ -53,6 +53,7 @@ public class BlockModelProvider extends ModelProvider {
         registerInfiniteImprobabilityDrive(blockModels);
         registerSomebodyElsesProblemField(blockModels, itemModels);
         registerWobblyWater(blockModels, itemModels);
+        registerWobblyWaterBucket(itemModels);
         registerBanishingBin(blockModels, itemModels);
     }
 
@@ -206,6 +207,16 @@ public class BlockModelProvider extends ModelProvider {
      * The block uses RenderShape.INVISIBLE so the blockstate model is only needed for the
      * inventory item icon; in-world rendering is handled by the BER.
      */
+    /**
+     * Makes the Wobbly Water Bucket item use the vanilla water_bucket appearance.
+     */
+    private static void registerWobblyWaterBucket(ItemModelGenerators itemModels) {
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.WOBBLY_WATER_BUCKET.get(),
+                ItemModelUtils.plainModel(
+                        Identifier.fromNamespaceAndPath("minecraft", "item/water_bucket")));
+    }
+
     private static void registerBanishingBin(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/banishing_bin_base");
         MultiVariant model = BlockModelGenerators.plainVariant(modelId);
