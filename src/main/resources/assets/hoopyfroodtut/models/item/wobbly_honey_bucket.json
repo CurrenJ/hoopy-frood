@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "hoopyfroodtut:item/wobbly_honey_bucket"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "hoopyfroodtut:no_remainder_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "hoopyfroodtut:wobbly_water_bucket",
+    "minecraft:slime_block"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:wobbly_slime_bucket"
+  }
+}

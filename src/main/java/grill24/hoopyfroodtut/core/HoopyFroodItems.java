@@ -1,5 +1,6 @@
 package grill24.hoopyfroodtut.core;
 
+import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.item.BalancerRangeExtender;
 import grill24.hoopyfroodtut.item.BeggingItemScrabblerItem;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
@@ -52,7 +53,23 @@ public class HoopyFroodItems {
 
     public static final DeferredItem<WobblyWaterBucketItem> WOBBLY_WATER_BUCKET =
             ITEMS.registerItem("wobbly_water_bucket",
-                    p -> new WobblyWaterBucketItem(p.craftRemainder(Items.BUCKET).stacksTo(1)));
+                    p -> new WobblyWaterBucketItem(WobblyWater.SurfaceTexture.WATER, p.craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    public static final DeferredItem<WobblyWaterBucketItem> WOBBLY_LAVA_BUCKET =
+            ITEMS.registerItem("wobbly_lava_bucket",
+                    p -> new WobblyWaterBucketItem(WobblyWater.SurfaceTexture.LAVA, p.craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    public static final DeferredItem<WobblyWaterBucketItem> WOBBLY_SLIME_BUCKET =
+            ITEMS.registerItem("wobbly_slime_bucket",
+                    p -> new WobblyWaterBucketItem(WobblyWater.SurfaceTexture.SLIME, p.craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    public static final DeferredItem<WobblyWaterBucketItem> WOBBLY_HONEY_BUCKET =
+            ITEMS.registerItem("wobbly_honey_bucket",
+                    p -> new WobblyWaterBucketItem(WobblyWater.SurfaceTexture.HONEY, p.craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    public static final DeferredItem<WobblyWaterBucketItem> WOBBLY_MAGMA_BUCKET =
+            ITEMS.registerItem("wobbly_magma_bucket",
+                    p -> new WobblyWaterBucketItem(WobblyWater.SurfaceTexture.MAGMA, p.craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final DeferredItem<BlockItem> BANISHING_BIN_ITEM =
             ITEMS.registerSimpleBlockItem("banishing_bin", HoopyFroodTutBlocks.BANISHING_BIN);

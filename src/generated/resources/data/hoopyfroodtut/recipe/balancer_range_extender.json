@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:hopper",
+    "minecraft:hopper",
+    "minecraft:redstone",
+    "minecraft:gold_block"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:balancer_range_extender"
+  }
+}

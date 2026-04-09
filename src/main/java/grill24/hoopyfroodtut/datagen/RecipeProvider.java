@@ -38,6 +38,26 @@ public class RecipeProvider extends VanillaRecipeProvider {
 
         generateRecipes(HoopyFroodTutBlocks.BROWN_BRICKS_FAMILY.get(), FeatureFlagSet.of());
 
+        // Balancer Node: two hoppers, redstone dust, and surrounded by iron ingots
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.BALANCER_NODE.get())
+                .pattern("III")
+                .pattern("HRH")
+                .pattern("III")
+                .define('I', Items.IRON_INGOT)
+                .define('H', Items.HOPPER)
+                .define('R', Items.REDSTONE)
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .save(this.output);
+
+        // Balancer Range Extender: two hoppers, redstone dust, 1 gold block
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodItems.BALANCER_RANGE_EXTENDER.get())
+                .requires(Items.HOPPER)
+                .requires(Items.HOPPER)
+                .requires(Items.REDSTONE)
+                .requires(Items.GOLD_BLOCK)
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .save(this.output);
+
         // Disposable Caterpillar: surround a dirt block with 4 slime balls
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), 16)
                 .requires(Items.PISTON)
@@ -74,6 +94,40 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .define('G', Items.GLASS)
                 .define('E', Items.ENDER_EYE)
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
+                .save(this.output);
+
+        // Wobbly Water Bucket: 4 water buckets fully consumed (no empty bucket remainder)
+        NoRemainderShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodItems.WOBBLY_WATER_BUCKET.get())
+                .requires(Items.WATER_BUCKET, 4)
+                .unlockedBy("has_bucket", has(Items.WATER_BUCKET))
+                .save(this.output);
+
+        // Wobbly Lava Bucket: Wobbly Water Bucket + Lava Bucket, fully consumed
+        NoRemainderShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodItems.WOBBLY_LAVA_BUCKET.get())
+                .requires(HoopyFroodItems.WOBBLY_WATER_BUCKET.get())
+                .requires(Items.LAVA_BUCKET)
+                .unlockedBy("has_wobbly_water_bucket", has(HoopyFroodItems.WOBBLY_WATER_BUCKET.get()))
+                .save(this.output);
+
+        // Wobbly Slime Bucket: Wobbly Water Bucket + Slime Block
+        NoRemainderShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodItems.WOBBLY_SLIME_BUCKET.get())
+                .requires(HoopyFroodItems.WOBBLY_WATER_BUCKET.get())
+                .requires(Items.SLIME_BLOCK)
+                .unlockedBy("has_wobbly_water_bucket", has(HoopyFroodItems.WOBBLY_WATER_BUCKET.get()))
+                .save(this.output);
+
+        // Wobbly Honey Bucket: Wobbly Water Bucket + Honey Block
+        NoRemainderShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodItems.WOBBLY_HONEY_BUCKET.get())
+                .requires(HoopyFroodItems.WOBBLY_WATER_BUCKET.get())
+                .requires(Items.HONEY_BLOCK)
+                .unlockedBy("has_wobbly_water_bucket", has(HoopyFroodItems.WOBBLY_WATER_BUCKET.get()))
+                .save(this.output);
+
+        // Wobbly Magma Bucket: Wobbly Water Bucket + Magma Block
+        NoRemainderShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodItems.WOBBLY_MAGMA_BUCKET.get())
+                .requires(HoopyFroodItems.WOBBLY_WATER_BUCKET.get())
+                .requires(Items.MAGMA_BLOCK)
+                .unlockedBy("has_wobbly_water_bucket", has(HoopyFroodItems.WOBBLY_WATER_BUCKET.get()))
                 .save(this.output);
 
         // Banishing Bin: Eye of Ender at centre, Blaze Rod below it, Iron Bars + Copper + Obsidian on sides

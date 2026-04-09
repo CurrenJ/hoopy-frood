@@ -1,0 +1,13 @@
+{
+  "type": "hoopyfroodtut:no_remainder_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:water_bucket",
+    "minecraft:water_bucket",
+    "minecraft:water_bucket",
+    "minecraft:water_bucket"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:wobbly_water_bucket"
+  }
+}

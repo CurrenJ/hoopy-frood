@@ -29,6 +29,10 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.BEGGING_ITEM_SCRABBLER_ITEM.get());
                 output.accept(HoopyFroodItems.SOMEBODY_ELSES_PROBLEM_FIELD_ITEM.get());
                 output.accept(HoopyFroodItems.WOBBLY_WATER_BUCKET.get());
+                output.accept(HoopyFroodItems.WOBBLY_LAVA_BUCKET.get());
+                output.accept(HoopyFroodItems.WOBBLY_SLIME_BUCKET.get());
+                output.accept(HoopyFroodItems.WOBBLY_HONEY_BUCKET.get());
+                output.accept(HoopyFroodItems.WOBBLY_MAGMA_BUCKET.get());
                 output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());
             }).build());
 

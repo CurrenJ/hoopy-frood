@@ -171,7 +171,7 @@ public class WobblyWater extends BaseEntityBlock implements BucketPickup {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, net.minecraft.world.entity.player.Player player) {
-        return new ItemStack(HoopyFroodItems.WOBBLY_WATER_BUCKET.get());
+        return new ItemStack(bucketForTexture(state.getValue(SURFACE_TEXTURE)));
     }
 
     // -------------------------------------------------------------------------
@@ -181,7 +181,17 @@ public class WobblyWater extends BaseEntityBlock implements BucketPickup {
     @Override
     public ItemStack pickupBlock(@Nullable LivingEntity user, LevelAccessor level, BlockPos pos, BlockState state) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
-        return new ItemStack(HoopyFroodItems.WOBBLY_WATER_BUCKET.get());
+        return new ItemStack(bucketForTexture(state.getValue(SURFACE_TEXTURE)));
+    }
+
+    private static net.minecraft.world.item.Item bucketForTexture(SurfaceTexture texture) {
+        return switch (texture) {
+            case LAVA  -> HoopyFroodItems.WOBBLY_LAVA_BUCKET.get();
+            case SLIME -> HoopyFroodItems.WOBBLY_SLIME_BUCKET.get();
+            case HONEY -> HoopyFroodItems.WOBBLY_HONEY_BUCKET.get();
+            case MAGMA -> HoopyFroodItems.WOBBLY_MAGMA_BUCKET.get();
+            default    -> HoopyFroodItems.WOBBLY_WATER_BUCKET.get();
+        };
     }
 
     @Override
@@ -197,7 +207,7 @@ public class WobblyWater extends BaseEntityBlock implements BucketPickup {
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         BlockEntity be = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         List<ItemStack> drops = new ArrayList<>();
-        drops.add(new ItemStack(HoopyFroodItems.WOBBLY_WATER_BUCKET.get()));
+        drops.add(new ItemStack(bucketForTexture(state.getValue(SURFACE_TEXTURE))));
         if (be instanceof WobblyWaterBlockEntity ww) {
             ItemStack stored = ww.getStoredItem();
             if (!stored.isEmpty()) {

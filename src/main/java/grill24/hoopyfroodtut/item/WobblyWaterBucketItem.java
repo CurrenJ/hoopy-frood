@@ -1,5 +1,6 @@
 package grill24.hoopyfroodtut.item;
 
+import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -25,14 +26,17 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 /**
- * A filled bucket containing Wobbly Water. Looks identical to the water bucket.
- * Right-clicking places the Wobbly Water block; the bucket becomes empty on use.
+ * A filled bucket containing Wobbly Water. Right-clicking places the Wobbly Water block
+ * with the corresponding surface texture; the bucket becomes empty on use.
  */
 public class WobblyWaterBucketItem extends BucketItem {
 
-    public WobblyWaterBucketItem(Item.Properties properties) {
+    private final WobblyWater.SurfaceTexture textureType;
+
+    public WobblyWaterBucketItem(WobblyWater.SurfaceTexture textureType, Item.Properties properties) {
         // Pass Fluids.WATER so NeoForge fluid-handling hooks see this as a water bucket.
         super(Fluids.WATER, properties);
+        this.textureType = textureType;
     }
 
     @Override
@@ -58,7 +62,9 @@ public class WobblyWaterBucketItem extends BucketItem {
         }
 
         if (!level.isClientSide()) {
-            level.setBlock(placePos, HoopyFroodTutBlocks.WOBBLY_WATER.get().defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+            BlockState placed = HoopyFroodTutBlocks.WOBBLY_WATER.get().defaultBlockState()
+                    .setValue(WobblyWater.SURFACE_TEXTURE, textureType);
+            level.setBlock(placePos, placed, Block.UPDATE_ALL_IMMEDIATE);
             level.playSound(null, placePos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(player, GameEvent.FLUID_PLACE, placePos);
             if (player instanceof ServerPlayer sp) {

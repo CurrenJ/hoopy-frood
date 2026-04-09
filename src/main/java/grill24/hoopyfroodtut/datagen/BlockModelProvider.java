@@ -53,7 +53,7 @@ public class BlockModelProvider extends ModelProvider {
         registerInfiniteImprobabilityDrive(blockModels);
         registerSomebodyElsesProblemField(blockModels, itemModels);
         registerWobblyWater(blockModels, itemModels);
-        registerWobblyWaterBucket(itemModels);
+        registerWobblyWaterBuckets(itemModels);
         registerBanishingBin(blockModels, itemModels);
     }
 
@@ -208,13 +208,30 @@ public class BlockModelProvider extends ModelProvider {
      * inventory item icon; in-world rendering is handled by the BER.
      */
     /**
-     * Makes the Wobbly Water Bucket item use the vanilla water_bucket appearance.
+     * Registers item models for all Wobbly Water bucket variants.
+     * Water and lava reuse vanilla bucket models; slime/honey/magma use custom models
+     * defined in src/main/resources that overlay vanilla block textures on the bucket shape.
      */
-    private static void registerWobblyWaterBucket(ItemModelGenerators itemModels) {
+    private static void registerWobblyWaterBuckets(ItemModelGenerators itemModels) {
         itemModels.itemModelOutput.accept(
                 HoopyFroodItems.WOBBLY_WATER_BUCKET.get(),
-                ItemModelUtils.plainModel(
-                        Identifier.fromNamespaceAndPath("minecraft", "item/water_bucket")));
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath("minecraft", "item/water_bucket")));
+
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.WOBBLY_LAVA_BUCKET.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath("minecraft", "item/lava_bucket")));
+
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.WOBBLY_SLIME_BUCKET.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "item/wobbly_slime_bucket")));
+
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.WOBBLY_HONEY_BUCKET.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "item/wobbly_honey_bucket")));
+
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.WOBBLY_MAGMA_BUCKET.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "item/wobbly_magma_bucket")));
     }
 
     private static void registerBanishingBin(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {

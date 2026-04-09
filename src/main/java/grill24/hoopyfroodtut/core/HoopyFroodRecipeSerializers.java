@@ -2,6 +2,7 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.recipe.CaterpillarAddTorchesRecipe;
 import grill24.hoopyfroodtut.recipe.CaterpillarCombineRecipe;
+import grill24.hoopyfroodtut.recipe.NoRemainderShapelessRecipe;
 import grill24.hoopyfroodtut.recipe.ScrabblerAddNuggetsRecipe;
 import grill24.hoopyfroodtut.recipe.ScrabblerClearHomeRecipe;
 import net.minecraft.core.registries.Registries;
@@ -32,4 +33,9 @@ public class HoopyFroodRecipeSerializers {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ScrabblerClearHomeRecipe>>
             SCRABBLER_CLEAR_HOME = RECIPE_SERIALIZERS.register("scrabbler_clear_home",
                     () -> new RecipeSerializer<>(ScrabblerClearHomeRecipe.CODEC, ScrabblerClearHomeRecipe.STREAM_CODEC));
+
+    /** Serializer for shapeless recipes that fully consume their inputs with no crafting remainder. */
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<NoRemainderShapelessRecipe>>
+            NO_REMAINDER_SHAPELESS = RECIPE_SERIALIZERS.register("no_remainder_shapeless",
+                    () -> new RecipeSerializer<>(NoRemainderShapelessRecipe.MAP_CODEC, NoRemainderShapelessRecipe.STREAM_CODEC));
 }
