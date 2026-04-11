@@ -37,6 +37,7 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
     private int charges = 1;
     private int torches = 0;
     private int blocksSinceLastTorch = 0;
+    private boolean immobile = false;
 
     private float mineProgress = 0f;
     private float miningSpeedMultiplier = 0.1f;
@@ -82,6 +83,15 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         setChanged();
     }
 
+    public boolean isImmobile() {
+        return immobile;
+    }
+
+    public void setImmobile(boolean immobile) {
+        this.immobile = immobile;
+        setChanged();
+    }
+
     public int getCooldown() { return cooldown; }
 
     public void setCooldown(int cooldown) {
@@ -110,6 +120,7 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         this.torches = input.getIntOr("Torches", 0);
         this.blocksSinceLastTorch = input.getIntOr("BlocksSinceLastTorch", 0);
         this.cooldown = input.getIntOr("Cooldown", 0);
+        this.immobile = input.getBooleanOr("Immobile", false);
     }
 
     @Override
@@ -119,6 +130,7 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         output.putInt("Torches", torches);
         output.putInt("BlocksSinceLastTorch", blocksSinceLastTorch);
         output.putInt("Cooldown", cooldown);
+        output.putBoolean("Immobile", immobile);
     }
 
     // -------------------------------------------------------------------------
@@ -213,6 +225,10 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         // Liquid blocks (water, lava) are treated as instantly passable — no mining needed.
         boolean targetIsPassable = targetState.isAir() || targetState.getBlock() instanceof LiquidBlock;
         if (targetIsPassable) {
+            if (immobile) {
+                // Nothing to mine in front — wait for a block to grow/appear there.
+                return;
+            }
             if (targetState.getBlock() instanceof LiquidBlock) {
                 level.destroyBlock(targetPos, false); // Remove liquid without drops
             }
@@ -234,9 +250,20 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
             level.destroyBlockProgress(-1, targetPos, (int) (mineProgress));
             return;
         } else {
-            // Mine the target block (drops items naturally), then begin advance animation.
+            // Mine the target block (drops items naturally).
             level.destroyBlock(targetPos, true);
-            startAdvance(level, facing);
+            mineProgress = 0f;
+            if (immobile) {
+                // Don't advance — decrement charges in place and cool down.
+                if (charges <= 1) {
+                    level.destroyBlock(pos, false);
+                } else {
+                    setCharges(charges - 1);
+                    addCooldown(COOLDOWN_AFTER);
+                }
+            } else {
+                startAdvance(level, facing);
+            }
             return;
         }
     }

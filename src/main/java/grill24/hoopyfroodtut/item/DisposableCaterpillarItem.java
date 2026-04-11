@@ -40,6 +40,11 @@ public class DisposableCaterpillarItem extends BlockItem {
         return stack.getOrDefault(HoopyFroodDataComponents.CATERPILLAR_TORCHES.get(), 0);
     }
 
+    /** Returns whether this caterpillar is immobile (stuck). Defaults to false if absent. */
+    public static boolean isImmobile(ItemStack stack) {
+        return stack.getOrDefault(HoopyFroodDataComponents.CATERPILLAR_IMMOBILE.get(), false);
+    }
+
     // -------------------------------------------------------------------------
     // Placement — push charges from item into the new block entity
     // -------------------------------------------------------------------------
@@ -52,6 +57,7 @@ public class DisposableCaterpillarItem extends BlockItem {
             if (context.getLevel().getBlockEntity(pos) instanceof DisposableCaterpillarBlockEntity be) {
                 be.setCharges(getCharges(context.getItemInHand()));
                 be.setTorches(getTorches(context.getItemInHand()));
+                be.setImmobile(isImmobile(context.getItemInHand()));
             }
         }
         return placed;
@@ -74,6 +80,10 @@ public class DisposableCaterpillarItem extends BlockItem {
             if (torches > 0) {
                 components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.torches", torches)
                         .withStyle(ChatFormatting.YELLOW));
+            }
+            if (isImmobile(stack)) {
+                components.accept(Component.translatable("item.hoopyfroodtut.disposable_caterpillar.stuck")
+                        .withStyle(ChatFormatting.DARK_AQUA));
             }
         });
     }

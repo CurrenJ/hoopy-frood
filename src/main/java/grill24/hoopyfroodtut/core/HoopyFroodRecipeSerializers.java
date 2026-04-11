@@ -1,5 +1,6 @@
 package grill24.hoopyfroodtut.core;
 
+import grill24.hoopyfroodtut.recipe.CaterpillarAddCobwebRecipe;
 import grill24.hoopyfroodtut.recipe.CaterpillarAddTorchesRecipe;
 import grill24.hoopyfroodtut.recipe.CaterpillarCombineRecipe;
 import grill24.hoopyfroodtut.recipe.NoRemainderShapelessRecipe;
@@ -23,6 +24,11 @@ public class HoopyFroodRecipeSerializers {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CaterpillarAddTorchesRecipe>>
             CATERPILLAR_ADD_TORCHES = RECIPE_SERIALIZERS.register("caterpillar_add_torches",
                     () -> new RecipeSerializer<>(CaterpillarAddTorchesRecipe.CODEC, CaterpillarAddTorchesRecipe.STREAM_CODEC));
+
+    /** Serializer for making a caterpillar immobile (stuck) by crafting with a cobweb. */
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CaterpillarAddCobwebRecipe>>
+            CATERPILLAR_ADD_COBWEB = RECIPE_SERIALIZERS.register("caterpillar_add_cobweb",
+                    () -> new RecipeSerializer<>(CaterpillarAddCobwebRecipe.CODEC, CaterpillarAddCobwebRecipe.STREAM_CODEC));
 
     /** Serializer for loading metallic nuggets (fuel) into a Begging Item Scrabbler. */
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ScrabblerAddNuggetsRecipe>>

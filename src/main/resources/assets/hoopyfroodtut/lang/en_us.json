@@ -13,6 +13,7 @@
   "item.hoopyfroodtut.disposable_caterpillar.tooltip.desc": "Mines the block it faces on each redstone pulse, then self-destructs.",
   "item.hoopyfroodtut.disposable_caterpillar.charges": "Charges: %s",
   "item.hoopyfroodtut.disposable_caterpillar.torches": "Torches: %s",
+  "item.hoopyfroodtut.disposable_caterpillar.stuck": "Stuck (mines in place, does not advance)",
 
   "block.hoopyfroodtut.begging_item_scrabbler": "Begging Item Scrabbler",
   "item.hoopyfroodtut.begging_item_scrabbler": "Begging Item Scrabbler",

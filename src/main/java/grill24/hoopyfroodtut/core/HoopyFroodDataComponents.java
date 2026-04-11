@@ -58,6 +58,19 @@ public class HoopyFroodDataComponents {
                             .build());
 
     /**
+     * Whether a Disposable Caterpillar is "stuck" (immobile). When true, each triggered
+     * mining cycle mines the block directly ahead and decrements charges, but the caterpillar
+     * never advances forward. Useful for static farming setups.
+     * Defaults to false (absent). Set by crafting with a cobweb.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> CATERPILLAR_IMMOBILE =
+            DATA_COMPONENT_TYPES.register("caterpillar_immobile",
+                    () -> DataComponentType.<Boolean>builder()
+                            .persistent(Codec.BOOL)
+                            .networkSynchronized(ByteBufCodecs.BOOL)
+                            .build());
+
+    /**
      * Number of inventory slots on a Begging Item Scrabbler item.
      * Defaults to {@code BeggingItemScrabblerBlockEntity.DEFAULT_INVENTORY_SIZE} when absent.
      * Increased by crafting with a chest or right-clicking the placed block with a chest.
