@@ -2,8 +2,6 @@ package grill24.hoopyfroodtut.blockentity;
 
 import grill24.hoopyfroodtut.Config;
 import grill24.hoopyfroodtut.block.BalancerNode;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import net.minecraft.core.BlockPos;

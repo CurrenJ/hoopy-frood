@@ -59,7 +59,7 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .save(this.output);
 
         // Disposable Caterpillar: surround a dirt block with 4 slime balls
-        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), 16)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), 64)
                 .requires(Items.PISTON)
                 .requires(Items.REDSTONE)
                 .requires(Items.IRON_PICKAXE)
