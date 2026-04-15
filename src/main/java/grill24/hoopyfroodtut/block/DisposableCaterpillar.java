@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.MovingBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
-import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -104,12 +103,7 @@ public class DisposableCaterpillar extends BaseEntityBlock {
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         BlockEntity be = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (be instanceof DisposableCaterpillarBlockEntity caterpillar) {
-            ItemStack drop = new ItemStack(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get());
-            drop.set(HoopyFroodDataComponents.CATERPILLAR_CHARGES.get(), caterpillar.getCharges());
-            if (caterpillar.getTorches() > 0) {
-                drop.set(HoopyFroodDataComponents.CATERPILLAR_TORCHES.get(), caterpillar.getTorches());
-            }
-            return List.of(drop);
+            return List.of(caterpillar.asItemStack());
         }
         return List.of(new ItemStack(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get()));
     }

@@ -1,7 +1,12 @@
 package grill24.hoopyfroodtut.datagen;
 
+import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
+import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
+import grill24.hoopyfroodtut.recipe.CaterpillarAddCountRecipe;
+import grill24.hoopyfroodtut.recipe.CaterpillarCombineRecipe;
+import grill24.hoopyfroodtut.recipe.CaterpillarSetFlagRecipe;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -11,10 +16,13 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.packs.VanillaRecipeProvider;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 
 import java.util.concurrent.CompletableFuture;
@@ -150,6 +158,29 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .define('G', Items.TINTED_GLASS)
                 .unlockedBy("has_glass", has(Items.GLASS))
                 .save(this.output);
+
+        // Caterpillar custom recipes — shapeless, no advancement, registered directly.
+        saveCaterpillarRecipe("caterpillar_combine",
+                new CaterpillarCombineRecipe(CraftingBookCategory.MISC));
+        saveCaterpillarRecipe("caterpillar_add_torches",
+                new CaterpillarAddCountRecipe(Ingredient.of(Items.TORCH),
+                        HoopyFroodDataComponents.CATERPILLAR_TORCHES.get(), 0));
+        saveCaterpillarRecipe("caterpillar_add_cobweb",
+                new CaterpillarSetFlagRecipe(Ingredient.of(Items.COBWEB),
+                        HoopyFroodDataComponents.CATERPILLAR_IMMOBILE.get()));
+        saveCaterpillarRecipe("caterpillar_add_nether_star",
+                new CaterpillarSetFlagRecipe(Ingredient.of(Items.NETHER_STAR),
+                        HoopyFroodDataComponents.CATERPILLAR_UNDYING.get()));
+    }
+
+    /** Saves a caterpillar custom recipe (no unlock advancement needed — isSpecial = true). */
+    private void saveCaterpillarRecipe(String name, Recipe<?> recipe) {
+        this.output.accept(
+                ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, name)),
+                recipe,
+                null
+        );
     }
 
     public static class Runner extends VanillaRecipeProvider.Runner {

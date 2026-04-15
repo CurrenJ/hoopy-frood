@@ -1,0 +1,5 @@
+{
+  "type": "hoopyfroodtut:caterpillar_add_count",
+  "component": "hoopyfroodtut:caterpillar_torches",
+  "ingredient": "minecraft:torch"
+}

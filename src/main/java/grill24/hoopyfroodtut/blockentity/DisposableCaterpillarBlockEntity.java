@@ -2,11 +2,18 @@ package grill24.hoopyfroodtut.blockentity;
 
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
+import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
+import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
+import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -15,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Block entity for the Disposable Caterpillar.
@@ -37,7 +45,9 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
     private int charges = 1;
     private int torches = 0;
     private int blocksSinceLastTorch = 0;
-    private boolean immobile = false;
+    private boolean immobile = false; // Mines, but doesn't advance.
+    private boolean undying = false; // Enters idle state when out of charges instead of self-destructing
+    private ItemEnchantments enchantments = ItemEnchantments.EMPTY;
 
     private float mineProgress = 0f;
     private float miningSpeedMultiplier = 0.1f;
@@ -65,6 +75,10 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         setChanged();
     }
 
+    public void decrementCharges() {
+        setCharges(this.charges - 1);
+    }
+
     public int getTorches() {
         return torches;
     }
@@ -89,6 +103,15 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
 
     public void setImmobile(boolean immobile) {
         this.immobile = immobile;
+        setChanged();
+    }
+
+    public boolean isUndying() {
+        return undying;
+    }
+
+    public void setUndying(boolean undying) {
+        this.undying = undying;
         setChanged();
     }
 
@@ -258,7 +281,7 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
                 if (charges <= 1) {
                     level.destroyBlock(pos, false);
                 } else {
-                    setCharges(charges - 1);
+                    decrementCharges();
                     addCooldown(COOLDOWN_AFTER);
                 }
             } else {
@@ -326,14 +349,51 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         level.setBlock(targetPos, successorState, Block.UPDATE_ALL);
 
         if (level.getBlockEntity(targetPos) instanceof DisposableCaterpillarBlockEntity successor) {
-            successor.setCharges(charges - 1);
-            successor.setTorches(successorTorches);
-            successor.setBlocksSinceLastTorch(successorBlocksSince);
+            successor.copyDataFrom(this);
+            successor.decrementCharges();
             successor.addCooldown(cooldown);
+
             if (ENABLE_CHAIN_TRIGGER) {
                 BlockState triggeredState = level.getBlockState(targetPos).setValue(DisposableCaterpillar.TRIGGERED, true);
                 level.setBlock(targetPos, triggeredState, Block.UPDATE_ALL);
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // Item Stack <-> Block Entity conversions
+    // -------------------------------------------------------------------------
+
+    public @NonNull ItemStack asItemStack() {
+        ItemStack stack = new ItemStack(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get());
+
+        stack.set(HoopyFroodDataComponents.CATERPILLAR_CHARGES.get(), getCharges());
+        if (getTorches() > 0) {
+            stack.set(HoopyFroodDataComponents.CATERPILLAR_TORCHES.get(), getTorches());
+        }
+        if (isImmobile()) {
+            stack.set(HoopyFroodDataComponents.CATERPILLAR_IMMOBILE.get(), true);
+        }
+        if (isUndying()) {
+            stack.set(HoopyFroodDataComponents.CATERPILLAR_UNDYING.get(), true);
+            stack.set(DataComponents.ITEM_NAME, Component.translatable("item.hoopyfroodtut.undying_caterpillar"));
+        }
+
+        return stack;
+    }
+
+    public void populateFromItemStack(ItemStack caterpillarItemStack) {
+        setCharges(DisposableCaterpillarItem.getCharges(caterpillarItemStack));
+        setTorches(DisposableCaterpillarItem.getTorches(caterpillarItemStack));
+        setImmobile(DisposableCaterpillarItem.isImmobile(caterpillarItemStack));
+        setUndying(DisposableCaterpillarItem.isUndying(caterpillarItemStack));
+    }
+
+    public void copyDataFrom(DisposableCaterpillarBlockEntity other) {
+        setCharges(other.getCharges());
+        setTorches(other.getTorches());
+        setBlocksSinceLastTorch(other.getBlocksSinceLastTorch());
+        setImmobile(other.isImmobile());
+        setUndying(other.isUndying());
     }
 }

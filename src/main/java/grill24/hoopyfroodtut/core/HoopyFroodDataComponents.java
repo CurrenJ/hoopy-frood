@@ -71,6 +71,18 @@ public class HoopyFroodDataComponents {
                             .build());
 
     /**
+     * Whether a Disposable Caterpillar will continue to exist after its charges are depleted.
+     * When true, the caterpillar will mine and consume charges as normal, but won't destroy itself.
+     * Defaults to false (absent). Set by crafting with a Nether Star.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> CATERPILLAR_UNDYING =
+            DATA_COMPONENT_TYPES.register("caterpillar_undying",
+                    () -> DataComponentType.<Boolean>builder()
+                            .persistent(Codec.BOOL)
+                            .networkSynchronized(ByteBufCodecs.BOOL)
+                            .build());
+
+    /**
      * Number of inventory slots on a Begging Item Scrabbler item.
      * Defaults to {@code BeggingItemScrabblerBlockEntity.DEFAULT_INVENTORY_SIZE} when absent.
      * Increased by crafting with a chest or right-clicking the placed block with a chest.

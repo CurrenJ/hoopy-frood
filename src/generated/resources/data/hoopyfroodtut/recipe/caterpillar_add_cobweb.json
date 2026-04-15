@@ -1,0 +1,5 @@
+{
+  "type": "hoopyfroodtut:caterpillar_set_flag",
+  "component": "hoopyfroodtut:caterpillar_immobile",
+  "ingredient": "minecraft:cobweb"
+}

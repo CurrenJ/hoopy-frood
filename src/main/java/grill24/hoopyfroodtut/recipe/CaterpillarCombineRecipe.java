@@ -1,7 +1,6 @@
 package grill24.hoopyfroodtut.recipe;
 
 import com.mojang.serialization.MapCodec;
-import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import grill24.hoopyfroodtut.core.HoopyFroodRecipeSerializers;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
@@ -66,24 +65,13 @@ public class CaterpillarCombineRecipe extends CustomRecipe {
         return count >= 2;
     }
 
-    /** Produces one caterpillar item with the total charge and torch counts of all inputs. */
     @Override
     public ItemStack assemble(CraftingInput input) {
-        int totalCharges = 0;
-        int totalTorches = 0;
-        for (int i = 0; i < input.size(); i++) {
-            ItemStack stack = input.getItem(i);
-            if (!stack.isEmpty() && stack.is(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get())) {
-                totalCharges += DisposableCaterpillarItem.getCharges(stack);
-                totalTorches += DisposableCaterpillarItem.getTorches(stack);
-            }
-        }
-        ItemStack result = new ItemStack(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get());
-        result.set(HoopyFroodDataComponents.CATERPILLAR_CHARGES.get(), totalCharges);
-        if (totalTorches > 0) {
-            result.set(HoopyFroodDataComponents.CATERPILLAR_TORCHES.get(), totalTorches);
-        }
-        return result;
+        return DisposableCaterpillarItem.merge(
+                input.items().stream()
+                        .filter(s -> s.is(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get()))
+                        .toList()
+        );
     }
 
     @Override

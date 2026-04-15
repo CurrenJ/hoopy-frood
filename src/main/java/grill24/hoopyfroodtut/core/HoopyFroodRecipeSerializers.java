@@ -1,8 +1,8 @@
 package grill24.hoopyfroodtut.core;
 
-import grill24.hoopyfroodtut.recipe.CaterpillarAddCobwebRecipe;
-import grill24.hoopyfroodtut.recipe.CaterpillarAddTorchesRecipe;
+import grill24.hoopyfroodtut.recipe.CaterpillarAddCountRecipe;
 import grill24.hoopyfroodtut.recipe.CaterpillarCombineRecipe;
+import grill24.hoopyfroodtut.recipe.CaterpillarSetFlagRecipe;
 import grill24.hoopyfroodtut.recipe.NoRemainderShapelessRecipe;
 import grill24.hoopyfroodtut.recipe.ScrabblerAddNuggetsRecipe;
 import grill24.hoopyfroodtut.recipe.ScrabblerClearHomeRecipe;
@@ -20,15 +20,15 @@ public class HoopyFroodRecipeSerializers {
             CATERPILLAR_COMBINE = RECIPE_SERIALIZERS.register("caterpillar_combine",
                     () -> new RecipeSerializer<>(CaterpillarCombineRecipe.CODEC, CaterpillarCombineRecipe.STREAM_CODEC));
 
-    /** Serializer for adding torches to a caterpillar item. */
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CaterpillarAddTorchesRecipe>>
-            CATERPILLAR_ADD_TORCHES = RECIPE_SERIALIZERS.register("caterpillar_add_torches",
-                    () -> new RecipeSerializer<>(CaterpillarAddTorchesRecipe.CODEC, CaterpillarAddTorchesRecipe.STREAM_CODEC));
+    /** Serializer for recipes that increment an integer data component on a caterpillar (e.g. add torches). */
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CaterpillarAddCountRecipe>>
+            CATERPILLAR_ADD_COUNT = RECIPE_SERIALIZERS.register("caterpillar_add_count",
+                    () -> new RecipeSerializer<>(CaterpillarAddCountRecipe.CODEC, CaterpillarAddCountRecipe.STREAM_CODEC));
 
-    /** Serializer for making a caterpillar immobile (stuck) by crafting with a cobweb. */
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CaterpillarAddCobwebRecipe>>
-            CATERPILLAR_ADD_COBWEB = RECIPE_SERIALIZERS.register("caterpillar_add_cobweb",
-                    () -> new RecipeSerializer<>(CaterpillarAddCobwebRecipe.CODEC, CaterpillarAddCobwebRecipe.STREAM_CODEC));
+    /** Serializer for recipes that set a boolean data component on a caterpillar (e.g. stuck, undying). */
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CaterpillarSetFlagRecipe>>
+            CATERPILLAR_SET_FLAG = RECIPE_SERIALIZERS.register("caterpillar_set_flag",
+                    () -> new RecipeSerializer<>(CaterpillarSetFlagRecipe.CODEC, CaterpillarSetFlagRecipe.STREAM_CODEC));
 
     /** Serializer for loading metallic nuggets (fuel) into a Begging Item Scrabbler. */
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ScrabblerAddNuggetsRecipe>>
