@@ -33,7 +33,7 @@ public class HoopyFroodItems {
 
     public static final DeferredItem<DisposableCaterpillarItem> DISPOSABLE_CATERPILLAR_ITEM =
             ITEMS.registerItem("disposable_caterpillar",
-                    p -> new DisposableCaterpillarItem(HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), p));
+                    p -> new DisposableCaterpillarItem(HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), p.enchantable(14)));
 
     public static final DeferredItem<BeggingItemScrabblerItem> BEGGING_ITEM_SCRABBLER_ITEM =
             ITEMS.registerItem("begging_item_scrabbler",

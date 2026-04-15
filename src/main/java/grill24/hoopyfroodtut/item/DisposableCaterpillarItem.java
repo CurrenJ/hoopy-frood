@@ -4,6 +4,8 @@ import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
 import grill24.hoopyfroodtut.core.Util;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -11,6 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -49,12 +53,19 @@ public class DisposableCaterpillarItem extends BlockItem {
         return stack.getOrDefault(HoopyFroodDataComponents.CATERPILLAR_UNDYING.get(), false);
     }
 
+    /** Returns the enchantments stored on this stack. */
+    public static ItemEnchantments getEnchantments(ItemStack stack) {
+        return stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+    }
+
     /**
      * Merges a list of caterpillar stacks into one:
      * <ul>
      *   <li>Integer components (charges, torches) are summed.</li>
      *   <li>Boolean components (immobile, undying) are OR-ed — a flag is kept if
      *       <em>any</em> input carries it, so properties are never silently lost.</li>
+     *   <li>Enchantments are merged by taking the <em>maximum level</em> of each
+     *       enchantment across all inputs, so no enchantment is ever lost.</li>
      * </ul>
      * The first stack is used as the base copy to preserve any unrecognised components.
      */
@@ -64,6 +75,7 @@ public class DisposableCaterpillarItem extends BlockItem {
         int totalTorches = 0;
         boolean anyImmobile = false;
         boolean anyUndying = false;
+        ItemEnchantments.Mutable mergedEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
 
         for (ItemStack stack : stacks) {
             if (first.isEmpty()) first = stack;
@@ -71,6 +83,10 @@ public class DisposableCaterpillarItem extends BlockItem {
             totalTorches += getTorches(stack);
             anyImmobile |= isImmobile(stack);
             anyUndying  |= isUndying(stack);
+            ItemEnchantments stackEnchants = getEnchantments(stack);
+            for (Holder<Enchantment> ench : stackEnchants.keySet()) {
+                mergedEnchantments.upgrade(ench, stackEnchants.getLevel(ench));
+            }
         }
 
         ItemStack result = first.copyWithCount(1);
@@ -81,6 +97,12 @@ public class DisposableCaterpillarItem extends BlockItem {
         else result.remove(HoopyFroodDataComponents.CATERPILLAR_IMMOBILE.get());
         if (anyUndying) result.set(HoopyFroodDataComponents.CATERPILLAR_UNDYING.get(), true);
         else result.remove(HoopyFroodDataComponents.CATERPILLAR_UNDYING.get());
+        ItemEnchantments finalEnchantments = mergedEnchantments.toImmutable();
+        if (!finalEnchantments.isEmpty()) {
+            result.set(DataComponents.ENCHANTMENTS, finalEnchantments);
+        } else {
+            result.remove(DataComponents.ENCHANTMENTS);
+        }
         return result;
     }
 

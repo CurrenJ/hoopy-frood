@@ -8,16 +8,23 @@ import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -37,6 +44,17 @@ import org.jspecify.annotations.NonNull;
  * </ol>
  * Charges are transferred to/from the item form via the
  * {@code hoopyfroodtut:caterpillar_charges} data component.
+ * <p>
+ * Enchantments (silk touch, fortune, efficiency, unbreaking) stored as
+ * {@link DataComponents#ENCHANTMENTS} on the item are preserved in the block entity
+ * and applied during mining:
+ * <ul>
+ *   <li><b>Silk Touch / Fortune</b> — passed to the block loot table via a fake diamond
+ *       pickaxe tool context in {@link Block#dropResources}.</li>
+ *   <li><b>Efficiency</b> — adds {@code level² + 1} to the effective mining speed.</li>
+ *   <li><b>Unbreaking</b> — each operation has a {@code 1/(level+1)} chance to actually
+ *       consume a charge.</li>
+ * </ul>
  * <p>
  * Extends {@link MovingBlockEntity} for the shared advance-animation logic.
  */
@@ -115,6 +133,15 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         setChanged();
     }
 
+    public ItemEnchantments getEnchantments() {
+        return enchantments;
+    }
+
+    public void setEnchantments(ItemEnchantments enchantments) {
+        this.enchantments = enchantments != null ? enchantments : ItemEnchantments.EMPTY;
+        setChanged();
+    }
+
     public int getCooldown() { return cooldown; }
 
     public void setCooldown(int cooldown) {
@@ -144,6 +171,7 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         this.blocksSinceLastTorch = input.getIntOr("BlocksSinceLastTorch", 0);
         this.cooldown = input.getIntOr("Cooldown", 0);
         this.immobile = input.getBooleanOr("Immobile", false);
+        this.enchantments = input.read("Enchantments", ItemEnchantments.CODEC).orElse(ItemEnchantments.EMPTY);
     }
 
     @Override
@@ -154,6 +182,9 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         output.putInt("BlocksSinceLastTorch", blocksSinceLastTorch);
         output.putInt("Cooldown", cooldown);
         output.putBoolean("Immobile", immobile);
+        if (!enchantments.isEmpty()) {
+            output.store("Enchantments", ItemEnchantments.CODEC, enchantments);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -217,9 +248,10 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
      *   <li>Looks at the block at {@code pos + FACING}.</li>
      *   <li>If that block is unbreakable (hardness &lt; 0) the caterpillar aborts and
      *       only destroys itself.</li>
-     *   <li>Otherwise the target block is destroyed with normal loot drops.</li>
-     *   <li>If {@code charges &gt; 1} a new Disposable Caterpillar is placed in the
-     *       vacated space with {@code charges - 1}.</li>
+     *   <li>Otherwise the target block is destroyed with normal loot drops, respecting
+     *       silk touch and fortune enchantments stored on this block entity.</li>
+     *   <li>If {@code charges &gt; 1} (or if unbreaking saves the charge) a new Disposable
+     *       Caterpillar is placed in the vacated space.</li>
      *   <li>This block is destroyed with no drops.</li>
      * </ol>
      */
@@ -266,24 +298,42 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         }
 
         float destroySpeed = targetState.getDestroySpeed(level, targetPos);
-        if(mineProgress <= 10f && destroySpeed > 0f) {
+        if (mineProgress <= 10f && destroySpeed > 0f) {
             // Vanilla formula: progress += playerSpeed / hardness / constant
             // miningSpeedMultiplier acts as the "player speed"; divide by hardness so harder blocks take longer.
-            mineProgress += (miningSpeedMultiplier / destroySpeed) * 10f;
+            // Efficiency adds level² + 1 to effective speed, matching the vanilla pickaxe formula.
+            float effectiveSpeed = miningSpeedMultiplier;
+            int effLevel = getEnchantmentLevel(level, Enchantments.EFFICIENCY);
+            if (effLevel > 0) {
+                effectiveSpeed += effLevel * effLevel + 1;
+            }
+            mineProgress += (effectiveSpeed / destroySpeed) * 10f;
             level.destroyBlockProgress(-1, targetPos, (int) (mineProgress));
             return;
         } else {
-            // Mine the target block (drops items naturally).
-            level.destroyBlock(targetPos, true);
+            // Mine the target block.
+            // Drop resources using a fake diamond-pickaxe tool carrying our enchantments so
+            // that silk touch and fortune are applied via the block's normal loot table.
             mineProgress = 0f;
+            BlockEntity targetBE = level.getBlockEntity(targetPos);
+            Block.dropResources(targetState, level, targetPos, targetBE, null, buildFakeTool());
+            level.destroyBlock(targetPos, false);
+
             if (immobile) {
-                // Don't advance — decrement charges in place and cool down.
-                if (charges <= 1) {
-                    level.destroyBlock(pos, false);
-                } else {
-                    decrementCharges();
-                    addCooldown(COOLDOWN_AFTER);
+                // Don't advance — optionally decrement charges in place and cool down.
+                boolean consumed = shouldConsumeCharge(level);
+                if (consumed) {
+                    if (charges <= 1) {
+                        if (!undying) {
+                            level.destroyBlock(pos, false);
+                            return;
+                        }
+                        // undying: keep alive with 1 charge
+                    } else {
+                        decrementCharges();
+                    }
                 }
+                addCooldown(COOLDOWN_AFTER);
             } else {
                 startAdvance(level, facing);
             }
@@ -299,14 +349,18 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         int successorTorches = torchPlaced ? torches - 1 : torches;
         int successorBlocksSince = torchPlaced ? 0 : newBlocksSinceLastTorch;
 
-        if (charges <= 1) {
-            // No successor: torch has already replaced the block (if placed), otherwise destroy.
+        // Unbreaking: give a chance to NOT consume a charge when advancing.
+        boolean consumeCharge = shouldConsumeCharge(level);
+        int successorCharges = consumeCharge ? (charges - 1) : charges;
+
+        if (successorCharges <= 0) {
+            // Last charge was consumed — no successor.
             if (!torchPlaced) {
                 level.destroyBlock(pos, false);
             }
         } else {
             // Place the successor at targetPos, then vacate pos.
-            placeSuccessor(level, pos, state, cooldown, successorTorches, successorBlocksSince);
+            placeSuccessor(level, pos, state, cooldown, successorTorches, successorBlocksSince, successorCharges);
             if (!torchPlaced) {
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
             }
@@ -338,7 +392,7 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         return false;
     }
 
-    private void placeSuccessor(ServerLevel level, BlockPos pos, BlockState state, int cooldown, int successorTorches, int successorBlocksSince) {
+    private void placeSuccessor(ServerLevel level, BlockPos pos, BlockState state, int cooldown, int successorTorches, int successorBlocksSince, int successorCharges) {
         Direction facing = state.getValue(DisposableCaterpillar.FACING);
         BlockPos targetPos = pos.relative(facing);
 
@@ -350,7 +404,7 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
 
         if (level.getBlockEntity(targetPos) instanceof DisposableCaterpillarBlockEntity successor) {
             successor.copyDataFrom(this);
-            successor.decrementCharges();
+            successor.setCharges(successorCharges);
             successor.addCooldown(cooldown);
 
             if (ENABLE_CHAIN_TRIGGER) {
@@ -358,6 +412,48 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
                 level.setBlock(targetPos, triggeredState, Block.UPDATE_ALL);
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // Enchantment helpers
+    // -------------------------------------------------------------------------
+
+    /**
+     * Looks up the level of a specific enchantment in this caterpillar's stored
+     * {@link #enchantments}. Returns 0 if the enchantment is absent or the registry
+     * key is not found.
+     */
+    private int getEnchantmentLevel(Level level, ResourceKey<Enchantment> key) {
+        if (enchantments.isEmpty()) return 0;
+        return level.registryAccess()
+                .lookupOrThrow(Registries.ENCHANTMENT)
+                .get(key)
+                .map(enchantments::getLevel)
+                .orElse(0);
+    }
+
+    /**
+     * Returns {@code true} if the current operation should consume a charge.
+     * With Unbreaking N, there is a {@code 1/(N+1)} probability of consuming a charge
+     * (matching the vanilla tool-durability formula for non-armour items).
+     */
+    private boolean shouldConsumeCharge(ServerLevel level) {
+        int unbreakingLevel = getEnchantmentLevel(level, Enchantments.UNBREAKING);
+        if (unbreakingLevel == 0) return true;
+        return level.getRandom().nextFloat() < 1.0f / (unbreakingLevel + 1);
+    }
+
+    /**
+     * Builds a fake diamond-pickaxe {@link ItemStack} carrying this caterpillar's
+     * enchantments. Passed to {@link Block#dropResources} so the block loot table
+     * sees silk touch / fortune on the "tool" and adjusts drops accordingly.
+     */
+    private ItemStack buildFakeTool() {
+        ItemStack tool = new ItemStack(Items.DIAMOND_PICKAXE);
+        if (!enchantments.isEmpty()) {
+            tool.set(DataComponents.ENCHANTMENTS, enchantments);
+        }
+        return tool;
     }
 
     // -------------------------------------------------------------------------
@@ -378,6 +474,9 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
             stack.set(HoopyFroodDataComponents.CATERPILLAR_UNDYING.get(), true);
             stack.set(DataComponents.ITEM_NAME, Component.translatable("item.hoopyfroodtut.undying_caterpillar"));
         }
+        if (!enchantments.isEmpty()) {
+            stack.set(DataComponents.ENCHANTMENTS, enchantments);
+        }
 
         return stack;
     }
@@ -387,6 +486,7 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         setTorches(DisposableCaterpillarItem.getTorches(caterpillarItemStack));
         setImmobile(DisposableCaterpillarItem.isImmobile(caterpillarItemStack));
         setUndying(DisposableCaterpillarItem.isUndying(caterpillarItemStack));
+        setEnchantments(caterpillarItemStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
     }
 
     public void copyDataFrom(DisposableCaterpillarBlockEntity other) {
@@ -395,5 +495,6 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
         setBlocksSinceLastTorch(other.getBlocksSinceLastTorch());
         setImmobile(other.isImmobile());
         setUndying(other.isUndying());
+        setEnchantments(other.getEnchantments());
     }
 }
