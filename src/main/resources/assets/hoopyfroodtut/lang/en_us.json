@@ -16,6 +16,11 @@
   "item.hoopyfroodtut.disposable_caterpillar.stuck": "Stuck (mines in place, does not advance)",
   "item.hoopyfroodtut.disposable_caterpillar.undying": "Undying (doesn't self-destruct)",
 
+  "item.hoopyfroodtut.disposable_caterpillar.prefix.undying": "Immortal ",
+  "item.hoopyfroodtut.disposable_caterpillar.prefix.immobile": "Stuck ",
+  "item.hoopyfroodtut.disposable_caterpillar.prefix.torch": "Shining ",
+  "item.hoopyfroodtut.disposable_caterpillar.prefix.many_charges": "Girthy ",
+
   "block.hoopyfroodtut.begging_item_scrabbler": "Begging Item Scrabbler",
   "item.hoopyfroodtut.begging_item_scrabbler": "Begging Item Scrabbler",
   "item.hoopyfroodtut.begging_item_scrabbler.tooltip.desc": "Crawls toward dropped items and delivers them to its linked container.",
@@ -66,6 +71,5 @@
 
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",
-  "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs",
-  "item.hoopyfroodtut.undying_caterpillar": "Immortal Caterpillar"
+  "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs"
 }

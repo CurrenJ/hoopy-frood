@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import grill24.hoopyfroodtut.core.HoopyFroodRecipeSerializers;
+import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -96,6 +97,9 @@ public class CaterpillarSetFlagRecipe extends CustomRecipe {
         }
         ItemStack result = caterpillar.copyWithCount(1);
         result.set(component, true);
+
+        DisposableCaterpillarItem.updateName(result);
+
         return result;
     }
 

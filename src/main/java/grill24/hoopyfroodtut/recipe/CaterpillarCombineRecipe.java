@@ -13,6 +13,8 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
+import java.util.List;
+
 /**
  * Crafting recipe that combines any number of Disposable Caterpillar items (≥ 2)
  * placed anywhere in the crafting grid into a single item whose charge count equals
@@ -67,11 +69,14 @@ public class CaterpillarCombineRecipe extends CustomRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput input) {
-        return DisposableCaterpillarItem.merge(
-                input.items().stream()
-                        .filter(s -> s.is(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get()))
-                        .toList()
-        );
+        List<ItemStack> caterpillars = input.items().stream()
+                .filter(s -> s.is(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get()))
+                .toList();
+        ItemStack result = DisposableCaterpillarItem.merge(caterpillars);
+
+        DisposableCaterpillarItem.updateName(result);
+
+        return result;
     }
 
     @Override

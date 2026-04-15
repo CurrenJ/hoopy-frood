@@ -2,11 +2,13 @@ package grill24.hoopyfroodtut.item;
 
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
+import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import grill24.hoopyfroodtut.core.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -56,6 +58,47 @@ public class DisposableCaterpillarItem extends BlockItem {
     /** Returns the enchantments stored on this stack. */
     public static ItemEnchantments getEnchantments(ItemStack stack) {
         return stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+    }
+
+    public static void updateName(ItemStack stack) {
+        stack.set(DataComponents.ITEM_NAME, computeName(stack));
+    }
+
+    public static Component computeName(ItemStack stack) {
+        MutableComponent name = Component.translatable(stack.getItem().getDescriptionId())
+                .withStyle(ChatFormatting.WHITE);
+        if (stack.is(HoopyFroodItems.DISPOSABLE_CATERPILLAR_ITEM.get())) {
+            boolean isUndying = isUndying(stack);
+            if(isUndying)
+            {
+                MutableComponent undyingPrefix = Component.translatable("item.hoopyfroodtut.disposable_caterpillar.prefix.undying")
+                        .withStyle(ChatFormatting.DARK_RED);
+                name = undyingPrefix.append(name);
+            }
+
+            boolean isImmobile = isImmobile(stack);
+            if(isImmobile) {
+                MutableComponent immobilePrefix = Component.translatable("item.hoopyfroodtut.disposable_caterpillar.prefix.immobile")
+                        .withStyle(ChatFormatting.DARK_AQUA);
+                name = immobilePrefix.append(name);
+            }
+
+            boolean hasTorches = getTorches(stack) > 0;
+            if(hasTorches) {
+                MutableComponent torchPrefix = Component.translatable("item.hoopyfroodtut.disposable_caterpillar.prefix.torch")
+                        .withStyle(ChatFormatting.YELLOW);
+                name = torchPrefix.append(name);
+            }
+
+            boolean hasManyCharges = getCharges(stack) > 64;
+            if(hasManyCharges) {
+                MutableComponent manyChargesPrefix = Component.translatable("item.hoopyfroodtut.disposable_caterpillar.prefix.many_charges")
+                        .withStyle(ChatFormatting.GRAY);
+                name = manyChargesPrefix.append(name);
+            }
+        }
+
+        return name;
     }
 
     /**
