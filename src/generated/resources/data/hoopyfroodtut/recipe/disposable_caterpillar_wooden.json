@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:piston",
+    "minecraft:redstone",
+    "minecraft:wooden_pickaxe"
+  ],
+  "result": {
+    "count": 32,
+    "id": "hoopyfroodtut:disposable_caterpillar"
+  }
+}

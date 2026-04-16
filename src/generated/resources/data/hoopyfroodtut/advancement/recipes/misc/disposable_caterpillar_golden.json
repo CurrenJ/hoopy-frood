@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_pickaxe": {
+    "has_golden_pickaxe": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:iron_pickaxe"
+            "items": "minecraft:golden_pickaxe"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hoopyfroodtut:disposable_caterpillar"
+        "recipe": "hoopyfroodtut:disposable_caterpillar_golden"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_pickaxe"
+      "has_golden_pickaxe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hoopyfroodtut:disposable_caterpillar"
+      "hoopyfroodtut:disposable_caterpillar_golden"
     ]
   }
 }

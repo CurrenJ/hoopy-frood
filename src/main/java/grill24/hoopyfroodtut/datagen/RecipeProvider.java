@@ -9,6 +9,7 @@ import grill24.hoopyfroodtut.recipe.CaterpillarCombineRecipe;
 import grill24.hoopyfroodtut.recipe.CaterpillarSetFlagRecipe;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -20,6 +21,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -66,13 +68,15 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_redstone", has(Items.REDSTONE))
                 .save(this.output);
 
-        // Disposable Caterpillar: surround a dirt block with 4 slime balls
-        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), 64)
-                .requires(Items.PISTON)
-                .requires(Items.REDSTONE)
-                .requires(Items.IRON_PICKAXE)
-                .unlockedBy("has_iron_pickaxe", has(Items.IRON_PICKAXE))
-                .save(this.output);
+        // Disposable Caterpillar — one recipe per pickaxe tier.
+        // Higher-tier pickaxes yield more caterpillars and/or more charges per caterpillar.
+        // Baseline: iron → 64 caterpillars × 1 charge = 64 total mining ops.
+        addCaterpillarRecipe(items, Items.WOODEN_PICKAXE,    "wooden",    32,  1);
+        addCaterpillarRecipe(items, Items.STONE_PICKAXE,     "stone",    64,  1);
+        addCaterpillarRecipe(items, Items.IRON_PICKAXE,      "iron",     64,  4);
+        addCaterpillarRecipe(items, Items.GOLDEN_PICKAXE,    "golden",   64,  8);
+        addCaterpillarRecipe(items, Items.DIAMOND_PICKAXE,   "diamond",  64,  16);
+        addCaterpillarRecipe(items, Items.NETHERITE_PICKAXE, "netherite", 64, 32);
 
         // Begging Item Scrabbler: surround a chest with 4 iron nuggets in cardinal positions
         ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get())
@@ -171,6 +175,25 @@ public class RecipeProvider extends VanillaRecipeProvider {
         saveCaterpillarRecipe("caterpillar_add_nether_star",
                 new CaterpillarSetFlagRecipe(Ingredient.of(Items.NETHER_STAR),
                         HoopyFroodDataComponents.CATERPILLAR_UNDYING.get()));
+    }
+
+    /** Adds a Disposable Caterpillar crafting recipe for a specific pickaxe tier. */
+    private void addCaterpillarRecipe(HolderGetter<Item> items, Item pickaxe, String tier, int count, int charges) {
+        DataComponentPatch patch = charges > 1
+                ? DataComponentPatch.builder()
+                        .set(HoopyFroodDataComponents.CATERPILLAR_CHARGES.get(), charges)
+                        .build()
+                : DataComponentPatch.EMPTY;
+        ItemStackTemplate result = new ItemStackTemplate(
+                HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get().asItem(), count, patch);
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, result)
+                .requires(Items.PISTON)
+                .requires(Items.REDSTONE)
+                .requires(pickaxe)
+                .unlockedBy("has_" + tier + "_pickaxe", has(pickaxe))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID,
+                                "disposable_caterpillar_" + tier)));
     }
 
     /** Saves a caterpillar custom recipe (no unlock advancement needed — isSpecial = true). */

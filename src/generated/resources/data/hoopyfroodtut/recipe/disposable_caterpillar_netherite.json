@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:piston",
+    "minecraft:redstone",
+    "minecraft:netherite_pickaxe"
+  ],
+  "result": {
+    "components": {
+      "hoopyfroodtut:caterpillar_charges": 32
+    },
+    "count": 64,
+    "id": "hoopyfroodtut:disposable_caterpillar"
+  }
+}

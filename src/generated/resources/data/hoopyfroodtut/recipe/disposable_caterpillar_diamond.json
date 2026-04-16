@@ -4,9 +4,12 @@
   "ingredients": [
     "minecraft:piston",
     "minecraft:redstone",
-    "minecraft:iron_pickaxe"
+    "minecraft:diamond_pickaxe"
   ],
   "result": {
+    "components": {
+      "hoopyfroodtut:caterpillar_charges": 16
+    },
     "count": 64,
     "id": "hoopyfroodtut:disposable_caterpillar"
   }
