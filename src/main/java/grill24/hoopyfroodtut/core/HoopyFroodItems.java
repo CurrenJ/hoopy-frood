@@ -4,6 +4,7 @@ import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.item.BalancerRangeExtender;
 import grill24.hoopyfroodtut.item.BeggingItemScrabblerItem;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
+import grill24.hoopyfroodtut.item.MagicMirrorItem;
 import grill24.hoopyfroodtut.item.PerilSensitiveSunglassesItem;
 import grill24.hoopyfroodtut.item.WobblyWaterBucketItem;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -78,4 +79,8 @@ public class HoopyFroodItems {
             ITEMS.registerItem("peril_sensitive_sunglasses",
                     p -> new PerilSensitiveSunglassesItem(
                             p.stacksTo(1).equippable(EquipmentSlot.HEAD)));
+
+    public static final DeferredItem<MagicMirrorItem> MAGIC_MIRROR =
+            ITEMS.registerItem("magic_mirror",
+                    p -> new MagicMirrorItem(p.stacksTo(1)));
 }

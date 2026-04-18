@@ -38,6 +38,7 @@ public class BlockModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(HoopyFroodItems.BROWN_BRICK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(HoopyFroodItems.BALANCER_RANGE_EXTENDER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(HoopyFroodItems.MAGIC_MIRROR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.itemModelOutput.accept(
                 HoopyFroodItems.PERIL_SENSITIVE_SUNGLASSES.get(),
                 ItemModelUtils.plainModel(

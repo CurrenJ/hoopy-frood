@@ -34,6 +34,7 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.WOBBLY_HONEY_BUCKET.get());
                 output.accept(HoopyFroodItems.WOBBLY_MAGMA_BUCKET.get());
                 output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());
+                output.accept(HoopyFroodItems.MAGIC_MIRROR.get());
             }).build());
 
     // Add the example block item to the building blocks tab

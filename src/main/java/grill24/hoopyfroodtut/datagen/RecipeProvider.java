@@ -175,6 +175,18 @@ public class RecipeProvider extends VanillaRecipeProvider {
         saveCaterpillarRecipe("caterpillar_add_nether_star",
                 new CaterpillarSetFlagRecipe(Ingredient.of(Items.NETHER_STAR),
                         HoopyFroodDataComponents.CATERPILLAR_UNDYING.get()));
+
+        // Magic Mirror
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.MAGIC_MIRROR.get())
+                .pattern("GLG")
+                .pattern("DED")
+                .pattern("GLG")
+                .define('G', Items.GOLD_BLOCK)
+                .define('L', Items.LAPIS_BLOCK)
+                .define('D', Items.DIAMOND_BLOCK)
+                .define('E', Items.ENDER_PEARL)
+                .unlockedBy("", has(Items.ENDER_PEARL))
+                .save(this.output);
     }
 
     /** Adds a Disposable Caterpillar crafting recipe for a specific pickaxe tier. */

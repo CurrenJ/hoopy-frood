@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -92,5 +93,16 @@ public class HoopyFroodDataComponents {
                     () -> DataComponentType.<Integer>builder()
                             .persistent(Codec.INT)
                             .networkSynchronized(ByteBufCodecs.INT)
+                            .build());
+
+    /**
+     * Cached teleport destination for the Magic Mirror. Stored server-side while held and
+     * network-synced so the client tooltip can show live cost and target coordinates.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Vec3>> MAGIC_MIRROR_DESTINATION =
+            DATA_COMPONENT_TYPES.register("magic_mirror_destination",
+                    () -> DataComponentType.<Vec3>builder()
+                            .persistent(Vec3.CODEC)
+                            .networkSynchronized(Vec3.STREAM_CODEC)
                             .build());
 }

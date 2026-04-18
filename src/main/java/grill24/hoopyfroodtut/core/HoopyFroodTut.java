@@ -7,8 +7,12 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -96,6 +100,10 @@ public class HoopyFroodTut {
      * suppression applies even to targets that were acquired before the field existed.
      */
     private void onEntityTickPost(EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof ServerPlayer player && !player.level().isClientSide()) {
+            updateMagicMirrorDestination(player);
+        }
+
         if (!(event.getEntity() instanceof Mob mob)) return;
         if (mob.level().isClientSide()) return;
 
@@ -119,6 +127,27 @@ public class HoopyFroodTut {
 
     private void onRegisterCommands(RegisterCommandsEvent event) {
         WobblyWaterDebugCommand.register(event.getDispatcher());
+    }
+
+    private static void updateMagicMirrorDestination(ServerPlayer player) {
+        // Throttle to once per second — the destination only changes when the player sleeps.
+        if (player.tickCount % 20 != 0) return;
+
+        ItemStack main = player.getMainHandItem();
+        ItemStack off  = player.getOffhandItem();
+        boolean holdingMirror = main.is(HoopyFroodItems.MAGIC_MIRROR.get())
+                || off.is(HoopyFroodItems.MAGIC_MIRROR.get());
+        if (!holdingMirror) return;
+
+        TeleportTransition transition = player.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING);
+        Vec3 dest = transition.position();
+
+        if (main.is(HoopyFroodItems.MAGIC_MIRROR.get())) {
+            main.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
+        }
+        if (off.is(HoopyFroodItems.MAGIC_MIRROR.get())) {
+            off.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
+        }
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

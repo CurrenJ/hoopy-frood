@@ -46,5 +46,16 @@ public class Config {
 
     static { BUILDER.pop(); }
 
+    // ── Magic Mirror ──────────────────────────────────────────────────────────
+    static { BUILDER.push("magicMirror"); }
+
+    public static final ModConfigSpec.IntValue MAGIC_MIRROR_BLOCKS_PER_LEVEL = BUILDER
+            .comment("How many blocks of travel cost 1 XP level when using the Magic Mirror.",
+                     "Example: 1000 means a 1000-block teleport costs 1 level, 2000 blocks costs 2 levels, etc.",
+                     "Cost is always rounded up, and is free when distance is effectively zero.")
+            .defineInRange("blocksPerLevel", 1000, 1, Integer.MAX_VALUE);
+
+    static { BUILDER.pop(); }
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 }
