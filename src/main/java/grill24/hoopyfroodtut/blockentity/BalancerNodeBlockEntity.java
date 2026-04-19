@@ -162,8 +162,7 @@ public class BalancerNodeBlockEntity extends BlockEntity {
         BlockPos scanPos = pos.relative(facing);
         for (int i = 0; i < entity.effectiveRange(); i++) {
             List<ResourceHandler<ItemResource>> handlers = getHandlersForDestination(level, scanPos);
-            if (handlers.isEmpty()) break;
-            destinations.add(handlers);
+            if (!handlers.isEmpty()) destinations.add(handlers);
             scanPos = scanPos.relative(facing);
         }
 
