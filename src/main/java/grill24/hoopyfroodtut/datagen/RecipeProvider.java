@@ -95,7 +95,7 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .pattern("DST")
                 .pattern("SSS")
                 .define('T', Items.REDSTONE_TORCH)
-                .define('R', Items.REDSTONE)
+                .define('D', Items.REDSTONE)
                 .define('S', Items.STONE)
                 .unlockedBy("has_redstone_torch", has(Items.REDSTONE_TORCH))
                 .save(this.output);

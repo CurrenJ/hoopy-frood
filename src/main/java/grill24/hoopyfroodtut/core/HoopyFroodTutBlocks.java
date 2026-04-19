@@ -18,8 +18,11 @@ import net.minecraft.data.BlockFamily;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.apache.logging.log4j.util.Lazy;
@@ -76,31 +79,31 @@ public class HoopyFroodTutBlocks {
 
     // Inverts the input redstone signal: outputs 15 when input is 0, outputs 0 when input is > 0.
     public static final DeferredBlock<Inverter> INVERTER = BLOCKS.registerBlock("inverter",
-            p -> new Inverter(p.strength(1.5f)));
+            p -> new Inverter(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
     // Holds a redstone signal HIGH for a configurable duration after a rising edge on its input face.
     public static final DeferredBlock<PulseLatch> PULSE_LATCH = BLOCKS.registerBlock("pulse_latch",
-            p -> new PulseLatch(p.strength(1.5f)));
+            p -> new PulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
     // Sluggish variant with much longer hold durations (2s, 5s, 15s, 60s).
     public static final DeferredBlock<SluggishPulseLatch> SLUGGISH_PULSE_LATCH = BLOCKS.registerBlock("sluggish_pulse_latch",
-            p -> new SluggishPulseLatch(p.strength(1.5f)));
+            p -> new SluggishPulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
     // Self-oscillating redstone pulse generator; input face pauses the clock.
     public static final DeferredBlock<RedstoneClock> REDSTONE_CLOCK = BLOCKS.registerBlock("redstone_clock",
-            p -> new RedstoneClock(p.strength(1.5f)));
+            p -> new RedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
     // Emits a redstone signal (0-15) proportional to the proximity of the nearest target entity.
     public static final DeferredBlock<ProximitySensor> PROXIMITY_SENSOR = BLOCKS.registerBlock("proximity_sensor",
-            p -> new ProximitySensor(p.strength(1.5f)));
+            p -> new ProximitySensor(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
     // A directional block that continuously dispenses items from its 9-slot inventory without needing redstone.
     public static final DeferredBlock<Ejector> EJECTOR = BLOCKS.registerBlock("ejector",
-            p -> new Ejector(p.strength(3.5f)));
+            p -> new Ejector(p.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.5f)));
 
     // A directional block that continuously drops items from its 9-slot inventory without needing redstone.
     public static final DeferredBlock<Expeller> EXPELLER = BLOCKS.registerBlock("expeller",
-            p -> new Expeller(p.strength(3.5f)));
+            p -> new Expeller(p.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.5f)));
 
     // A field emitter that makes the surrounding area invisible to mob AI and pathfinding.
     public static final DeferredBlock<SomebodyElsesProblemField> SOMEBODY_ELSES_PROBLEM_FIELD = BLOCKS.registerBlock(

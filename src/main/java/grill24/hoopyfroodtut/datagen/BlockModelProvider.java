@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
+import grill24.hoopyfroodtut.block.Expeller;
 import grill24.hoopyfroodtut.block.Inverter;
 import grill24.hoopyfroodtut.block.ProximitySensor;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
@@ -68,6 +69,7 @@ public class BlockModelProvider extends ModelProvider {
 
         registerBalancerNode(blockModels);
         registerEjector(blockModels);
+        registerExpeller(blockModels);
         registerProximitySensor(blockModels, itemModels);
         // PulseLatch, RedstoneClock, and Inverter blockstates are hand-authored; only register item models.
         itemModels.itemModelOutput.accept(HoopyFroodItems.PULSE_LATCH_ITEM.get(),
@@ -302,6 +304,19 @@ public class BlockModelProvider extends ModelProvider {
         blockModels.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.EJECTOR.get())
                         .with(PropertyDispatch.initial(Ejector.TRIGGERED)
+                                .select(false, model)
+                                .select(true,  model))
+                        .with(BlockModelGenerators.ROTATION_FACING)
+        );
+    }
+
+    private static void registerExpeller(BlockModelGenerators blockModels) {
+        MultiVariant model = BlockModelGenerators.plainVariant(
+                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/expeller"));
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.EXPELLER.get())
+                        .with(PropertyDispatch.initial(Expeller.TRIGGERED)
                                 .select(false, model)
                                 .select(true,  model))
                         .with(BlockModelGenerators.ROTATION_FACING)

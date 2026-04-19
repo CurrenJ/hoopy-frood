@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "hoopyfroodtut:sluggish_pulse_latch"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "hoopyfroodtut:blocks/sluggish_pulse_latch"
+}
