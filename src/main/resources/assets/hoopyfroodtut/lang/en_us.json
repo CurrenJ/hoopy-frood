@@ -72,6 +72,8 @@
 
   "block.hoopyfroodtut.pulse_latch": "Pulse Latch",
   "item.hoopyfroodtut.pulse_latch": "Pulse Latch",
+  "block.hoopyfroodtut.sluggish_pulse_latch": "Sluggish Pulse Latch",
+  "item.hoopyfroodtut.sluggish_pulse_latch": "Sluggish Pulse Latch",
   "block.hoopyfroodtut.redstone_clock": "Redstone Clock",
   "item.hoopyfroodtut.redstone_clock": "Redstone Clock",
   "block.hoopyfroodtut.proximity_sensor": "Proximity Sensor",

@@ -7,6 +7,7 @@ import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
 import grill24.hoopyfroodtut.block.Inverter;
 import grill24.hoopyfroodtut.block.PulseLatch;
+import grill24.hoopyfroodtut.block.SluggishPulseLatch;
 import grill24.hoopyfroodtut.block.ProximitySensor;
 import grill24.hoopyfroodtut.block.RedstoneClock;
 import grill24.hoopyfroodtut.block.InfiniteImprobabilityDrive;
@@ -79,6 +80,10 @@ public class HoopyFroodTutBlocks {
     // Holds a redstone signal HIGH for a configurable duration after a rising edge on its input face.
     public static final DeferredBlock<PulseLatch> PULSE_LATCH = BLOCKS.registerBlock("pulse_latch",
             p -> new PulseLatch(p.strength(1.5f)));
+
+    // Sluggish variant with much longer hold durations (2s, 5s, 15s, 60s).
+    public static final DeferredBlock<SluggishPulseLatch> SLUGGISH_PULSE_LATCH = BLOCKS.registerBlock("sluggish_pulse_latch",
+            p -> new SluggishPulseLatch(p.strength(1.5f)));
 
     // Self-oscillating redstone pulse generator; input face pauses the clock.
     public static final DeferredBlock<RedstoneClock> REDSTONE_CLOCK = BLOCKS.registerBlock("redstone_clock",

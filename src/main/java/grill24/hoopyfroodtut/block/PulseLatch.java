@@ -37,6 +37,8 @@ public class PulseLatch extends DiodeBlock implements EntityBlock {
     // Hold duration in ticks for each delay level (1-4)
     public static final int[] DURATIONS = {5, 10, 20, 40};
 
+    protected int[] getDurations() { return DURATIONS; }
+
     public PulseLatch(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
@@ -46,7 +48,7 @@ public class PulseLatch extends DiodeBlock implements EntityBlock {
     }
 
     @Override
-    public MapCodec<PulseLatch> codec() {
+    public MapCodec<? extends PulseLatch> codec() {
         return CODEC;
     }
 
@@ -69,7 +71,7 @@ public class PulseLatch extends DiodeBlock implements EntityBlock {
             int delay = newState.getValue(DELAY);
             level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.3f, 0.5f + (delay - 1) * 0.1f);
             if (player instanceof ServerPlayer sp)
-                sp.sendSystemMessage(Component.literal("Hold: " + DURATIONS[delay - 1] + " ticks"), true);
+                sp.sendSystemMessage(Component.literal("Hold: " + getDurations()[delay - 1] + " ticks"), true);
         }
         return InteractionResult.SUCCESS;
     }
@@ -87,7 +89,7 @@ public class PulseLatch extends DiodeBlock implements EntityBlock {
         if (!level.isClientSide() && level.getBlockEntity(pos) instanceof PulseLatchBlockEntity be) {
             boolean receivingNow = this.shouldTurnOn(level, pos, state);
             if (receivingNow && !be.wasReceivingPower) {
-                be.trigger(level, pos, state, DURATIONS[state.getValue(DELAY) - 1]);
+                be.trigger(level, pos, state, getDurations()[state.getValue(DELAY) - 1]);
             }
             be.wasReceivingPower = receivingNow;
         }

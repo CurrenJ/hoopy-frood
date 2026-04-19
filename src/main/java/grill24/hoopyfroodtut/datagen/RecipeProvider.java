@@ -59,6 +59,13 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_repeater", has(Items.REPEATER))
                 .save(this.output);
 
+        // Sluggish Pulse Latch: craft a Pulse Latch with Soul Sand
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.PULSE_LATCH)
+                .requires(Items.SOUL_SAND)
+                .unlockedBy("has_pulse_latch", has(HoopyFroodTutBlocks.PULSE_LATCH.get()))
+                .save(this.output);
+
         // Redstone Clock: clock item centre, comparator below, iron ingots corners, redstone sides
         ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.REDSTONE_CLOCK.get())
                 .pattern("DS")

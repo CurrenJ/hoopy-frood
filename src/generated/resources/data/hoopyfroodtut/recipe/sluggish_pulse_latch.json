@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hoopyfroodtut:pulse_latch",
+    "minecraft:soul_sand"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:sluggish_pulse_latch"
+  }
+}

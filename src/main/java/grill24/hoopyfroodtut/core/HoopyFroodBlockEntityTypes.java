@@ -6,6 +6,7 @@ import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.EjectorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.PulseLatchBlockEntity;
+import grill24.hoopyfroodtut.blockentity.SluggishPulseLatchBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ProximitySensorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.RedstoneClockBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
@@ -51,6 +52,10 @@ public class HoopyFroodBlockEntityTypes {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PulseLatchBlockEntity>> PULSE_LATCH =
             BLOCK_ENTITY_TYPES.register("pulse_latch",
                     () -> new BlockEntityType<>(PulseLatchBlockEntity::new, HoopyFroodTutBlocks.PULSE_LATCH.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SluggishPulseLatchBlockEntity>> SLUGGISH_PULSE_LATCH =
+            BLOCK_ENTITY_TYPES.register("sluggish_pulse_latch",
+                    () -> new BlockEntityType<>(SluggishPulseLatchBlockEntity::new, HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneClockBlockEntity>> REDSTONE_CLOCK =
             BLOCK_ENTITY_TYPES.register("redstone_clock",

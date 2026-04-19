@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -15,7 +16,11 @@ public class PulseLatchBlockEntity extends BlockEntity {
     private int ticksRemaining = 0;
 
     public PulseLatchBlockEntity(BlockPos pos, BlockState state) {
-        super(HoopyFroodBlockEntityTypes.PULSE_LATCH.get(), pos, state);
+        this(HoopyFroodBlockEntityTypes.PULSE_LATCH.get(), pos, state);
+    }
+
+    protected PulseLatchBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     @Override

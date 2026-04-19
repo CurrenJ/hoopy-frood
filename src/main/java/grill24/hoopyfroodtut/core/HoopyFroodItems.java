@@ -78,6 +78,9 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> PULSE_LATCH_ITEM =
             ITEMS.registerSimpleBlockItem("pulse_latch", HoopyFroodTutBlocks.PULSE_LATCH);
 
+    public static final DeferredItem<BlockItem> SLUGGISH_PULSE_LATCH_ITEM =
+            ITEMS.registerSimpleBlockItem("sluggish_pulse_latch", HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH);
+
     public static final DeferredItem<BlockItem> REDSTONE_CLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("redstone_clock", HoopyFroodTutBlocks.REDSTONE_CLOCK);
 

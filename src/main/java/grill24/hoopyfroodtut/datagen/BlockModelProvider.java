@@ -38,6 +38,7 @@ public class BlockModelProvider extends ModelProvider {
         return super.getKnownBlocks().filter(h -> {
             Block b = h.value();
             return b != HoopyFroodTutBlocks.PULSE_LATCH.get()
+                    && b != HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get()
                     && b != HoopyFroodTutBlocks.REDSTONE_CLOCK.get()
                     && b != HoopyFroodTutBlocks.INVERTER.get();
         });
@@ -71,6 +72,8 @@ public class BlockModelProvider extends ModelProvider {
         // PulseLatch, RedstoneClock, and Inverter blockstates are hand-authored; only register item models.
         itemModels.itemModelOutput.accept(HoopyFroodItems.PULSE_LATCH_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/pulse_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SLUGGISH_PULSE_LATCH_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/sluggish_pulse_latch_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.REDSTONE_CLOCK_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/redstone_clock_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.INVERTER_ITEM.get(),

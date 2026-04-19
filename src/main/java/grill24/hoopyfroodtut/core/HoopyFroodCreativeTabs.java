@@ -35,6 +35,7 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.WOBBLY_MAGMA_BUCKET.get());
                 output.accept(HoopyFroodItems.INVERTER_ITEM.get());
                 output.accept(HoopyFroodItems.PULSE_LATCH_ITEM.get());
+                output.accept(HoopyFroodItems.SLUGGISH_PULSE_LATCH_ITEM.get());
                 output.accept(HoopyFroodItems.REDSTONE_CLOCK_ITEM.get());
                 output.accept(HoopyFroodItems.PROXIMITY_SENSOR_ITEM.get());
                 output.accept(HoopyFroodItems.EJECTOR_ITEM.get());
