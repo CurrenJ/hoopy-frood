@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/repeater_4tick",
+  "textures": {
+    "slab": "minecraft:block/red_concrete_powder",
+    "top": "minecraft:block/repeater",
+    "unlit": "minecraft:block/redstone_torch_off"
+  }
+}

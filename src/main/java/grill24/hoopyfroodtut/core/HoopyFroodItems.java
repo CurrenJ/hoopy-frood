@@ -72,6 +72,18 @@ public class HoopyFroodItems {
             ITEMS.registerItem("wobbly_magma_bucket",
                     p -> new WobblyWaterBucketItem(WobblyWater.SurfaceTexture.MAGMA, p.craftRemainder(Items.BUCKET).stacksTo(1)));
 
+    public static final DeferredItem<BlockItem> PULSE_LATCH_ITEM =
+            ITEMS.registerSimpleBlockItem("pulse_latch", HoopyFroodTutBlocks.PULSE_LATCH);
+
+    public static final DeferredItem<BlockItem> REDSTONE_CLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("redstone_clock", HoopyFroodTutBlocks.REDSTONE_CLOCK);
+
+    public static final DeferredItem<BlockItem> PROXIMITY_SENSOR_ITEM =
+            ITEMS.registerSimpleBlockItem("proximity_sensor", HoopyFroodTutBlocks.PROXIMITY_SENSOR);
+
+    public static final DeferredItem<BlockItem> EJECTOR_ITEM =
+            ITEMS.registerSimpleBlockItem("ejector", HoopyFroodTutBlocks.EJECTOR);
+
     public static final DeferredItem<BlockItem> BANISHING_BIN_ITEM =
             ITEMS.registerSimpleBlockItem("banishing_bin", HoopyFroodTutBlocks.BANISHING_BIN);
 

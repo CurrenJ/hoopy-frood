@@ -4,6 +4,10 @@ import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BanishingBinBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
+import grill24.hoopyfroodtut.blockentity.EjectorBlockEntity;
+import grill24.hoopyfroodtut.blockentity.PulseLatchBlockEntity;
+import grill24.hoopyfroodtut.blockentity.ProximitySensorBlockEntity;
+import grill24.hoopyfroodtut.blockentity.RedstoneClockBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
 import grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SomebodyElsesProblemFieldBlockEntity;
@@ -43,6 +47,22 @@ public class HoopyFroodBlockEntityTypes {
             BLOCK_ENTITY_TYPES.register("wobbly_water",
                     () -> new BlockEntityType<>(WobblyWaterBlockEntity::new,
                             HoopyFroodTutBlocks.WOBBLY_WATER.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PulseLatchBlockEntity>> PULSE_LATCH =
+            BLOCK_ENTITY_TYPES.register("pulse_latch",
+                    () -> new BlockEntityType<>(PulseLatchBlockEntity::new, HoopyFroodTutBlocks.PULSE_LATCH.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneClockBlockEntity>> REDSTONE_CLOCK =
+            BLOCK_ENTITY_TYPES.register("redstone_clock",
+                    () -> new BlockEntityType<>(RedstoneClockBlockEntity::new, HoopyFroodTutBlocks.REDSTONE_CLOCK.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ProximitySensorBlockEntity>> PROXIMITY_SENSOR =
+            BLOCK_ENTITY_TYPES.register("proximity_sensor",
+                    () -> new BlockEntityType<>(ProximitySensorBlockEntity::new, HoopyFroodTutBlocks.PROXIMITY_SENSOR.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EjectorBlockEntity>> EJECTOR =
+            BLOCK_ENTITY_TYPES.register("ejector",
+                    () -> new BlockEntityType<>(EjectorBlockEntity::new, HoopyFroodTutBlocks.EJECTOR.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BanishingBinBlockEntity>> BANISHING_BIN =
             BLOCK_ENTITY_TYPES.register("banishing_bin",

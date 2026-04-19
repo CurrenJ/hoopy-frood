@@ -75,6 +75,13 @@ public class HoopyFroodTut {
                 HoopyFroodBlockEntityTypes.BANISHING_BIN.get(),
                 (be, direction) -> VanillaContainerWrapper.of(be)
         );
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
+                HoopyFroodBlockEntityTypes.EJECTOR.get(),
+                (be, direction) -> VanillaContainerWrapper.of(be)
+        );
+        // ProximitySensor has no inventory, but register for completeness/future use.
+        // PulseLatch and RedstoneClock have no inventory either.
     }
 
     // -------------------------------------------------------------------------

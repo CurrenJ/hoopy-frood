@@ -4,6 +4,8 @@ import grill24.hoopyfroodtut.block.BalancerNode;
 import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
+import grill24.hoopyfroodtut.block.Ejector;
+import grill24.hoopyfroodtut.block.ProximitySensor;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
 import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
@@ -17,13 +19,25 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.Block;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
 
 public class BlockModelProvider extends ModelProvider {
     public BlockModelProvider(PackOutput output) {
         super(output, HoopyFroodTut.MODID);
+    }
+
+    // PulseLatch and RedstoneClock have hand-authored blockstate JSONs in src/main/resources;
+    // exclude them from datagen validation so runData doesn't complain about missing definitions.
+    @Override
+    protected java.util.stream.Stream<? extends Holder<Block>> getKnownBlocks() {
+        return super.getKnownBlocks().filter(h -> {
+            Block b = h.value();
+            return b != HoopyFroodTutBlocks.PULSE_LATCH.get() && b != HoopyFroodTutBlocks.REDSTONE_CLOCK.get();
+        });
     }
 
     @Override
@@ -49,6 +63,13 @@ public class BlockModelProvider extends ModelProvider {
 //        itemModels.itemModelOutput.accept(HoopyFroodTut.BROWN_BRICK.get(), ItemModelUtils.plainModel(brownBrickId));
 
         registerBalancerNode(blockModels);
+        registerEjector(blockModels);
+        registerProximitySensor(blockModels, itemModels);
+        // PulseLatch and RedstoneClock blockstates are hand-authored; only register item models.
+        itemModels.itemModelOutput.accept(HoopyFroodItems.PULSE_LATCH_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/pulse_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.REDSTONE_CLOCK_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/redstone_clock_1tick")));
         registerDisposableCaterpillar(blockModels);
         registerBeggingItemScrabbler(blockModels);
         registerInfiniteImprobabilityDrive(blockModels);
@@ -246,6 +267,37 @@ public class BlockModelProvider extends ModelProvider {
         itemModels.itemModelOutput.accept(
                 HoopyFroodItems.BANISHING_BIN_ITEM.get(),
                 ItemModelUtils.plainModel(modelId));
+    }
+
+    private static void registerProximitySensor(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        MultiVariant inactiveModel = BlockModelGenerators.plainVariant(
+                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/proximity_sensor"));
+        MultiVariant activeModel = BlockModelGenerators.plainVariant(
+                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/proximity_sensor_active"));
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.PROXIMITY_SENSOR.get())
+                        .with(PropertyDispatch.initial(ProximitySensor.ACTIVE)
+                                .select(false, inactiveModel)
+                                .select(true,  activeModel))
+        );
+
+        itemModels.itemModelOutput.accept(
+                HoopyFroodItems.PROXIMITY_SENSOR_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/proximity_sensor")));
+    }
+
+    private static void registerEjector(BlockModelGenerators blockModels) {
+        MultiVariant model = BlockModelGenerators.plainVariant(
+                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/ejector"));
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(HoopyFroodTutBlocks.EJECTOR.get())
+                        .with(PropertyDispatch.initial(Ejector.TRIGGERED)
+                                .select(false, model)
+                                .select(true,  model))
+                        .with(BlockModelGenerators.ROTATION_FACING)
+        );
     }
 
     private static void registerBalancerNode(BlockModelGenerators blockModels) {

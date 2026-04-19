@@ -26,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -47,6 +48,47 @@ public class RecipeProvider extends VanillaRecipeProvider {
         recipeBuilder.save(this.output, recipeKey);
 
         generateRecipes(HoopyFroodTutBlocks.BROWN_BRICKS_FAMILY.get(), FeatureFlagSet.of());
+
+        // Pulse Latch: comparator centre, iron ingots in corners, redstone on cardinal sides
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.PULSE_LATCH.get())
+                .pattern("RSR")
+                .pattern("SPS")
+                .define('S', Items.STONE)
+                .define('P', Items.STICKY_PISTON)
+                .define('R', Items.REPEATER)
+                .unlockedBy("has_repeater", has(Items.REPEATER))
+                .save(this.output);
+
+        // Redstone Clock: clock item centre, comparator below, iron ingots corners, redstone sides
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.REDSTONE_CLOCK.get())
+                .pattern("DS")
+                .pattern("SR")
+                .pattern("CD")
+                .define('S', Items.STONE)
+                .define('R', Items.REPEATER)
+                .define('D', Items.REDSTONE)
+                .define('C', Items.COMPARATOR)
+                .unlockedBy("has_comparator", has(Items.COMPARATOR))
+                .save(this.output);
+
+        // Proximity Sensor: comparator centre, ender pearls on sides, iron ingots corners, redstone
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.PROXIMITY_SENSOR.get())
+                .pattern("IRI")
+                .pattern("ESE")
+                .pattern("IRI")
+                .define('I', Items.SCULK)
+                .define('R', Items.REDSTONE)
+                .define('S', Items.SCULK_SENSOR)
+                .define('E', Items.ENDER_PEARL)
+                .unlockedBy("has_comparator", has(Items.COMPARATOR))
+                .save(this.output);
+
+        // Ejector: dispenser wrapped in redstone dust, with an observer and comparator
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.EJECTOR.get())
+                .requires(Blocks.DISPENSER)
+                .requires(HoopyFroodTutBlocks.REDSTONE_CLOCK)
+                .unlockedBy("has_dispenser", has(Items.DISPENSER))
+                .save(this.output);
 
         // Balancer Node: two hoppers, redstone dust, and surrounded by iron ingots
         ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.BALANCER_NODE.get())

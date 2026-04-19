@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "P": "minecraft:sticky_piston",
+    "R": "minecraft:repeater",
+    "S": "minecraft:stone"
+  },
+  "pattern": [
+    "RSR",
+    "SPS"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:pulse_latch"
+  }
+}

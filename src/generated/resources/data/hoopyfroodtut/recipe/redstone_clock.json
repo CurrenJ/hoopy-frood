@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": "minecraft:comparator",
+    "D": "minecraft:redstone",
+    "R": "minecraft:repeater",
+    "S": "minecraft:stone"
+  },
+  "pattern": [
+    "DS",
+    "SR",
+    "CD"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:redstone_clock"
+  }
+}

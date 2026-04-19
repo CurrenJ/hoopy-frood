@@ -4,6 +4,10 @@ import grill24.hoopyfroodtut.block.BalancerNode;
 import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
+import grill24.hoopyfroodtut.block.Ejector;
+import grill24.hoopyfroodtut.block.PulseLatch;
+import grill24.hoopyfroodtut.block.ProximitySensor;
+import grill24.hoopyfroodtut.block.RedstoneClock;
 import grill24.hoopyfroodtut.block.InfiniteImprobabilityDrive;
 import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
@@ -66,6 +70,22 @@ public class HoopyFroodTutBlocks {
                     .isSuffocating((_, _, _) -> false)
                     .isViewBlocking((_, _, _) -> false)
                     .strength(3.0f, 6.0f)));
+
+    // Holds a redstone signal HIGH for a configurable duration after a rising edge on its input face.
+    public static final DeferredBlock<PulseLatch> PULSE_LATCH = BLOCKS.registerBlock("pulse_latch",
+            p -> new PulseLatch(p.strength(1.5f)));
+
+    // Self-oscillating redstone pulse generator; input face pauses the clock.
+    public static final DeferredBlock<RedstoneClock> REDSTONE_CLOCK = BLOCKS.registerBlock("redstone_clock",
+            p -> new RedstoneClock(p.strength(1.5f)));
+
+    // Emits a redstone signal (0-15) proportional to the proximity of the nearest target entity.
+    public static final DeferredBlock<ProximitySensor> PROXIMITY_SENSOR = BLOCKS.registerBlock("proximity_sensor",
+            p -> new ProximitySensor(p.strength(1.5f)));
+
+    // A directional block that continuously dispenses items from its 9-slot inventory without needing redstone.
+    public static final DeferredBlock<Ejector> EJECTOR = BLOCKS.registerBlock("ejector",
+            p -> new Ejector(p.strength(3.5f)));
 
     // A field emitter that makes the surrounding area invisible to mob AI and pathfinding.
     public static final DeferredBlock<SomebodyElsesProblemField> SOMEBODY_ELSES_PROBLEM_FIELD = BLOCKS.registerBlock(

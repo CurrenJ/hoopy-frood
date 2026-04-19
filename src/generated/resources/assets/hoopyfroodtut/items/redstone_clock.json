@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "hoopyfroodtut:block/redstone_clock_1tick"
+  }
+}

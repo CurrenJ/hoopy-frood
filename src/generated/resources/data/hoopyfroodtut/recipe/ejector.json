@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:dispenser",
+    "hoopyfroodtut:redstone_clock"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:ejector"
+  }
+}

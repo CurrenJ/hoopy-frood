@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "hoopyfroodtut:block/proximity_sensor"
+    },
+    "powered=true": {
+      "model": "hoopyfroodtut:block/proximity_sensor_active"
+    }
+  }
+}
