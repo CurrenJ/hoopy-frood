@@ -90,11 +90,28 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_comparator", has(Items.COMPARATOR))
                 .save(this.output);
 
+        // Proximity Sensor: comparator centre, ender pearls on sides, iron ingots corners, redstone
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.INVERTER.get())
+                .pattern("DST")
+                .pattern("SSS")
+                .define('T', Items.REDSTONE_TORCH)
+                .define('R', Items.REDSTONE)
+                .define('S', Items.STONE)
+                .unlockedBy("has_redstone_torch", has(Items.REDSTONE_TORCH))
+                .save(this.output);
+
         // Ejector: dispenser wrapped in redstone dust, with an observer and comparator
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.EJECTOR.get())
                 .requires(Blocks.DISPENSER)
                 .requires(HoopyFroodTutBlocks.REDSTONE_CLOCK)
                 .unlockedBy("has_dispenser", has(Items.DISPENSER))
+                .save(this.output);
+
+        // Expeller: dropper + redstone clock
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.EXPELLER.get())
+                .requires(Blocks.DROPPER)
+                .requires(HoopyFroodTutBlocks.REDSTONE_CLOCK)
+                .unlockedBy("has_dropper", has(Items.DROPPER))
                 .save(this.output);
 
         // Balancer Node: two hoppers, redstone dust, and surrounded by iron ingots

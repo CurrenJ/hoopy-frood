@@ -90,6 +90,9 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> EJECTOR_ITEM =
             ITEMS.registerSimpleBlockItem("ejector", HoopyFroodTutBlocks.EJECTOR);
 
+    public static final DeferredItem<BlockItem> EXPELLER_ITEM =
+            ITEMS.registerSimpleBlockItem("expeller", HoopyFroodTutBlocks.EXPELLER);
+
     public static final DeferredItem<BlockItem> BANISHING_BIN_ITEM =
             ITEMS.registerSimpleBlockItem("banishing_bin", HoopyFroodTutBlocks.BANISHING_BIN);
 

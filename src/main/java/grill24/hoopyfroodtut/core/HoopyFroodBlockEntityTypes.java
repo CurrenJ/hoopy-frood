@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.blockentity.BanishingBinBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.EjectorBlockEntity;
+import grill24.hoopyfroodtut.blockentity.ExpellerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.PulseLatchBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SluggishPulseLatchBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ProximitySensorBlockEntity;
@@ -68,6 +69,10 @@ public class HoopyFroodBlockEntityTypes {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EjectorBlockEntity>> EJECTOR =
             BLOCK_ENTITY_TYPES.register("ejector",
                     () -> new BlockEntityType<>(EjectorBlockEntity::new, HoopyFroodTutBlocks.EJECTOR.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ExpellerBlockEntity>> EXPELLER =
+            BLOCK_ENTITY_TYPES.register("expeller",
+                    () -> new BlockEntityType<>(ExpellerBlockEntity::new, HoopyFroodTutBlocks.EXPELLER.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BanishingBinBlockEntity>> BANISHING_BIN =
             BLOCK_ENTITY_TYPES.register("banishing_bin",

@@ -80,6 +80,13 @@
   "item.hoopyfroodtut.proximity_sensor": "Proximity Sensor",
   "block.hoopyfroodtut.ejector": "Ejector",
   "item.hoopyfroodtut.ejector": "Ejector",
+  "container.ejector": "Ejector",
+  "item.hoopyfroodtut.ejector.tooltip.desc": "A self-activating Dispenser — fires every 4 ticks without redstone. Triggers item-specific behaviors (arrows shoot, buckets place, etc.).",
+
+  "block.hoopyfroodtut.expeller": "Expeller",
+  "item.hoopyfroodtut.expeller": "Expeller",
+  "container.expeller": "Expeller",
+  "item.hoopyfroodtut.expeller.tooltip.desc": "A self-activating Dropper — drops every 4 ticks without redstone. Inserts into adjacent inventories; ejects as item entities otherwise.",
 
   "item.hoopyfroodtut.magic_mirror": "Magic Mirror",
   "item.hoopyfroodtut.magic_mirror.charging": "Charging... costs %s levels",

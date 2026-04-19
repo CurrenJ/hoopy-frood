@@ -260,6 +260,22 @@ public class HoopyFroodTutClient {
                 }
             }
 
+        } else if (item == HoopyFroodItems.EJECTOR_ITEM.get()) {
+            if (Minecraft.getInstance().hasShiftDown()) {
+                tip.add(1, Component.translatable("item.hoopyfroodtut.ejector.tooltip.desc")
+                        .withStyle(ChatFormatting.GRAY));
+            } else {
+                tip.add(1, holdShift);
+            }
+
+        } else if (item == HoopyFroodItems.EXPELLER_ITEM.get()) {
+            if (Minecraft.getInstance().hasShiftDown()) {
+                tip.add(1, Component.translatable("item.hoopyfroodtut.expeller.tooltip.desc")
+                        .withStyle(ChatFormatting.GRAY));
+            } else {
+                tip.add(1, holdShift);
+            }
+
         } else if (item == HoopyFroodItems.WOBBLY_WATER_ITEM.get()
                 || item == HoopyFroodItems.WOBBLY_WATER_BUCKET.get()
                 || item == HoopyFroodItems.WOBBLY_LAVA_BUCKET.get()

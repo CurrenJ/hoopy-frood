@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
+import grill24.hoopyfroodtut.block.Expeller;
 import grill24.hoopyfroodtut.block.Inverter;
 import grill24.hoopyfroodtut.block.PulseLatch;
 import grill24.hoopyfroodtut.block.SluggishPulseLatch;
@@ -96,6 +97,10 @@ public class HoopyFroodTutBlocks {
     // A directional block that continuously dispenses items from its 9-slot inventory without needing redstone.
     public static final DeferredBlock<Ejector> EJECTOR = BLOCKS.registerBlock("ejector",
             p -> new Ejector(p.strength(3.5f)));
+
+    // A directional block that continuously drops items from its 9-slot inventory without needing redstone.
+    public static final DeferredBlock<Expeller> EXPELLER = BLOCKS.registerBlock("expeller",
+            p -> new Expeller(p.strength(3.5f)));
 
     // A field emitter that makes the surrounding area invisible to mob AI and pathfinding.
     public static final DeferredBlock<SomebodyElsesProblemField> SOMEBODY_ELSES_PROBLEM_FIELD = BLOCKS.registerBlock(
