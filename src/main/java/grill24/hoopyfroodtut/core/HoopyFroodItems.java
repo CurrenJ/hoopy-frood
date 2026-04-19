@@ -72,6 +72,9 @@ public class HoopyFroodItems {
             ITEMS.registerItem("wobbly_magma_bucket",
                     p -> new WobblyWaterBucketItem(WobblyWater.SurfaceTexture.MAGMA, p.craftRemainder(Items.BUCKET).stacksTo(1)));
 
+    public static final DeferredItem<BlockItem> INVERTER_ITEM =
+            ITEMS.registerSimpleBlockItem("inverter", HoopyFroodTutBlocks.INVERTER);
+
     public static final DeferredItem<BlockItem> PULSE_LATCH_ITEM =
             ITEMS.registerSimpleBlockItem("pulse_latch", HoopyFroodTutBlocks.PULSE_LATCH);
 

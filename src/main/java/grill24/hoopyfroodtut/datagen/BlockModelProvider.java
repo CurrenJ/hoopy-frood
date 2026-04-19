@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
+import grill24.hoopyfroodtut.block.Inverter;
 import grill24.hoopyfroodtut.block.ProximitySensor;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
 import grill24.hoopyfroodtut.block.WobblyWater;
@@ -30,13 +31,15 @@ public class BlockModelProvider extends ModelProvider {
         super(output, HoopyFroodTut.MODID);
     }
 
-    // PulseLatch and RedstoneClock have hand-authored blockstate JSONs in src/main/resources;
+    // PulseLatch, RedstoneClock, and Inverter have hand-authored blockstate JSONs in src/main/resources;
     // exclude them from datagen validation so runData doesn't complain about missing definitions.
     @Override
     protected java.util.stream.Stream<? extends Holder<Block>> getKnownBlocks() {
         return super.getKnownBlocks().filter(h -> {
             Block b = h.value();
-            return b != HoopyFroodTutBlocks.PULSE_LATCH.get() && b != HoopyFroodTutBlocks.REDSTONE_CLOCK.get();
+            return b != HoopyFroodTutBlocks.PULSE_LATCH.get()
+                    && b != HoopyFroodTutBlocks.REDSTONE_CLOCK.get()
+                    && b != HoopyFroodTutBlocks.INVERTER.get();
         });
     }
 
@@ -65,11 +68,13 @@ public class BlockModelProvider extends ModelProvider {
         registerBalancerNode(blockModels);
         registerEjector(blockModels);
         registerProximitySensor(blockModels, itemModels);
-        // PulseLatch and RedstoneClock blockstates are hand-authored; only register item models.
+        // PulseLatch, RedstoneClock, and Inverter blockstates are hand-authored; only register item models.
         itemModels.itemModelOutput.accept(HoopyFroodItems.PULSE_LATCH_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/pulse_latch_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.REDSTONE_CLOCK_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/redstone_clock_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.INVERTER_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/inverter")));
         registerDisposableCaterpillar(blockModels);
         registerBeggingItemScrabbler(blockModels);
         registerInfiniteImprobabilityDrive(blockModels);

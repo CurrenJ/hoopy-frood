@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
+import grill24.hoopyfroodtut.block.Inverter;
 import grill24.hoopyfroodtut.block.PulseLatch;
 import grill24.hoopyfroodtut.block.ProximitySensor;
 import grill24.hoopyfroodtut.block.RedstoneClock;
@@ -70,6 +71,10 @@ public class HoopyFroodTutBlocks {
                     .isSuffocating((_, _, _) -> false)
                     .isViewBlocking((_, _, _) -> false)
                     .strength(3.0f, 6.0f)));
+
+    // Inverts the input redstone signal: outputs 15 when input is 0, outputs 0 when input is > 0.
+    public static final DeferredBlock<Inverter> INVERTER = BLOCKS.registerBlock("inverter",
+            p -> new Inverter(p.strength(1.5f)));
 
     // Holds a redstone signal HIGH for a configurable duration after a rising edge on its input face.
     public static final DeferredBlock<PulseLatch> PULSE_LATCH = BLOCKS.registerBlock("pulse_latch",

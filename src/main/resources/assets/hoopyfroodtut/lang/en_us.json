@@ -67,6 +67,9 @@
   "block.hoopyfroodtut.somebody_elses_problem_field": "Somebody Else's Problem Field",
   "item.hoopyfroodtut.somebody_elses_problem_field": "Somebody Else's Problem Field",
 
+  "block.hoopyfroodtut.inverter": "Inverter",
+  "item.hoopyfroodtut.inverter": "Inverter",
+
   "block.hoopyfroodtut.pulse_latch": "Pulse Latch",
   "item.hoopyfroodtut.pulse_latch": "Pulse Latch",
   "block.hoopyfroodtut.redstone_clock": "Redstone Clock",
