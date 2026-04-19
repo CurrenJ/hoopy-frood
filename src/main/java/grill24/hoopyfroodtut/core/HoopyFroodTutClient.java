@@ -2,6 +2,8 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
+import grill24.hoopyfroodtut.item.MagicMirrorItem;
+import net.minecraft.world.phys.Vec3;
 import grill24.hoopyfroodtut.client.renderer.BalancerNodeRenderer;
 import grill24.hoopyfroodtut.client.renderer.BanishingBinRenderer;
 import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
@@ -240,6 +242,22 @@ public class HoopyFroodTutClient {
                         .withStyle(ChatFormatting.GRAY));
             } else {
                 tip.add(1, holdShift);
+            }
+
+        } else if (item == HoopyFroodItems.MAGIC_MIRROR.get()) {
+            if (Minecraft.getInstance().hasShiftDown()) {
+                Vec3 dest = event.getItemStack().get(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get());
+                Player player = Minecraft.getInstance().player;
+                if (dest != null && player != null) {
+                    double cost = MagicMirrorItem.computeCost(player.position(), dest);
+                    String coords = String.format("%d, %d, %d", (int) dest.x, (int) dest.y, (int) dest.z);
+                    // Insert between the description line (index 1) and the rate line (index 2)
+                    tip.add(2, Component.literal("Currently: ").withStyle(ChatFormatting.GRAY)
+                        .append(Component.literal(MagicMirrorItem.fmt(cost) + " levels").withStyle(ChatFormatting.YELLOW))
+                        .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
+                        .append(Component.literal(coords).withStyle(ChatFormatting.AQUA))
+                        .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
+                }
             }
 
         } else if (item == HoopyFroodItems.WOBBLY_WATER_ITEM.get()

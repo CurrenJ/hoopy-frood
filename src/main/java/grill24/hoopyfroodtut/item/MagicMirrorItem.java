@@ -3,7 +3,6 @@ package grill24.hoopyfroodtut.item;
 import grill24.hoopyfroodtut.Config;
 import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
 import grill24.hoopyfroodtut.core.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -104,13 +103,13 @@ public class MagicMirrorItem extends Item {
         level.sendParticles(ParticleTypes.END_ROD, pos.x, pos.y + 1.0, pos.z, 30, 0.5, 0.5, 0.5, 0.15);
     }
 
-    private static double computeCost(Vec3 from, Vec3 to) {
+    public static double computeCost(Vec3 from, Vec3 to) {
         double distance = from.distanceTo(to);
         if (distance < 1.0) return 0.0;
         return distance / Config.MAGIC_MIRROR_BLOCKS_PER_LEVEL.get();
     }
 
-    private static String fmt(double cost) {
+    public static String fmt(double cost) {
         return String.format("%.1f", cost);
     }
 
@@ -125,22 +124,6 @@ public class MagicMirrorItem extends Item {
                     .append(Component.literal("spawn point").withStyle(ChatFormatting.AQUA))
                     .append(Component.literal(".").withStyle(ChatFormatting.GRAY))
             );
-
-            Vec3 dest = stack.get(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get());
-            if (dest != null) {
-                net.minecraft.world.entity.player.Player clientPlayer = Minecraft.getInstance().player;
-                if (clientPlayer != null) {
-                    double cost = computeCost(clientPlayer.position(), dest);
-                    String coords = String.format("%d, %d, %d", (int) dest.x, (int) dest.y, (int) dest.z);
-                    components.accept(
-                        Component.literal("Currently: ").withStyle(ChatFormatting.GRAY)
-                            .append(Component.literal(fmt(cost) + " levels").withStyle(ChatFormatting.YELLOW))
-                            .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
-                            .append(Component.literal(coords).withStyle(ChatFormatting.AQUA))
-                            .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                    );
-                }
-            }
 
             int blocksPerLevel = Config.MAGIC_MIRROR_BLOCKS_PER_LEVEL.get();
             components.accept(
