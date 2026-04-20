@@ -291,9 +291,10 @@ public class DisposableCaterpillarBlockEntity extends MovingBlockEntity {
             return;
         }
 
-        // Unbreakable blocks (bedrock, end portal frame, etc.) — abort and destroy self.
+        // Unbreakable blocks (bedrock, end portal frame, etc.) — drop self as item rather than vanish.
         if (targetState.getDestroySpeed(level, targetPos) < 0f) {
-            level.destroyBlock(pos, false);
+            Block.popResource(level, pos, asItemStack());
+            level.removeBlock(pos, false);
             return;
         }
 
