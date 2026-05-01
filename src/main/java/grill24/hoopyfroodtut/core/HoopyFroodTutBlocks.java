@@ -93,27 +93,27 @@ public class HoopyFroodTutBlocks {
 
     // Inverts the input redstone signal: outputs 15 when input is 0, outputs 0 when input is > 0.
     public static final DeferredBlock<Inverter> INVERTER = BLOCKS.registerBlock("inverter",
-            p -> new Inverter(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new Inverter(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Holds a redstone signal HIGH for a configurable duration after a rising edge on its input face.
     public static final DeferredBlock<PulseLatch> PULSE_LATCH = BLOCKS.registerBlock("pulse_latch",
-            p -> new PulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new PulseLatch(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Sluggish variant with much longer hold durations (2s, 5s, 15s, 60s).
     public static final DeferredBlock<SluggishPulseLatch> SLUGGISH_PULSE_LATCH = BLOCKS.registerBlock("sluggish_pulse_latch",
-            p -> new SluggishPulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new SluggishPulseLatch(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Self-oscillating redstone pulse generator; input face pauses the clock.
     public static final DeferredBlock<RedstoneClock> REDSTONE_CLOCK = BLOCKS.registerBlock("redstone_clock",
-            p -> new RedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new RedstoneClock(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Sluggish variant of RedstoneClock with much longer periods (4s, 10s, 30s, 2min).
     public static final DeferredBlock<SluggishRedstoneClock> SLUGGISH_REDSTONE_CLOCK = BLOCKS.registerBlock("sluggish_redstone_clock",
-            p -> new SluggishRedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new SluggishRedstoneClock(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Emits a redstone signal (0-15) proportional to the proximity of the nearest target entity.
     public static final DeferredBlock<ProximitySensor> PROXIMITY_SENSOR = BLOCKS.registerBlock("proximity_sensor",
-            p -> new ProximitySensor(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ProximitySensor(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // A directional block that continuously dispenses items from its 9-slot inventory without needing redstone.
     public static final DeferredBlock<Ejector> EJECTOR = BLOCKS.registerBlock("ejector",
@@ -137,53 +137,53 @@ public class HoopyFroodTutBlocks {
 
     // Functionally identical to Inverter but with a scaffolding frame (allows blocks above).
     public static final DeferredBlock<ScaffoldedInverter> SCAFFOLDED_INVERTER = BLOCKS.registerBlock("scaffolded_inverter",
-            p -> new ScaffoldedInverter(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedInverter(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to vanilla Repeater but with a scaffolding frame (allows blocks above).
     public static final DeferredBlock<ScaffoldedRepeater> SCAFFOLDED_REPEATER = BLOCKS.registerBlock("scaffolded_repeater",
-            p -> new ScaffoldedRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedRepeater(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to vanilla Comparator but with a scaffolding frame.
     public static final DeferredBlock<ScaffoldedComparator> SCAFFOLDED_COMPARATOR = BLOCKS.registerBlock("scaffolded_comparator",
-            p -> new ScaffoldedComparator(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedComparator(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to PulseLatch but with a scaffolding frame.
     public static final DeferredBlock<ScaffoldedPulseLatch> SCAFFOLDED_PULSE_LATCH = BLOCKS.registerBlock("scaffolded_pulse_latch",
-            p -> new ScaffoldedPulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedPulseLatch(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to SluggishPulseLatch but with a scaffolding frame.
     public static final DeferredBlock<ScaffoldedSluggishPulseLatch> SCAFFOLDED_SLUGGISH_PULSE_LATCH = BLOCKS.registerBlock("scaffolded_sluggish_pulse_latch",
-            p -> new ScaffoldedSluggishPulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedSluggishPulseLatch(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to SluggishRedstoneClock but with a scaffolding frame.
     public static final DeferredBlock<ScaffoldedSluggishRedstoneClock> SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK = BLOCKS.registerBlock("scaffolded_sluggish_redstone_clock",
-            p -> new ScaffoldedSluggishRedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedSluggishRedstoneClock(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to RedstoneClock but with a scaffolding frame.
     public static final DeferredBlock<ScaffoldedRedstoneClock> SCAFFOLDED_REDSTONE_CLOCK = BLOCKS.registerBlock("scaffolded_redstone_clock",
-            p -> new ScaffoldedRedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedRedstoneClock(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to vanilla RedstoneWire but with a scaffolding frame.
     public static final DeferredBlock<ScaffoldedRedstoneDust> SCAFFOLDED_REDSTONE_DUST = BLOCKS.registerBlock("scaffolded_redstone_dust",
-            p -> new ScaffoldedRedstoneDust(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY).noOcclusion()));
+            p -> new ScaffoldedRedstoneDust(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // ---- Angled Repeaters -----
 
     // Reads from counter-clockwise side, outputs in FACING direction.
     public static final DeferredBlock<LeftAngledRepeater> LEFT_ANGLED_REPEATER = BLOCKS.registerBlock("left_angled_repeater",
-            p -> new LeftAngledRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new LeftAngledRepeater(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Reads from clockwise side, outputs in FACING direction.
     public static final DeferredBlock<RightAngledRepeater> RIGHT_ANGLED_REPEATER = BLOCKS.registerBlock("right_angled_repeater",
-            p -> new RightAngledRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new RightAngledRepeater(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Scaffolded variant of LeftAngledRepeater.
     public static final DeferredBlock<ScaffoldedLeftAngledRepeater> SCAFFOLDED_LEFT_ANGLED_REPEATER = BLOCKS.registerBlock("scaffolded_left_angled_repeater",
-            p -> new ScaffoldedLeftAngledRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedLeftAngledRepeater(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // Scaffolded variant of RightAngledRepeater.
     public static final DeferredBlock<ScaffoldedRightAngledRepeater> SCAFFOLDED_RIGHT_ANGLED_REPEATER = BLOCKS.registerBlock("scaffolded_right_angled_repeater",
-            p -> new ScaffoldedRightAngledRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+            p -> new ScaffoldedRightAngledRepeater(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     // ---- Block Families -----
     public static final Lazy<BlockFamily> BROWN_BRICKS_FAMILY = Lazy.lazy(() -> new BlockFamily.Builder(HoopyFroodTutBlocks.BROWN_BRICKS.get())

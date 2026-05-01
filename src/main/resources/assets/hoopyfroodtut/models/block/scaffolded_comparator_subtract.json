@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/block",
   "loader": "neoforge:composite",
+  "textures": { "particle": "minecraft:block/scaffolding_side" },
   "children": {
     "part_1": {
       "parent": "minecraft:block/comparator_subtract"

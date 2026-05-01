@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/block",
   "loader": "neoforge:composite",
+  "textures": { "particle": "minecraft:block/scaffolding_side" },
   "children": {
     "part_1": {
       "parent": "hoopyfroodtut:block/left_angled_repeater_2tick_on"
