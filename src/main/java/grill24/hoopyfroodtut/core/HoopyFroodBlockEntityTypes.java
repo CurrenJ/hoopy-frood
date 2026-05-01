@@ -7,6 +7,7 @@ import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.EjectorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ExpellerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.PulseLatchBlockEntity;
+import grill24.hoopyfroodtut.blockentity.ScaffoldedComparatorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SluggishPulseLatchBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ProximitySensorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.RedstoneClockBlockEntity;
@@ -52,15 +53,26 @@ public class HoopyFroodBlockEntityTypes {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PulseLatchBlockEntity>> PULSE_LATCH =
             BLOCK_ENTITY_TYPES.register("pulse_latch",
-                    () -> new BlockEntityType<>(PulseLatchBlockEntity::new, HoopyFroodTutBlocks.PULSE_LATCH.get()));
+                    () -> new BlockEntityType<>(PulseLatchBlockEntity::new,
+                            HoopyFroodTutBlocks.PULSE_LATCH.get(),
+                            HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SluggishPulseLatchBlockEntity>> SLUGGISH_PULSE_LATCH =
             BLOCK_ENTITY_TYPES.register("sluggish_pulse_latch",
-                    () -> new BlockEntityType<>(SluggishPulseLatchBlockEntity::new, HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get()));
+                    () -> new BlockEntityType<>(SluggishPulseLatchBlockEntity::new,
+                            HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get(),
+                            HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneClockBlockEntity>> REDSTONE_CLOCK =
             BLOCK_ENTITY_TYPES.register("redstone_clock",
-                    () -> new BlockEntityType<>(RedstoneClockBlockEntity::new, HoopyFroodTutBlocks.REDSTONE_CLOCK.get()));
+                    () -> new BlockEntityType<>(RedstoneClockBlockEntity::new,
+                            HoopyFroodTutBlocks.REDSTONE_CLOCK.get(),
+                            HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ScaffoldedComparatorBlockEntity>> SCAFFOLDED_COMPARATOR =
+            BLOCK_ENTITY_TYPES.register("scaffolded_comparator",
+                    () -> new BlockEntityType<>(ScaffoldedComparatorBlockEntity::new,
+                            HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ProximitySensorBlockEntity>> PROXIMITY_SENSOR =
             BLOCK_ENTITY_TYPES.register("proximity_sensor",

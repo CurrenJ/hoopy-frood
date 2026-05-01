@@ -42,6 +42,18 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.EXPELLER_ITEM.get());
                 output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());
                 output.accept(HoopyFroodItems.MAGIC_MIRROR.get());
+                // Scaffolded redstone components
+                output.accept(HoopyFroodItems.SCAFFOLDED_REPEATER_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_COMPARATOR_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_PULSE_LATCH_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_PULSE_LATCH_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_REDSTONE_CLOCK_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_REDSTONE_DUST_ITEM.get());
+                // Angled repeaters
+                output.accept(HoopyFroodItems.LEFT_ANGLED_REPEATER_ITEM.get());
+                output.accept(HoopyFroodItems.RIGHT_ANGLED_REPEATER_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_LEFT_ANGLED_REPEATER_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_RIGHT_ANGLED_REPEATER_ITEM.get());
             }).build());
 
     // Add the example block item to the building blocks tab

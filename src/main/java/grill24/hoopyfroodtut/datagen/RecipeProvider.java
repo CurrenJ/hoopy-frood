@@ -242,6 +242,155 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 new CaterpillarSetFlagRecipe(Ingredient.of(Items.NETHER_STAR),
                         HoopyFroodDataComponents.CATERPILLAR_UNDYING.get()));
 
+        // ---- Scaffolded Redstone Components ----
+        // [base] + Scaffolding → [scaffolded] (shapeless)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get())
+                .requires(Items.REPEATER)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_repeater", has(Items.REPEATER))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_repeater")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get())
+                .requires(Items.COMPARATOR)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_comparator", has(Items.COMPARATOR))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_comparator")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.PULSE_LATCH)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_pulse_latch", has(HoopyFroodTutBlocks.PULSE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_pulse_latch")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_sluggish_pulse_latch", has(HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_sluggish_pulse_latch")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get())
+                .requires(HoopyFroodTutBlocks.REDSTONE_CLOCK)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_redstone_clock", has(HoopyFroodTutBlocks.REDSTONE_CLOCK.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_redstone_clock")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get())
+                .requires(Items.REDSTONE)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_redstone_dust")));
+
+        // Reverse: [scaffolded] alone → [base] + Scaffolding (shapeless, 1 ingredient)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, Items.REPEATER)
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_REPEATER)
+                .unlockedBy("has_scaffolded_repeater", has(HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_repeater_reverse")));
+
+        // Note: reverse gives back base + scaffolding as two outputs — but shapeless only supports one result.
+        // We give back only the base item; Scaffolding is consumed (treat as cost of in-world conversion only).
+        // For crafting, return base + separate scaffolding recipe.
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, Items.COMPARATOR)
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR)
+                .unlockedBy("has_scaffolded_comparator", has(HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_comparator_reverse")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.PULSE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH)
+                .unlockedBy("has_scaffolded_pulse_latch", has(HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_pulse_latch_reverse")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH)
+                .unlockedBy("has_scaffolded_sluggish_pulse_latch", has(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_sluggish_pulse_latch_reverse")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.REDSTONE_CLOCK.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK)
+                .unlockedBy("has_scaffolded_redstone_clock", has(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_redstone_clock_reverse")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, Items.REDSTONE)
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST)
+                .unlockedBy("has_scaffolded_redstone_dust", has(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_redstone_dust_reverse")));
+
+        // ---- Angled Repeaters ----
+        // Initial craft: Repeater + Redstone Dust → Left Angled Repeater (shaped)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get())
+                .pattern("RD ")
+                .define('R', Items.REPEATER)
+                .define('D', Items.REDSTONE)
+                .unlockedBy("has_repeater", has(Items.REPEATER))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "left_angled_repeater")));
+
+        // Flip: left ↔ right (shapeless, 1 ingredient, delay resets)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get())
+                .requires(HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER)
+                .unlockedBy("has_left_angled_repeater", has(HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "left_to_right_angled_repeater")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get())
+                .requires(HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER)
+                .unlockedBy("has_right_angled_repeater", has(HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "right_to_left_angled_repeater")));
+
+        // Scaffolded angled: [angled] + Scaffolding → [scaffolded angled]
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get())
+                .requires(HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_left_angled_repeater", has(HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_left_angled_repeater")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get())
+                .requires(HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_right_angled_repeater", has(HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_right_angled_repeater")));
+
+        // Scaffolded angled flip: [scaffolded left] ↔ [scaffolded right]
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER)
+                .unlockedBy("has_scaffolded_left_angled_repeater", has(HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_left_to_right_angled_repeater")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER)
+                .unlockedBy("has_scaffolded_right_angled_repeater", has(HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_right_to_left_angled_repeater")));
+
+        // Reverse scaffolded angled: [scaffolded angled] alone → [angled] + Scaffolding
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER)
+                .unlockedBy("has_scaffolded_left_angled_repeater", has(HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_left_angled_repeater_reverse")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER)
+                .unlockedBy("has_scaffolded_right_angled_repeater", has(HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_right_angled_repeater_reverse")));
+
         // Magic Mirror
         ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.MAGIC_MIRROR.get())
                 .pattern("GLG")

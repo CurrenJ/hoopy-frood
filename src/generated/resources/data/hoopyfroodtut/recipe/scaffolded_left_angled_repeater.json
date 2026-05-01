@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hoopyfroodtut:left_angled_repeater",
+    "minecraft:scaffolding"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:scaffolded_left_angled_repeater"
+  }
+}

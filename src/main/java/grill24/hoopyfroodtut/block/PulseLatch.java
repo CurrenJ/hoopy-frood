@@ -35,7 +35,7 @@ public class PulseLatch extends DiodeBlock implements EntityBlock {
     public static final IntegerProperty DELAY = BlockStateProperties.DELAY;
 
     // Hold duration in ticks for each delay level (1-4)
-    public static final int[] DURATIONS = {5, 10, 20, 40};
+    public static final int[] DURATIONS = {2, 4, 6, 8};
 
     protected int[] getDurations() { return DURATIONS; }
 

@@ -62,6 +62,9 @@ public class HoopyFroodTut {
 
         // Debug commands
         NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
+
+        // Scaffolding conversion: right-click with scaffolding to upgrade redstone components
+        NeoForge.EVENT_BUS.addListener(ScaffoldingConversionEvents::onRightClickBlock);
     }
 
     private void onRegisterCapabilities(RegisterCapabilitiesEvent event) {

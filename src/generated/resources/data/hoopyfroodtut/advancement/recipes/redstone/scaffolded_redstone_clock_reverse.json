@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_scaffolded_redstone_clock": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hoopyfroodtut:scaffolded_redstone_clock"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hoopyfroodtut:scaffolded_redstone_clock_reverse"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_scaffolded_redstone_clock"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hoopyfroodtut:scaffolded_redstone_clock_reverse"
+    ]
+  }
+}

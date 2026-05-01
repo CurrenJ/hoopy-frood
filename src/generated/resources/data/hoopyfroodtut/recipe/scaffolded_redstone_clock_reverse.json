@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hoopyfroodtut:scaffolded_redstone_clock"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:redstone_clock"
+  }
+}

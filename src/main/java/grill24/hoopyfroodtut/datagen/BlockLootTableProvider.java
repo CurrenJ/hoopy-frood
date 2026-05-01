@@ -28,6 +28,18 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HoopyFroodTutBlocks.EXPELLER.get());
         add(HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(), noDrop());
         add(HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), noDrop());
+        // Scaffolded redstone components
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get());
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get());
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get());
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get());
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get());
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get());
+        // Angled repeaters
+        dropSelf(HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get());
+        dropSelf(HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get());
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get());
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get());
     }
 
     @Override
@@ -43,7 +55,19 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
                 HoopyFroodTutBlocks.EJECTOR.get(),
                 HoopyFroodTutBlocks.EXPELLER.get(),
                 HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(),
-                HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get()
+                HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(),
+                // Scaffolded redstone components
+                HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get(),
+                HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get(),
+                HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get(),
+                HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get(),
+                HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get(),
+                HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get(),
+                // Angled repeaters
+                HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get(),
+                HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get(),
+                HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get(),
+                HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get()
         );
     }
 }

@@ -25,6 +25,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
 
 public class BlockModelProvider extends ModelProvider {
@@ -32,7 +33,7 @@ public class BlockModelProvider extends ModelProvider {
         super(output, HoopyFroodTut.MODID);
     }
 
-    // PulseLatch, RedstoneClock, and Inverter have hand-authored blockstate JSONs in src/main/resources;
+    // PulseLatch, RedstoneClock, Inverter, and all 10 new blocks have hand-authored blockstate JSONs;
     // exclude them from datagen validation so runData doesn't complain about missing definitions.
     @Override
     protected java.util.stream.Stream<? extends Holder<Block>> getKnownBlocks() {
@@ -41,7 +42,19 @@ public class BlockModelProvider extends ModelProvider {
             return b != HoopyFroodTutBlocks.PULSE_LATCH.get()
                     && b != HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get()
                     && b != HoopyFroodTutBlocks.REDSTONE_CLOCK.get()
-                    && b != HoopyFroodTutBlocks.INVERTER.get();
+                    && b != HoopyFroodTutBlocks.INVERTER.get()
+                    // Scaffolded redstone components (hand-authored models)
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get()
+                    // Angled repeaters (hand-authored models)
+                    && b != HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get()
+                    && b != HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get();
         });
     }
 
@@ -80,6 +93,30 @@ public class BlockModelProvider extends ModelProvider {
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/redstone_clock_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.INVERTER_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/inverter")));
+        // New blocks — all hand-authored blockstates; register item models pointing to their base models.
+        // Scaffolded repeater: use same model as vanilla repeater_1tick
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_REPEATER_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_repeater_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_COMPARATOR_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_comparator")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_PULSE_LATCH_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_pulse_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_PULSE_LATCH_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_sluggish_pulse_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_REDSTONE_CLOCK_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_redstone_clock_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_REDSTONE_DUST_ITEM.get(),
+                ItemModelUtils.tintedModel(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_redstone_dust_dot"),
+                        ItemModelUtils.constantTint(RedStoneWireBlock.getColorForPower(0))));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.LEFT_ANGLED_REPEATER_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/left_angled_repeater_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.RIGHT_ANGLED_REPEATER_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/right_angled_repeater_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_LEFT_ANGLED_REPEATER_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_left_angled_repeater_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_RIGHT_ANGLED_REPEATER_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_right_angled_repeater_1tick")));
         registerDisposableCaterpillar(blockModels);
         registerBeggingItemScrabbler(blockModels);
         registerInfiniteImprobabilityDrive(blockModels);

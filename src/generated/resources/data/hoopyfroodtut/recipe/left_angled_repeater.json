@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "D": "minecraft:redstone",
+    "R": "minecraft:repeater"
+  },
+  "pattern": [
+    "RD "
+  ],
+  "result": {
+    "id": "hoopyfroodtut:left_angled_repeater"
+  }
+}

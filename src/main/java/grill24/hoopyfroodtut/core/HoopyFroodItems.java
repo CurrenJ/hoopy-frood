@@ -104,4 +104,36 @@ public class HoopyFroodItems {
     public static final DeferredItem<MagicMirrorItem> MAGIC_MIRROR =
             ITEMS.registerItem("magic_mirror",
                     p -> new MagicMirrorItem(p.stacksTo(1)));
+
+    // ---- Scaffolded Redstone Components ----
+    public static final DeferredItem<BlockItem> SCAFFOLDED_REPEATER_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_repeater", HoopyFroodTutBlocks.SCAFFOLDED_REPEATER);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_COMPARATOR_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_comparator", HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_PULSE_LATCH_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_pulse_latch", HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_SLUGGISH_PULSE_LATCH_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_sluggish_pulse_latch", HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_REDSTONE_CLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_redstone_clock", HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_REDSTONE_DUST_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_redstone_dust", HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST);
+
+    // ---- Angled Repeaters ----
+    public static final DeferredItem<BlockItem> LEFT_ANGLED_REPEATER_ITEM =
+            ITEMS.registerSimpleBlockItem("left_angled_repeater", HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER);
+
+    public static final DeferredItem<BlockItem> RIGHT_ANGLED_REPEATER_ITEM =
+            ITEMS.registerSimpleBlockItem("right_angled_repeater", HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_LEFT_ANGLED_REPEATER_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_left_angled_repeater", HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_RIGHT_ANGLED_REPEATER_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_right_angled_repeater", HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER);
 }

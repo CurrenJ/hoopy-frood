@@ -3,6 +3,9 @@ package grill24.hoopyfroodtut.core;
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
 import grill24.hoopyfroodtut.item.MagicMirrorItem;
+import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.color.block.BlockTintSources;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import grill24.hoopyfroodtut.client.renderer.BalancerNodeRenderer;
 import grill24.hoopyfroodtut.client.renderer.BanishingBinRenderer;
@@ -31,6 +34,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RenderLivingEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -253,10 +257,10 @@ public class HoopyFroodTutClient {
                     String coords = String.format("%d, %d, %d", (int) dest.x, (int) dest.y, (int) dest.z);
                     // Insert between the description line (index 1) and the rate line (index 2)
                     tip.add(2, Component.literal("Currently: ").withStyle(ChatFormatting.GRAY)
-                        .append(Component.literal(MagicMirrorItem.fmt(cost) + " levels").withStyle(ChatFormatting.YELLOW))
-                        .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(coords).withStyle(ChatFormatting.AQUA))
-                        .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
+                            .append(Component.literal(MagicMirrorItem.fmt(cost) + " levels").withStyle(ChatFormatting.YELLOW))
+                            .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
+                            .append(Component.literal(coords).withStyle(ChatFormatting.AQUA))
+                            .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
                 }
             }
 
@@ -317,5 +321,10 @@ public class HoopyFroodTutClient {
                 event.setCanceled(true);
             }
         }
+    }
+
+    @SubscribeEvent
+    static void onRegisterColorHandlers(RegisterColorHandlersEvent.BlockTintSources event) {
+        event.register(List.of(BlockTintSources.redstone()), HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get());
     }
 }

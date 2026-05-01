@@ -1,0 +1,23 @@
+{
+  "parent": "hoopyfroodtut:block/left_angled_repeater_base",
+  "loader": "neoforge:composite",
+  "children": {
+    "part_1": {
+      "parent": "hoopyfroodtut:block/left_angled_repeater_base"
+    },
+    "part_2": {
+      "parent": "hoopyfroodtut:block/left_angled_repeater_base",
+      "elements": [
+        { "from": [ 7, 2, 12 ], "to": [ 9, 7, 14 ],
+          "faces": {
+            "up":    { "uv": [ 7, 6, 9, 8 ], "texture": "#torch" },
+            "north": { "uv": [ 7, 6, 9, 11 ], "texture": "#torch" },
+            "south": { "uv": [ 7, 6, 9, 11 ], "texture": "#torch" },
+            "west":  { "uv": [ 7, 6, 9, 11 ], "texture": "#torch" },
+            "east":  { "uv": [ 7, 6, 9, 11 ], "texture": "#torch" }
+          }
+        }
+      ]
+    }
+  }
+}

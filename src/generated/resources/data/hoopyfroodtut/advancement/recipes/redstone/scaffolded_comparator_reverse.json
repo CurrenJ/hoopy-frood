@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_scaffolded_comparator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hoopyfroodtut:scaffolded_comparator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hoopyfroodtut:scaffolded_comparator_reverse"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_scaffolded_comparator"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hoopyfroodtut:scaffolded_comparator_reverse"
+    ]
+  }
+}

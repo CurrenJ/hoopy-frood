@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "children": {
+    "part_1": {
+      "parent": "minecraft:block/redstone_dust_side_up"
+    },
+    "part_2": {
+      "parent": "minecraft:block/scaffolding_stable"
+    }
+  }
+}

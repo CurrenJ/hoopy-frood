@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "minecraft:redstone",
+    "minecraft:scaffolding"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:scaffolded_redstone_dust"
+  }
+}

@@ -96,5 +96,26 @@
 
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",
-  "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs"
+  "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs",
+
+  "block.hoopyfroodtut.scaffolded_repeater": "Scaffolded Repeater",
+  "item.hoopyfroodtut.scaffolded_repeater": "Scaffolded Repeater",
+  "block.hoopyfroodtut.scaffolded_comparator": "Scaffolded Comparator",
+  "item.hoopyfroodtut.scaffolded_comparator": "Scaffolded Comparator",
+  "block.hoopyfroodtut.scaffolded_pulse_latch": "Scaffolded Pulse Latch",
+  "item.hoopyfroodtut.scaffolded_pulse_latch": "Scaffolded Pulse Latch",
+  "block.hoopyfroodtut.scaffolded_sluggish_pulse_latch": "Scaffolded Sluggish Pulse Latch",
+  "item.hoopyfroodtut.scaffolded_sluggish_pulse_latch": "Scaffolded Sluggish Pulse Latch",
+  "block.hoopyfroodtut.scaffolded_redstone_clock": "Scaffolded Redstone Clock",
+  "item.hoopyfroodtut.scaffolded_redstone_clock": "Scaffolded Redstone Clock",
+  "block.hoopyfroodtut.scaffolded_redstone_dust": "Scaffolded Redstone Dust",
+  "item.hoopyfroodtut.scaffolded_redstone_dust": "Scaffolded Redstone Dust",
+  "block.hoopyfroodtut.left_angled_repeater": "Left Angled Repeater",
+  "item.hoopyfroodtut.left_angled_repeater": "Left Angled Repeater",
+  "block.hoopyfroodtut.right_angled_repeater": "Right Angled Repeater",
+  "item.hoopyfroodtut.right_angled_repeater": "Right Angled Repeater",
+  "block.hoopyfroodtut.scaffolded_left_angled_repeater": "Scaffolded Left Angled Repeater",
+  "item.hoopyfroodtut.scaffolded_left_angled_repeater": "Scaffolded Left Angled Repeater",
+  "block.hoopyfroodtut.scaffolded_right_angled_repeater": "Scaffolded Right Angled Repeater",
+  "item.hoopyfroodtut.scaffolded_right_angled_repeater": "Scaffolded Right Angled Repeater"
 }

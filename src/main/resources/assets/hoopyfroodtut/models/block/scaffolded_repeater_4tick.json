@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "children": {
+    "part_1": {
+      "parent": "minecraft:block/repeater_4tick"
+    },
+    "part_2": {
+      "parent": "hoopyfroodtut:block/scaffolding_short"
+    }
+  }
+}

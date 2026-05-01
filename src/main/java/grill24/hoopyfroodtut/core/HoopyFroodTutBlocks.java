@@ -1,5 +1,6 @@
 package grill24.hoopyfroodtut.core;
 
+import grill24.hoopyfroodtut.block.AngledRepeater;
 import grill24.hoopyfroodtut.block.BalancerNode;
 import grill24.hoopyfroodtut.block.BanishingBin;
 import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
@@ -7,7 +8,17 @@ import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
 import grill24.hoopyfroodtut.block.Expeller;
 import grill24.hoopyfroodtut.block.Inverter;
+import grill24.hoopyfroodtut.block.LeftAngledRepeater;
 import grill24.hoopyfroodtut.block.PulseLatch;
+import grill24.hoopyfroodtut.block.RightAngledRepeater;
+import grill24.hoopyfroodtut.block.ScaffoldedComparator;
+import grill24.hoopyfroodtut.block.ScaffoldedLeftAngledRepeater;
+import grill24.hoopyfroodtut.block.ScaffoldedPulseLatch;
+import grill24.hoopyfroodtut.block.ScaffoldedRedstoneClock;
+import grill24.hoopyfroodtut.block.ScaffoldedRedstoneDust;
+import grill24.hoopyfroodtut.block.ScaffoldedRepeater;
+import grill24.hoopyfroodtut.block.ScaffoldedRightAngledRepeater;
+import grill24.hoopyfroodtut.block.ScaffoldedSluggishPulseLatch;
 import grill24.hoopyfroodtut.block.SluggishPulseLatch;
 import grill24.hoopyfroodtut.block.ProximitySensor;
 import grill24.hoopyfroodtut.block.RedstoneClock;
@@ -114,6 +125,50 @@ public class HoopyFroodTutBlocks {
                     .isViewBlocking((_, _, _) -> false)
                     .strength(3.0f, 6.0f)
                     .lightLevel(state -> 5)));
+
+    // ---- Scaffolded Redstone Components -----
+
+    // Functionally identical to vanilla Repeater but with a scaffolding frame (allows blocks above).
+    public static final DeferredBlock<ScaffoldedRepeater> SCAFFOLDED_REPEATER = BLOCKS.registerBlock("scaffolded_repeater",
+            p -> new ScaffoldedRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Functionally identical to vanilla Comparator but with a scaffolding frame.
+    public static final DeferredBlock<ScaffoldedComparator> SCAFFOLDED_COMPARATOR = BLOCKS.registerBlock("scaffolded_comparator",
+            p -> new ScaffoldedComparator(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Functionally identical to PulseLatch but with a scaffolding frame.
+    public static final DeferredBlock<ScaffoldedPulseLatch> SCAFFOLDED_PULSE_LATCH = BLOCKS.registerBlock("scaffolded_pulse_latch",
+            p -> new ScaffoldedPulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Functionally identical to SluggishPulseLatch but with a scaffolding frame.
+    public static final DeferredBlock<ScaffoldedSluggishPulseLatch> SCAFFOLDED_SLUGGISH_PULSE_LATCH = BLOCKS.registerBlock("scaffolded_sluggish_pulse_latch",
+            p -> new ScaffoldedSluggishPulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Functionally identical to RedstoneClock but with a scaffolding frame.
+    public static final DeferredBlock<ScaffoldedRedstoneClock> SCAFFOLDED_REDSTONE_CLOCK = BLOCKS.registerBlock("scaffolded_redstone_clock",
+            p -> new ScaffoldedRedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Functionally identical to vanilla RedstoneWire but with a scaffolding frame.
+    public static final DeferredBlock<ScaffoldedRedstoneDust> SCAFFOLDED_REDSTONE_DUST = BLOCKS.registerBlock("scaffolded_redstone_dust",
+            p -> new ScaffoldedRedstoneDust(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY).noOcclusion()));
+
+    // ---- Angled Repeaters -----
+
+    // Reads from counter-clockwise side, outputs in FACING direction.
+    public static final DeferredBlock<LeftAngledRepeater> LEFT_ANGLED_REPEATER = BLOCKS.registerBlock("left_angled_repeater",
+            p -> new LeftAngledRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Reads from clockwise side, outputs in FACING direction.
+    public static final DeferredBlock<RightAngledRepeater> RIGHT_ANGLED_REPEATER = BLOCKS.registerBlock("right_angled_repeater",
+            p -> new RightAngledRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Scaffolded variant of LeftAngledRepeater.
+    public static final DeferredBlock<ScaffoldedLeftAngledRepeater> SCAFFOLDED_LEFT_ANGLED_REPEATER = BLOCKS.registerBlock("scaffolded_left_angled_repeater",
+            p -> new ScaffoldedLeftAngledRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Scaffolded variant of RightAngledRepeater.
+    public static final DeferredBlock<ScaffoldedRightAngledRepeater> SCAFFOLDED_RIGHT_ANGLED_REPEATER = BLOCKS.registerBlock("scaffolded_right_angled_repeater",
+            p -> new ScaffoldedRightAngledRepeater(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
     // ---- Block Families -----
     public static final Lazy<BlockFamily> BROWN_BRICKS_FAMILY = Lazy.lazy(() -> new BlockFamily.Builder(HoopyFroodTutBlocks.BROWN_BRICKS.get())
