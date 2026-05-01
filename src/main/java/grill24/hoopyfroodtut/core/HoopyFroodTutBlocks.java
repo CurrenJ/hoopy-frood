@@ -9,6 +9,7 @@ import grill24.hoopyfroodtut.block.Ejector;
 import grill24.hoopyfroodtut.block.Expeller;
 import grill24.hoopyfroodtut.block.Inverter;
 import grill24.hoopyfroodtut.block.ScaffoldedInverter;
+import grill24.hoopyfroodtut.block.ScaffoldedSluggishRedstoneClock;
 import grill24.hoopyfroodtut.block.SluggishRedstoneClock;
 import grill24.hoopyfroodtut.block.LeftAngledRepeater;
 import grill24.hoopyfroodtut.block.PulseLatch;
@@ -153,6 +154,10 @@ public class HoopyFroodTutBlocks {
     // Functionally identical to SluggishPulseLatch but with a scaffolding frame.
     public static final DeferredBlock<ScaffoldedSluggishPulseLatch> SCAFFOLDED_SLUGGISH_PULSE_LATCH = BLOCKS.registerBlock("scaffolded_sluggish_pulse_latch",
             p -> new ScaffoldedSluggishPulseLatch(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
+    // Functionally identical to SluggishRedstoneClock but with a scaffolding frame.
+    public static final DeferredBlock<ScaffoldedSluggishRedstoneClock> SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK = BLOCKS.registerBlock("scaffolded_sluggish_redstone_clock",
+            p -> new ScaffoldedSluggishRedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to RedstoneClock but with a scaffolding frame.
     public static final DeferredBlock<ScaffoldedRedstoneClock> SCAFFOLDED_REDSTONE_CLOCK = BLOCKS.registerBlock("scaffolded_redstone_clock",

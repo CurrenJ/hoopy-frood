@@ -73,7 +73,8 @@ public class HoopyFroodBlockEntityTypes {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SluggishRedstoneClockBlockEntity>> SLUGGISH_REDSTONE_CLOCK =
             BLOCK_ENTITY_TYPES.register("sluggish_redstone_clock",
                     () -> new BlockEntityType<>(SluggishRedstoneClockBlockEntity::new,
-                            HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get()));
+                            HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get(),
+                            HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ScaffoldedComparatorBlockEntity>> SCAFFOLDED_COMPARATOR =
             BLOCK_ENTITY_TYPES.register("scaffolded_comparator",

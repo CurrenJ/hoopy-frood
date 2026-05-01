@@ -46,6 +46,7 @@ public class BlockModelProvider extends ModelProvider {
                     && b != HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get()
                     // Scaffolded redstone components (hand-authored models)
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get()
@@ -109,6 +110,8 @@ public class BlockModelProvider extends ModelProvider {
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_pulse_latch_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_PULSE_LATCH_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_sluggish_pulse_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_sluggish_redstone_clock_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_REDSTONE_CLOCK_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_redstone_clock_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_REDSTONE_DUST_ITEM.get(),

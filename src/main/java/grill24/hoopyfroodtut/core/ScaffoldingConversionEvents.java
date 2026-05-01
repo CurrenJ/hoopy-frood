@@ -49,6 +49,8 @@ public class ScaffoldingConversionEvents {
                     HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get());
             scaffoldMap.put(HoopyFroodTutBlocks.REDSTONE_CLOCK.get(),
                     HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get());
+            scaffoldMap.put(HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get(),
+                    HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK.get());
             scaffoldMap.put(net.minecraft.world.level.block.Blocks.REDSTONE_WIRE,
                     HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get());
             scaffoldMap.put(HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get(),

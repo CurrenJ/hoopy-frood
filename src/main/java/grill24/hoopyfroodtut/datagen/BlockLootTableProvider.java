@@ -35,6 +35,7 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get());
         dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get());
         dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get());
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK.get());
         dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get());
         dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get());
         // Angled repeaters
@@ -65,6 +66,7 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
                 HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get(),
+                HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get(),
                 // Angled repeaters

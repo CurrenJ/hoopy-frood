@@ -124,6 +124,9 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> SCAFFOLDED_SLUGGISH_PULSE_LATCH_ITEM =
             ITEMS.registerSimpleBlockItem("scaffolded_sluggish_pulse_latch", HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH);
 
+    public static final DeferredItem<BlockItem> SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_sluggish_redstone_clock", HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK);
+
     public static final DeferredItem<BlockItem> SCAFFOLDED_REDSTONE_CLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("scaffolded_redstone_clock", HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK);
 

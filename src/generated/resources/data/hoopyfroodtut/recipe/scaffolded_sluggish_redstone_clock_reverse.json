@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hoopyfroodtut:scaffolded_sluggish_redstone_clock"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:sluggish_redstone_clock"
+  }
+}

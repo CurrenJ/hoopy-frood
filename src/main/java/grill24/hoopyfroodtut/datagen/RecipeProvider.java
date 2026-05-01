@@ -286,6 +286,13 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .save(this.output, ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_sluggish_pulse_latch")));
 
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK.get())
+                .requires(HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_sluggish_redstone_clock", has(HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_sluggish_redstone_clock")));
+
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get())
                 .requires(HoopyFroodTutBlocks.REDSTONE_CLOCK)
                 .requires(Items.SCAFFOLDING)
@@ -334,6 +341,12 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_scaffolded_sluggish_pulse_latch", has(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get()))
                 .save(this.output, ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_sluggish_pulse_latch_reverse")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK)
+                .unlockedBy("has_scaffolded_sluggish_redstone_clock", has(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_sluggish_redstone_clock_reverse")));
 
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.REDSTONE_CLOCK.get())
                 .requires(HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK)
