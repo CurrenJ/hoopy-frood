@@ -1,0 +1,6 @@
+{
+  "parent": "hoopyfroodtut:block/redstone_clock_4tick",
+  "textures": {
+    "slab": "minecraft:block/soul_sand"
+  }
+}

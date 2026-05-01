@@ -37,12 +37,14 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.PULSE_LATCH_ITEM.get());
                 output.accept(HoopyFroodItems.SLUGGISH_PULSE_LATCH_ITEM.get());
                 output.accept(HoopyFroodItems.REDSTONE_CLOCK_ITEM.get());
+                output.accept(HoopyFroodItems.SLUGGISH_REDSTONE_CLOCK_ITEM.get());
                 output.accept(HoopyFroodItems.PROXIMITY_SENSOR_ITEM.get());
                 output.accept(HoopyFroodItems.EJECTOR_ITEM.get());
                 output.accept(HoopyFroodItems.EXPELLER_ITEM.get());
                 output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());
                 output.accept(HoopyFroodItems.MAGIC_MIRROR.get());
                 // Scaffolded redstone components
+                output.accept(HoopyFroodItems.SCAFFOLDED_INVERTER_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_REPEATER_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_COMPARATOR_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_PULSE_LATCH_ITEM.get());

@@ -11,6 +11,7 @@ import grill24.hoopyfroodtut.blockentity.ScaffoldedComparatorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SluggishPulseLatchBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ProximitySensorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.RedstoneClockBlockEntity;
+import grill24.hoopyfroodtut.blockentity.SluggishRedstoneClockBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
 import grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SomebodyElsesProblemFieldBlockEntity;
@@ -68,6 +69,11 @@ public class HoopyFroodBlockEntityTypes {
                     () -> new BlockEntityType<>(RedstoneClockBlockEntity::new,
                             HoopyFroodTutBlocks.REDSTONE_CLOCK.get(),
                             HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SluggishRedstoneClockBlockEntity>> SLUGGISH_REDSTONE_CLOCK =
+            BLOCK_ENTITY_TYPES.register("sluggish_redstone_clock",
+                    () -> new BlockEntityType<>(SluggishRedstoneClockBlockEntity::new,
+                            HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ScaffoldedComparatorBlockEntity>> SCAFFOLDED_COMPARATOR =
             BLOCK_ENTITY_TYPES.register("scaffolded_comparator",

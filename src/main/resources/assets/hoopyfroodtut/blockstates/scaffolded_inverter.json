@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=south,powered=false": { "model": "hoopyfroodtut:block/scaffolded_inverter" },
+    "facing=west,powered=false":  { "model": "hoopyfroodtut:block/scaffolded_inverter", "y": 90 },
+    "facing=north,powered=false": { "model": "hoopyfroodtut:block/scaffolded_inverter", "y": 180 },
+    "facing=east,powered=false":  { "model": "hoopyfroodtut:block/scaffolded_inverter", "y": 270 },
+    "facing=south,powered=true":  { "model": "hoopyfroodtut:block/scaffolded_inverter_on" },
+    "facing=west,powered=true":   { "model": "hoopyfroodtut:block/scaffolded_inverter_on", "y": 90 },
+    "facing=north,powered=true":  { "model": "hoopyfroodtut:block/scaffolded_inverter_on", "y": 180 },
+    "facing=east,powered=true":   { "model": "hoopyfroodtut:block/scaffolded_inverter_on", "y": 270 }
+  }
+}

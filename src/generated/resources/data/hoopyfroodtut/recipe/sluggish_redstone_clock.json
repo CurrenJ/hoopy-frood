@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hoopyfroodtut:redstone_clock",
+    "minecraft:soul_sand"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:sluggish_redstone_clock"
+  }
+}

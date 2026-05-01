@@ -23,12 +23,14 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HoopyFroodTutBlocks.PULSE_LATCH.get());
         dropSelf(HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get());
         dropSelf(HoopyFroodTutBlocks.REDSTONE_CLOCK.get());
+        dropSelf(HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get());
         dropSelf(HoopyFroodTutBlocks.PROXIMITY_SENSOR.get());
         dropSelf(HoopyFroodTutBlocks.EJECTOR.get());
         dropSelf(HoopyFroodTutBlocks.EXPELLER.get());
         add(HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(), noDrop());
         add(HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), noDrop());
         // Scaffolded redstone components
+        dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get());
         dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get());
         dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get());
         dropSelf(HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get());
@@ -51,12 +53,14 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
                 HoopyFroodTutBlocks.PULSE_LATCH.get(),
                 HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get(),
                 HoopyFroodTutBlocks.REDSTONE_CLOCK.get(),
+                HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get(),
                 HoopyFroodTutBlocks.PROXIMITY_SENSOR.get(),
                 HoopyFroodTutBlocks.EJECTOR.get(),
                 HoopyFroodTutBlocks.EXPELLER.get(),
                 HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(),
                 HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(),
                 // Scaffolded redstone components
+                HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get(),

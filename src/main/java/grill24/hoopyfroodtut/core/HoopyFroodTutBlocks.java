@@ -8,6 +8,8 @@ import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
 import grill24.hoopyfroodtut.block.Expeller;
 import grill24.hoopyfroodtut.block.Inverter;
+import grill24.hoopyfroodtut.block.ScaffoldedInverter;
+import grill24.hoopyfroodtut.block.SluggishRedstoneClock;
 import grill24.hoopyfroodtut.block.LeftAngledRepeater;
 import grill24.hoopyfroodtut.block.PulseLatch;
 import grill24.hoopyfroodtut.block.RightAngledRepeater;
@@ -104,6 +106,10 @@ public class HoopyFroodTutBlocks {
     public static final DeferredBlock<RedstoneClock> REDSTONE_CLOCK = BLOCKS.registerBlock("redstone_clock",
             p -> new RedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
+    // Sluggish variant of RedstoneClock with much longer periods (4s, 10s, 30s, 2min).
+    public static final DeferredBlock<SluggishRedstoneClock> SLUGGISH_REDSTONE_CLOCK = BLOCKS.registerBlock("sluggish_redstone_clock",
+            p -> new SluggishRedstoneClock(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
+
     // Emits a redstone signal (0-15) proportional to the proximity of the nearest target entity.
     public static final DeferredBlock<ProximitySensor> PROXIMITY_SENSOR = BLOCKS.registerBlock("proximity_sensor",
             p -> new ProximitySensor(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
@@ -127,6 +133,10 @@ public class HoopyFroodTutBlocks {
                     .lightLevel(state -> 5)));
 
     // ---- Scaffolded Redstone Components -----
+
+    // Functionally identical to Inverter but with a scaffolding frame (allows blocks above).
+    public static final DeferredBlock<ScaffoldedInverter> SCAFFOLDED_INVERTER = BLOCKS.registerBlock("scaffolded_inverter",
+            p -> new ScaffoldedInverter(p.instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY)));
 
     // Functionally identical to vanilla Repeater but with a scaffolding frame (allows blocks above).
     public static final DeferredBlock<ScaffoldedRepeater> SCAFFOLDED_REPEATER = BLOCKS.registerBlock("scaffolded_repeater",

@@ -37,6 +37,8 @@ public class RedstoneClock extends DiodeBlock implements EntityBlock {
     // Half-period in ticks for each delay level (full period = 2×)
     public static final int[] HALF_PERIODS = {2, 5, 10, 20};
 
+    public int[] getHalfPeriods() { return HALF_PERIODS; }
+
     public RedstoneClock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
@@ -67,7 +69,7 @@ public class RedstoneClock extends DiodeBlock implements EntityBlock {
             BlockState newState = state.cycle(DELAY);
             level.setBlock(pos, newState, 3);
             int delay = newState.getValue(DELAY);
-            int halfPeriod = HALF_PERIODS[delay - 1];
+            int halfPeriod = getHalfPeriods()[delay - 1];
             level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS, 0.3f, 0.5f + (delay - 1) * 0.1f);
             if (player instanceof ServerPlayer sp)
                 sp.sendSystemMessage(Component.literal("Period: " + (halfPeriod * 2) + " ticks"), true);

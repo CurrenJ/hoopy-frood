@@ -84,6 +84,9 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> REDSTONE_CLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("redstone_clock", HoopyFroodTutBlocks.REDSTONE_CLOCK);
 
+    public static final DeferredItem<BlockItem> SLUGGISH_REDSTONE_CLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("sluggish_redstone_clock", HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK);
+
     public static final DeferredItem<BlockItem> PROXIMITY_SENSOR_ITEM =
             ITEMS.registerSimpleBlockItem("proximity_sensor", HoopyFroodTutBlocks.PROXIMITY_SENSOR);
 
@@ -106,6 +109,9 @@ public class HoopyFroodItems {
                     p -> new MagicMirrorItem(p.stacksTo(1)));
 
     // ---- Scaffolded Redstone Components ----
+    public static final DeferredItem<BlockItem> SCAFFOLDED_INVERTER_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_inverter", HoopyFroodTutBlocks.SCAFFOLDED_INVERTER);
+
     public static final DeferredItem<BlockItem> SCAFFOLDED_REPEATER_ITEM =
             ITEMS.registerSimpleBlockItem("scaffolded_repeater", HoopyFroodTutBlocks.SCAFFOLDED_REPEATER);
 

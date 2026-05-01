@@ -43,7 +43,9 @@ public class BlockModelProvider extends ModelProvider {
                     && b != HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get()
                     && b != HoopyFroodTutBlocks.REDSTONE_CLOCK.get()
                     && b != HoopyFroodTutBlocks.INVERTER.get()
+                    && b != HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get()
                     // Scaffolded redstone components (hand-authored models)
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get()
@@ -93,7 +95,11 @@ public class BlockModelProvider extends ModelProvider {
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/redstone_clock_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.INVERTER_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/inverter")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SLUGGISH_REDSTONE_CLOCK_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/sluggish_redstone_clock_1tick")));
         // New blocks — all hand-authored blockstates; register item models pointing to their base models.
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_INVERTER_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_inverter")));
         // Scaffolded repeater: use same model as vanilla repeater_1tick
         itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_REPEATER_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_repeater_1tick")));

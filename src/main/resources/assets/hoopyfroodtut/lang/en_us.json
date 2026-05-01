@@ -76,6 +76,8 @@
   "item.hoopyfroodtut.sluggish_pulse_latch": "Sluggish Pulse Latch",
   "block.hoopyfroodtut.redstone_clock": "Redstone Clock",
   "item.hoopyfroodtut.redstone_clock": "Redstone Clock",
+  "block.hoopyfroodtut.sluggish_redstone_clock": "Sluggish Redstone Clock",
+  "item.hoopyfroodtut.sluggish_redstone_clock": "Sluggish Redstone Clock",
   "block.hoopyfroodtut.proximity_sensor": "Proximity Sensor",
   "item.hoopyfroodtut.proximity_sensor": "Proximity Sensor",
   "block.hoopyfroodtut.ejector": "Ejector",
@@ -98,6 +100,8 @@
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml": "Hoopy Frood Tut Configs",
   "hoopyfroodtut.configuration.section.hoopyfroodtut.common.toml.title": "Hoopy Frood Tut Configs",
 
+  "block.hoopyfroodtut.scaffolded_inverter": "Scaffolded Inverter",
+  "item.hoopyfroodtut.scaffolded_inverter": "Scaffolded Inverter",
   "block.hoopyfroodtut.scaffolded_repeater": "Scaffolded Repeater",
   "item.hoopyfroodtut.scaffolded_repeater": "Scaffolded Repeater",
   "block.hoopyfroodtut.scaffolded_comparator": "Scaffolded Comparator",

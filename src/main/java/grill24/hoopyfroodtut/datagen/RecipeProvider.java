@@ -100,6 +100,13 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_redstone_torch", has(Items.REDSTONE_TORCH))
                 .save(this.output);
 
+        // Sluggish Redstone Clock: craft a Redstone Clock with Soul Sand
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get())
+                .requires(HoopyFroodTutBlocks.REDSTONE_CLOCK)
+                .requires(Items.SOUL_SAND)
+                .unlockedBy("has_redstone_clock", has(HoopyFroodTutBlocks.REDSTONE_CLOCK.get()))
+                .save(this.output);
+
         // Ejector: dispenser wrapped in redstone dust, with an observer and comparator
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, HoopyFroodTutBlocks.EJECTOR.get())
                 .requires(Blocks.DISPENSER)
@@ -244,6 +251,13 @@ public class RecipeProvider extends VanillaRecipeProvider {
 
         // ---- Scaffolded Redstone Components ----
         // [base] + Scaffolding → [scaffolded] (shapeless)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get())
+                .requires(HoopyFroodTutBlocks.INVERTER)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_inverter", has(HoopyFroodTutBlocks.INVERTER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_inverter")));
+
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get())
                 .requires(Items.REPEATER)
                 .requires(Items.SCAFFOLDING)
@@ -287,6 +301,12 @@ public class RecipeProvider extends VanillaRecipeProvider {
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_redstone_dust")));
 
         // Reverse: [scaffolded] alone → [base] + Scaffolding (shapeless, 1 ingredient)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.INVERTER.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_INVERTER)
+                .unlockedBy("has_scaffolded_inverter", has(HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_inverter_reverse")));
+
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, Items.REPEATER)
                 .requires(HoopyFroodTutBlocks.SCAFFOLDED_REPEATER)
                 .unlockedBy("has_scaffolded_repeater", has(HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get()))

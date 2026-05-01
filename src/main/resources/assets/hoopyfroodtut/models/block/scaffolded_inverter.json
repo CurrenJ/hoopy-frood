@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "children": {
+    "part_1": { "parent": "hoopyfroodtut:block/inverter" },
+    "part_2": { "parent": "hoopyfroodtut:block/scaffolding_short" }
+  }
+}

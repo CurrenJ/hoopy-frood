@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.core.HoopyFroodBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -15,7 +16,11 @@ public class RedstoneClockBlockEntity extends BlockEntity {
     public int tickCount = 0;
 
     public RedstoneClockBlockEntity(BlockPos pos, BlockState state) {
-        super(HoopyFroodBlockEntityTypes.REDSTONE_CLOCK.get(), pos, state);
+        this(HoopyFroodBlockEntityTypes.REDSTONE_CLOCK.get(), pos, state);
+    }
+
+    protected RedstoneClockBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     @Override
@@ -35,7 +40,7 @@ public class RedstoneClockBlockEntity extends BlockEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, RedstoneClockBlockEntity be) {
         if (!be.running) return;
 
-        int halfPeriod = RedstoneClock.HALF_PERIODS[state.getValue(RedstoneClock.DELAY) - 1];
+        int halfPeriod = ((RedstoneClock) state.getBlock()).getHalfPeriods()[state.getValue(RedstoneClock.DELAY) - 1];
         be.tickCount++;
         if (be.tickCount >= halfPeriod) {
             be.tickCount = 0;

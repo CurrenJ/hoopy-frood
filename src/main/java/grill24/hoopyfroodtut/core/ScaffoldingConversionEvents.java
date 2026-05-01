@@ -39,6 +39,8 @@ public class ScaffoldingConversionEvents {
             scaffoldMap = new HashMap<>();
             scaffoldMap.put(net.minecraft.world.level.block.Blocks.REPEATER,
                     HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get());
+            scaffoldMap.put(HoopyFroodTutBlocks.INVERTER.get(),
+                    HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get());
             scaffoldMap.put(net.minecraft.world.level.block.Blocks.COMPARATOR,
                     HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get());
             scaffoldMap.put(HoopyFroodTutBlocks.PULSE_LATCH.get(),
