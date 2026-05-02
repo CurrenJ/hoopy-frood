@@ -66,6 +66,21 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_pulse_latch", has(HoopyFroodTutBlocks.PULSE_LATCH.get()))
                 .save(this.output);
 
+        // Release Latch: Pulse Latch + Redstone Torch (invert the trigger edge)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.RELEASE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.PULSE_LATCH)
+                .requires(Items.REDSTONE_TORCH)
+                .unlockedBy("has_pulse_latch", has(HoopyFroodTutBlocks.PULSE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "release_latch")));
+
+        // Sluggish Release Latch: Release Latch + Soul Sand
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.RELEASE_LATCH)
+                .requires(Items.SOUL_SAND)
+                .unlockedBy("has_release_latch", has(HoopyFroodTutBlocks.RELEASE_LATCH.get()))
+                .save(this.output);
+
         // Redstone Clock: clock item centre, comparator below, iron ingots corners, redstone sides
         ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.REDSTONE_CLOCK.get())
                 .pattern("DS")
@@ -279,6 +294,20 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .save(this.output, ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_pulse_latch")));
 
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_RELEASE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.RELEASE_LATCH)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_release_latch", has(HoopyFroodTutBlocks.RELEASE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_release_latch")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_RELEASE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH)
+                .requires(Items.SCAFFOLDING)
+                .unlockedBy("has_sluggish_release_latch", has(HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_sluggish_release_latch")));
+
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get())
                 .requires(HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH)
                 .requires(Items.SCAFFOLDING)
@@ -335,6 +364,18 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_scaffolded_pulse_latch", has(HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get()))
                 .save(this.output, ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_pulse_latch_reverse")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.RELEASE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_RELEASE_LATCH)
+                .unlockedBy("has_scaffolded_release_latch", has(HoopyFroodTutBlocks.SCAFFOLDED_RELEASE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_release_latch_reverse")));
+
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH.get())
+                .requires(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_RELEASE_LATCH)
+                .unlockedBy("has_scaffolded_sluggish_release_latch", has(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_RELEASE_LATCH.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_sluggish_release_latch_reverse")));
 
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get())
                 .requires(HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH)

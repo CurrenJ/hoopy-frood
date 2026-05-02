@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pulse_latch": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hoopyfroodtut:pulse_latch"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hoopyfroodtut:release_latch"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pulse_latch"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hoopyfroodtut:release_latch"
+    ]
+  }
+}

@@ -7,8 +7,10 @@ import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.EjectorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ExpellerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.PulseLatchBlockEntity;
+import grill24.hoopyfroodtut.blockentity.ReleaseLatchBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ScaffoldedComparatorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SluggishPulseLatchBlockEntity;
+import grill24.hoopyfroodtut.blockentity.SluggishReleaseLatchBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ProximitySensorBlockEntity;
 import grill24.hoopyfroodtut.blockentity.RedstoneClockBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SluggishRedstoneClockBlockEntity;
@@ -57,6 +59,18 @@ public class HoopyFroodBlockEntityTypes {
                     () -> new BlockEntityType<>(PulseLatchBlockEntity::new,
                             HoopyFroodTutBlocks.PULSE_LATCH.get(),
                             HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ReleaseLatchBlockEntity>> RELEASE_LATCH =
+            BLOCK_ENTITY_TYPES.register("release_latch",
+                    () -> new BlockEntityType<>(ReleaseLatchBlockEntity::new,
+                            HoopyFroodTutBlocks.RELEASE_LATCH.get(),
+                            HoopyFroodTutBlocks.SCAFFOLDED_RELEASE_LATCH.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SluggishReleaseLatchBlockEntity>> SLUGGISH_RELEASE_LATCH =
+            BLOCK_ENTITY_TYPES.register("sluggish_release_latch",
+                    () -> new BlockEntityType<>(SluggishReleaseLatchBlockEntity::new,
+                            HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH.get(),
+                            HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_RELEASE_LATCH.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SluggishPulseLatchBlockEntity>> SLUGGISH_PULSE_LATCH =
             BLOCK_ENTITY_TYPES.register("sluggish_pulse_latch",

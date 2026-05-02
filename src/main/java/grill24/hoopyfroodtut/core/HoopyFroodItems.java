@@ -78,6 +78,12 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> PULSE_LATCH_ITEM =
             ITEMS.registerSimpleBlockItem("pulse_latch", HoopyFroodTutBlocks.PULSE_LATCH);
 
+    public static final DeferredItem<BlockItem> RELEASE_LATCH_ITEM =
+            ITEMS.registerSimpleBlockItem("release_latch", HoopyFroodTutBlocks.RELEASE_LATCH);
+
+    public static final DeferredItem<BlockItem> SLUGGISH_RELEASE_LATCH_ITEM =
+            ITEMS.registerSimpleBlockItem("sluggish_release_latch", HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH);
+
     public static final DeferredItem<BlockItem> SLUGGISH_PULSE_LATCH_ITEM =
             ITEMS.registerSimpleBlockItem("sluggish_pulse_latch", HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH);
 
@@ -111,6 +117,12 @@ public class HoopyFroodItems {
     // ---- Scaffolded Redstone Components ----
     public static final DeferredItem<BlockItem> SCAFFOLDED_INVERTER_ITEM =
             ITEMS.registerSimpleBlockItem("scaffolded_inverter", HoopyFroodTutBlocks.SCAFFOLDED_INVERTER);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_RELEASE_LATCH_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_release_latch", HoopyFroodTutBlocks.SCAFFOLDED_RELEASE_LATCH);
+
+    public static final DeferredItem<BlockItem> SCAFFOLDED_SLUGGISH_RELEASE_LATCH_ITEM =
+            ITEMS.registerSimpleBlockItem("scaffolded_sluggish_release_latch", HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_RELEASE_LATCH);
 
     public static final DeferredItem<BlockItem> SCAFFOLDED_REPEATER_ITEM =
             ITEMS.registerSimpleBlockItem("scaffolded_repeater", HoopyFroodTutBlocks.SCAFFOLDED_REPEATER);

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hoopyfroodtut:pulse_latch",
+    "minecraft:redstone_torch"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:release_latch"
+  }
+}

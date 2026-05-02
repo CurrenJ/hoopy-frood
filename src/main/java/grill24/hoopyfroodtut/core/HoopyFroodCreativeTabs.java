@@ -36,6 +36,8 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.INVERTER_ITEM.get());
                 output.accept(HoopyFroodItems.PULSE_LATCH_ITEM.get());
                 output.accept(HoopyFroodItems.SLUGGISH_PULSE_LATCH_ITEM.get());
+                output.accept(HoopyFroodItems.RELEASE_LATCH_ITEM.get());
+                output.accept(HoopyFroodItems.SLUGGISH_RELEASE_LATCH_ITEM.get());
                 output.accept(HoopyFroodItems.REDSTONE_CLOCK_ITEM.get());
                 output.accept(HoopyFroodItems.SLUGGISH_REDSTONE_CLOCK_ITEM.get());
                 output.accept(HoopyFroodItems.PROXIMITY_SENSOR_ITEM.get());
@@ -49,6 +51,8 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.SCAFFOLDED_COMPARATOR_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_PULSE_LATCH_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_PULSE_LATCH_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_RELEASE_LATCH_ITEM.get());
+                output.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_RELEASE_LATCH_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_REDSTONE_CLOCK_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_REDSTONE_DUST_ITEM.get());

@@ -51,6 +51,10 @@ public class BlockModelProvider extends ModelProvider {
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_COMPARATOR.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get()
+                    && b != HoopyFroodTutBlocks.RELEASE_LATCH.get()
+                    && b != HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_RELEASE_LATCH.get()
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_RELEASE_LATCH.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_DUST.get()
                     // Angled repeaters (hand-authored models)
@@ -92,6 +96,10 @@ public class BlockModelProvider extends ModelProvider {
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/pulse_latch_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.SLUGGISH_PULSE_LATCH_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/sluggish_pulse_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.RELEASE_LATCH_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/release_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SLUGGISH_RELEASE_LATCH_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/sluggish_release_latch_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.REDSTONE_CLOCK_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/redstone_clock_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.INVERTER_ITEM.get(),
@@ -108,6 +116,10 @@ public class BlockModelProvider extends ModelProvider {
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_comparator")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_PULSE_LATCH_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_pulse_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_RELEASE_LATCH_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_release_latch_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_RELEASE_LATCH_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_sluggish_release_latch_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_PULSE_LATCH_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_sluggish_pulse_latch_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_SLUGGISH_REDSTONE_CLOCK_ITEM.get(),
