@@ -47,6 +47,10 @@ public class ScaffoldingConversionEvents {
                     HoopyFroodTutBlocks.SCAFFOLDED_PULSE_LATCH.get());
             scaffoldMap.put(HoopyFroodTutBlocks.SLUGGISH_PULSE_LATCH.get(),
                     HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_PULSE_LATCH.get());
+            scaffoldMap.put(HoopyFroodTutBlocks.RELEASE_LATCH.get(),
+                    HoopyFroodTutBlocks.SCAFFOLDED_RELEASE_LATCH.get());
+            scaffoldMap.put(HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH.get(),
+                    HoopyFroodTutBlocks.SCAFFOLDED_SLUGGISH_RELEASE_LATCH.get());
             scaffoldMap.put(HoopyFroodTutBlocks.REDSTONE_CLOCK.get(),
                     HoopyFroodTutBlocks.SCAFFOLDED_REDSTONE_CLOCK.get());
             scaffoldMap.put(HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get(),
