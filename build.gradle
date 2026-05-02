@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.141'
     id 'idea'
+    id 'net.darkhax.curseforgegradle' version '1.1.26'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -12,6 +13,12 @@ tasks.named('wrapper', Wrapper).configure {
     // file size for Gradle. If you do switch this to ALL, run the Gradle wrapper task twice afterwards.
     // (Verify by checking gradle/wrapper/gradle-wrapper.properties to see if distributionUrl now points to `-all`)
     distributionType = Wrapper.DistributionType.BIN
+}
+
+if (file('local.properties').exists()) {
+    def localProps = new Properties()
+    file('local.properties').withInputStream { localProps.load(it) }
+    localProps.each { key, value -> ext.set(key, value) }
 }
 
 version = "${mod_version}+${minecraft_version}"
@@ -176,6 +183,19 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    apiToken = System.getenv('CURSEFORGE_TOKEN') ?: findProperty('curseforge_token') ?: ''
+
+    def mainFile = upload(curseforge_project_id, tasks.jar)
+    mainFile.changelog = file('CHANGELOG.md').exists() ? file('CHANGELOG.md').text : 'No changelog provided.'
+    mainFile.changelogType = 'markdown'
+    mainFile.releaseType = 'release'
+    mainFile.addGameVersion(minecraft_version)
+    mainFile.addModLoader('NeoForge')
 }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
