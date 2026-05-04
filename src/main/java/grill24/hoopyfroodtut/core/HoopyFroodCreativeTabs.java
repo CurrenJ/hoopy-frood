@@ -45,6 +45,7 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.EXPELLER_ITEM.get());
                 output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());
                 output.accept(HoopyFroodItems.MAGIC_MIRROR.get());
+                output.accept(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get());
                 // Scaffolded redstone components
                 output.accept(HoopyFroodItems.SCAFFOLDED_INVERTER_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_REPEATER_ITEM.get());

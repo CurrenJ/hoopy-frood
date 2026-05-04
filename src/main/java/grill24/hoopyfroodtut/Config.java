@@ -57,5 +57,16 @@ public class Config {
 
     static { BUILDER.pop(); }
 
+    // ── Round-Trip Magic Mirror ──────────────────────────────────────────────────
+    static { BUILDER.push("roundTripMagicMirror"); }
+
+    public static final ModConfigSpec.IntValue ROUND_TRIP_MAGIC_MIRROR_MAX_DURABILITY = BUILDER
+            .comment("Maximum durability (number of teleport uses) for the Round-Trip Magic Mirror.",
+                     "A value of 2 gives one full round trip (teleport to spawn, then back to origin).",
+                     "Higher values allow multiple round trips before the mirror shatters.")
+            .defineInRange("maxDurability", 6, 1, Integer.MAX_VALUE);
+
+    static { BUILDER.pop(); }
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 }

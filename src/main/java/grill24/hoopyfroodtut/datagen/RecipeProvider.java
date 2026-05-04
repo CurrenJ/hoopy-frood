@@ -476,6 +476,18 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .define('E', Items.ENDER_PEARL)
                 .unlockedBy("", has(Items.ENDER_PEARL))
                 .save(this.output);
+
+        // Round-Trip Magic Mirror
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())
+                .pattern("GAG")
+                .pattern("DED")
+                .pattern("GAG")
+                .define('G', Items.GOLD_INGOT)
+                .define('A', Items.AMETHYST_BLOCK)
+                .define('D', Items.DIAMOND)
+                .define('E', Items.ENDER_PEARL)
+                .unlockedBy("", has(Items.ENDER_PEARL))
+                .save(this.output);
     }
 
     /** Adds a Disposable Caterpillar crafting recipe for a specific pickaxe tier. */

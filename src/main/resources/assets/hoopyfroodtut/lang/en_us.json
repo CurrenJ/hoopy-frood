@@ -98,6 +98,9 @@
   "item.hoopyfroodtut.magic_mirror.charging": "Charging... costs %s levels",
   "item.hoopyfroodtut.magic_mirror.insufficient_xp": "Not enough XP — needs %s levels",
 
+  "item.hoopyfroodtut.round_trip_magic_mirror": "Round-Trip Magic Mirror",
+  "item.hoopyfroodtut.round_trip_magic_mirror.charging": "Charging... costs %s levels",
+
   "tooltip.hoopyfroodtut.hold_shift": "Hold Shift for details",
 
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",

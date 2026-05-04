@@ -105,4 +105,16 @@ public class HoopyFroodDataComponents {
                             .persistent(Vec3.CODEC)
                             .networkSynchronized(Vec3.STREAM_CODEC)
                             .build());
+
+    /**
+     * Original position stored by the Round-Trip Magic Mirror on its first use.
+     * When present, the next use teleports the player back to this position.
+     * Cleared after the return trip. Absent when the mirror is fresh or has completed a round trip.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Vec3>> ROUND_TRIP_ORIGIN =
+            DATA_COMPONENT_TYPES.register("round_trip_origin",
+                    () -> DataComponentType.<Vec3>builder()
+                            .persistent(Vec3.CODEC)
+                            .networkSynchronized(Vec3.STREAM_CODEC)
+                            .build());
 }

@@ -147,7 +147,9 @@ public class HoopyFroodTut {
         ItemStack off  = player.getOffhandItem();
         boolean holdingMirror = main.is(HoopyFroodItems.MAGIC_MIRROR.get())
                 || off.is(HoopyFroodItems.MAGIC_MIRROR.get());
-        if (!holdingMirror) return;
+        boolean holdingRTMM = main.is(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())
+                || off.is(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get());
+        if (!holdingMirror && !holdingRTMM) return;
 
         TeleportTransition transition = player.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING);
         Vec3 dest = transition.position();
@@ -156,6 +158,13 @@ public class HoopyFroodTut {
             main.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
         }
         if (off.is(HoopyFroodItems.MAGIC_MIRROR.get())) {
+            off.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
+        }
+
+        if (main.is(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())) {
+            main.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
+        }
+        if (off.is(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())) {
             off.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
         }
     }

@@ -88,7 +88,7 @@ public class MagicMirrorItem extends Item {
         return stack;
     }
 
-    private static void deductFractionalLevels(ServerPlayer player, double cost) {
+    public static void deductFractionalLevels(ServerPlayer player, double cost) {
         double newTotal = Math.max(0.0, player.experienceLevel + player.experienceProgress - cost);
         int newLevel = (int) newTotal;
         float newProgress = (float) (newTotal - newLevel);

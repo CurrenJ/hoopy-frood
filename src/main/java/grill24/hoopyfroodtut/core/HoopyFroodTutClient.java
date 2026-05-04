@@ -3,6 +3,7 @@ package grill24.hoopyfroodtut.core;
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
 import grill24.hoopyfroodtut.item.MagicMirrorItem;
+import grill24.hoopyfroodtut.item.RoundTripMagicMirrorItem;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.block.BlockTintSources;
 import net.minecraft.world.level.block.Blocks;
@@ -261,6 +262,33 @@ public class HoopyFroodTutClient {
                             .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
                             .append(Component.literal(coords).withStyle(ChatFormatting.AQUA))
                             .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
+                }
+            }
+
+        } else if (item == HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get()) {
+            if (Minecraft.getInstance().hasShiftDown()) {
+                Vec3 dest = event.getItemStack().get(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get());
+                Player player = Minecraft.getInstance().player;
+                if (dest != null && player != null) {
+                    double cost = MagicMirrorItem.computeCost(player.position(), dest);
+                    String coords = String.format("%d, %d, %d", (int) dest.x, (int) dest.y, (int) dest.z);
+                    tip.add(2, Component.literal("Spawn: ").withStyle(ChatFormatting.GRAY)
+                            .append(Component.literal(MagicMirrorItem.fmt(cost) + " levels").withStyle(ChatFormatting.YELLOW))
+                            .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
+                            .append(Component.literal(coords).withStyle(ChatFormatting.AQUA))
+                            .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
+                }
+                if (RoundTripMagicMirrorItem.isReturning(event.getItemStack())) {
+                    Vec3 origin = event.getItemStack().get(HoopyFroodDataComponents.ROUND_TRIP_ORIGIN.get());
+                    if (origin != null && player != null) {
+                        double returnCost = MagicMirrorItem.computeCost(player.position(), origin);
+                        String originCoords = String.format("%d, %d, %d", (int) origin.x, (int) origin.y, (int) origin.z);
+                        tip.add(3, Component.literal("Return: ").withStyle(ChatFormatting.GRAY)
+                                .append(Component.literal(MagicMirrorItem.fmt(returnCost) + " levels").withStyle(ChatFormatting.GREEN))
+                                .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
+                                .append(Component.literal(originCoords).withStyle(ChatFormatting.AQUA))
+                                .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
+                    }
                 }
             }
 
