@@ -134,5 +134,12 @@
   "block.hoopyfroodtut.scaffolded_left_angled_repeater": "Scaffolded Left Angled Repeater",
   "item.hoopyfroodtut.scaffolded_left_angled_repeater": "Scaffolded Left Angled Repeater",
   "block.hoopyfroodtut.scaffolded_right_angled_repeater": "Scaffolded Right Angled Repeater",
-  "item.hoopyfroodtut.scaffolded_right_angled_repeater": "Scaffolded Right Angled Repeater"
+  "item.hoopyfroodtut.scaffolded_right_angled_repeater": "Scaffolded Right Angled Repeater",
+  "block.hoopyfroodtut.inert_tnt": "Inert TNT",
+  "item.hoopyfroodtut.inert_tnt": "Inert TNT",
+
+  "block.hoopyfroodtut.sturdy_piston": "Sturdy Piston",
+  "item.hoopyfroodtut.sturdy_piston": "Sturdy Piston",
+  "block.hoopyfroodtut.sticky_sturdy_piston": "Sticky Sturdy Piston",
+  "item.hoopyfroodtut.sticky_sturdy_piston": "Sticky Sturdy Piston"
 }

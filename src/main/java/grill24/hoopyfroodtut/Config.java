@@ -68,5 +68,28 @@ public class Config {
 
     static { BUILDER.pop(); }
 
+    // ── Inert TNT ──────────────────────────────────────────────────────────────
+    static { BUILDER.push("inertTnt"); }
+
+    public static final ModConfigSpec.BooleanValue INERT_TNT_KNOCKBACK = BUILDER
+            .comment("When enabled, Inert TNT explosions apply knockback to nearby entities.",
+                     "Entity damage is always zero regardless of this setting.")
+            .define("knockback", false);
+
+    static { BUILDER.pop(); }
+
+    // ── Sturdy Pistons (server config) ────────────────────────────────────────────
+    private static final ModConfigSpec.Builder SERVER_BUILDER = new ModConfigSpec.Builder();
+
+    static { SERVER_BUILDER.push("sturdyPistons"); }
+
+    public static final ModConfigSpec.IntValue STURDY_PISTON_PUSH_LIMIT = SERVER_BUILDER
+            .comment("Maximum number of blocks a Sturdy Piston can push or pull in a single operation.",
+                     "Vanilla pistons are hardcoded to 12.")
+            .defineInRange("pushLimit", 24, 1, 1024);
+
+    static { SERVER_BUILDER.pop(); }
+
     public static final ModConfigSpec SPEC = BUILDER.build();
+    public static final ModConfigSpec SERVER_SPEC = SERVER_BUILDER.build();
 }

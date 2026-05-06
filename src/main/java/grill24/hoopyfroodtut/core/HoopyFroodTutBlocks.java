@@ -7,7 +7,10 @@ import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
 import grill24.hoopyfroodtut.block.Expeller;
+import grill24.hoopyfroodtut.block.InertTntBlock;
 import grill24.hoopyfroodtut.block.Inverter;
+import grill24.hoopyfroodtut.block.SturdyPistonBaseBlock;
+import grill24.hoopyfroodtut.block.SturdyPistonHeadBlock;
 import grill24.hoopyfroodtut.block.ScaffoldedInverter;
 import grill24.hoopyfroodtut.block.ScaffoldedSluggishRedstoneClock;
 import grill24.hoopyfroodtut.block.SluggishRedstoneClock;
@@ -204,6 +207,24 @@ public class HoopyFroodTutBlocks {
     // Scaffolded variant of RightAngledRepeater.
     public static final DeferredBlock<ScaffoldedRightAngledRepeater> SCAFFOLDED_RIGHT_ANGLED_REPEATER = BLOCKS.registerBlock("scaffolded_right_angled_repeater",
             p -> new ScaffoldedRightAngledRepeater(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY).isRedstoneConductor((_, _, _) -> false)));
+
+    // Inert TNT — looks and behaves like vanilla TNT but does zero block/entity damage.
+    public static final DeferredBlock<InertTntBlock> INERT_TNT = BLOCKS.registerBlock("inert_tnt",
+            p -> new InertTntBlock(p.mapColor(MapColor.COLOR_RED).instabreak().sound(SoundType.GRASS)));
+
+    // ---- Sturdy Pistons -----
+
+    // A piston with configurable push limit.
+    public static final DeferredBlock<SturdyPistonBaseBlock> STURDY_PISTON = BLOCKS.registerBlock("sturdy_piston",
+            p -> new SturdyPistonBaseBlock(false, p.strength(1.5F).noOcclusion()));
+
+    // Sticky variant of the Sturdy Piston.
+    public static final DeferredBlock<SturdyPistonBaseBlock> STICKY_STURDY_PISTON = BLOCKS.registerBlock("sticky_sturdy_piston",
+            p -> new SturdyPistonBaseBlock(true, p.strength(1.5F).noOcclusion()));
+
+    // Piston head for Sturdy Pistons — recognizes our blocks as valid bases.
+    public static final DeferredBlock<SturdyPistonHeadBlock> STURDY_PISTON_HEAD = BLOCKS.registerBlock("sturdy_piston_head",
+            p -> new SturdyPistonHeadBlock(p.strength(1.5F).noOcclusion()));
 
     // ---- Block Families -----
     public static final Lazy<BlockFamily> BROWN_BRICKS_FAMILY = Lazy.lazy(() -> new BlockFamily.Builder(HoopyFroodTutBlocks.BROWN_BRICKS.get())

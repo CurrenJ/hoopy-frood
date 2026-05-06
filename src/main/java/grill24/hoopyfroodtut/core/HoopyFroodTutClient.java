@@ -6,6 +6,7 @@ import grill24.hoopyfroodtut.item.MagicMirrorItem;
 import grill24.hoopyfroodtut.item.RoundTripMagicMirrorItem;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.block.BlockTintSources;
+import net.minecraft.client.renderer.entity.TntRenderer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import grill24.hoopyfroodtut.client.renderer.BalancerNodeRenderer;
@@ -75,6 +76,8 @@ public class HoopyFroodTutClient {
         event.registerBlockEntityRenderer(
                 HoopyFroodBlockEntityTypes.BANISHING_BIN.get(),
                 BanishingBinRenderer::new);
+
+        event.registerEntityRenderer(HoopyFroodEntities.INERT_PRIMED_TNT.get(), TntRenderer::new);
     }
 
     private static void onRegisterAdditionalModels(ModelEvent.RegisterStandalone event) {

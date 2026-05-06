@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "hoopyfroodtut:sturdy_piston",
+    "minecraft:slime_ball"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:sticky_sturdy_piston"
+  }
+}

@@ -336,6 +336,26 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .save(this.output, ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_redstone_dust")));
 
+        // ---- Sturdy Pistons ----
+        // Sturdy Piston: iron ingots top, cobblestone sides, piston center, redstone bottom
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.STURDY_PISTON.get())
+                .pattern("III")
+                .pattern("CPC")
+                .pattern("CRC")
+                .define('I', Items.IRON_INGOT)
+                .define('C', Items.COBBLESTONE)
+                .define('P', Items.PISTON)
+                .define('R', Items.REDSTONE)
+                .unlockedBy("has_piston", has(Items.PISTON))
+                .save(this.output);
+
+        // Sticky Sturdy Piston: Sturdy Piston + Slime Ball (shapeless)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.STICKY_STURDY_PISTON.get())
+                .requires(HoopyFroodTutBlocks.STURDY_PISTON)
+                .requires(Items.SLIME_BALL)
+                .unlockedBy("has_sturdy_piston", has(HoopyFroodTutBlocks.STURDY_PISTON.get()))
+                .save(this.output);
+
         // Reverse: [scaffolded] alone → [base] + Scaffolding (shapeless, 1 ingredient)
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.INVERTER.get())
                 .requires(HoopyFroodTutBlocks.SCAFFOLDED_INVERTER)
@@ -488,6 +508,20 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .define('E', Items.ENDER_PEARL)
                 .unlockedBy("", has(Items.ENDER_PEARL))
                 .save(this.output);
+
+        // Inert TNT: deactivate regular TNT with a slime ball (absorbs the concussive force)
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.INERT_TNT.get())
+                .requires(Blocks.TNT)
+                .requires(Items.MILK_BUCKET)
+                .unlockedBy("has_tnt", has(Items.TNT))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "inert_tnt_from_milk_bucket")));
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.INERT_TNT.get())
+                .requires(Blocks.TNT)
+                .requires(Items.HONEY_BOTTLE)
+                .unlockedBy("has_tnt", has(Items.TNT))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "inert_tnt_from_honey_bottle")));
     }
 
     /** Adds a Disposable Caterpillar crafting recipe for a specific pickaxe tier. */

@@ -62,6 +62,11 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.RIGHT_ANGLED_REPEATER_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_LEFT_ANGLED_REPEATER_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_RIGHT_ANGLED_REPEATER_ITEM.get());
+                // Inert TNT
+                output.accept(HoopyFroodItems.INERT_TNT_ITEM.get());
+                // Sturdy Pistons
+                output.accept(HoopyFroodItems.STURDY_PISTON_ITEM.get());
+                output.accept(HoopyFroodItems.STICKY_STURDY_PISTON_ITEM.get());
             }).build());
 
     // Add the example block item to the building blocks tab
@@ -70,6 +75,10 @@ public class HoopyFroodCreativeTabs {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(HoopyFroodItems.BROWN_BRICKS_ITEM.get());
             event.accept(HoopyFroodItems.BROWN_BRICK.get());
+        }
+        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
+            event.accept(HoopyFroodItems.STURDY_PISTON_ITEM.get());
+            event.accept(HoopyFroodItems.STICKY_STURDY_PISTON_ITEM.get());
         }
     }
 }

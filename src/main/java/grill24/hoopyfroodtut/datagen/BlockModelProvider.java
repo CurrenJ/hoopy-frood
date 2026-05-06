@@ -61,7 +61,11 @@ public class BlockModelProvider extends ModelProvider {
                     && b != HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get()
                     && b != HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get()
                     && b != HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get()
-                    && b != HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get();
+                    && b != HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get()
+                    && b != HoopyFroodTutBlocks.INERT_TNT.get()
+                    && b != HoopyFroodTutBlocks.STURDY_PISTON.get()
+                    && b != HoopyFroodTutBlocks.STICKY_STURDY_PISTON.get()
+                    && b != HoopyFroodTutBlocks.STURDY_PISTON_HEAD.get();
         });
     }
 
@@ -139,6 +143,14 @@ public class BlockModelProvider extends ModelProvider {
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_left_angled_repeater_1tick")));
         itemModels.itemModelOutput.accept(HoopyFroodItems.SCAFFOLDED_RIGHT_ANGLED_REPEATER_ITEM.get(),
                 ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/scaffolded_right_angled_repeater_1tick")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.INERT_TNT_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/inert_tnt")));
+
+        itemModels.itemModelOutput.accept(HoopyFroodItems.STURDY_PISTON_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/sturdy_piston")));
+        itemModels.itemModelOutput.accept(HoopyFroodItems.STICKY_STURDY_PISTON_ITEM.get(),
+                ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/sticky_sturdy_piston")));
+
         registerDisposableCaterpillar(blockModels);
         registerBeggingItemScrabbler(blockModels);
         registerInfiniteImprobabilityDrive(blockModels);

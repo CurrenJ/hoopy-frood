@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "unstable=false": {
+      "model": "hoopyfroodtut:block/inert_tnt"
+    },
+    "unstable=true": {
+      "model": "hoopyfroodtut:block/inert_tnt"
+    }
+  }
+}

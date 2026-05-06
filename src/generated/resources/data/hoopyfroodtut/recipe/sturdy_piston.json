@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": "minecraft:cobblestone",
+    "I": "minecraft:iron_ingot",
+    "P": "minecraft:piston",
+    "R": "minecraft:redstone"
+  },
+  "pattern": [
+    "III",
+    "CPC",
+    "CRC"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:sturdy_piston"
+  }
+}

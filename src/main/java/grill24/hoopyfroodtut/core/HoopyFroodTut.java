@@ -47,6 +47,7 @@ public class HoopyFroodTut {
         HoopyFroodTutBlocks.BLOCKS.register(modEventBus);
         HoopyFroodItems.ITEMS.register(modEventBus);
         HoopyFroodBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
+        HoopyFroodEntities.ENTITY_TYPES.register(modEventBus);
         HoopyFroodCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         HoopyFroodDataComponents.DATA_COMPONENT_TYPES.register(modEventBus);
         HoopyFroodRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
@@ -54,6 +55,7 @@ public class HoopyFroodTut {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
 
         // SEP Field — server-side AI suppression events
         NeoForge.EVENT_BUS.addListener(this::onLivingChangeTarget);

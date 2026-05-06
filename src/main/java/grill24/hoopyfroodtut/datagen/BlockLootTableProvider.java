@@ -72,6 +72,10 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
         // Angled repeaters
         dropSelf(HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get());
         dropSelf(HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get());
+        dropSelf(HoopyFroodTutBlocks.INERT_TNT.get());
+        dropSelf(HoopyFroodTutBlocks.STURDY_PISTON.get());
+        dropSelf(HoopyFroodTutBlocks.STICKY_STURDY_PISTON.get());
+        add(HoopyFroodTutBlocks.STURDY_PISTON_HEAD.get(), noDrop());
         add(HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get(),
                 dropScaffolded(HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get(), HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get()));
         add(HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get(),
@@ -110,7 +114,11 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
                 HoopyFroodTutBlocks.LEFT_ANGLED_REPEATER.get(),
                 HoopyFroodTutBlocks.RIGHT_ANGLED_REPEATER.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_LEFT_ANGLED_REPEATER.get(),
-                HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get()
+                HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER.get(),
+                HoopyFroodTutBlocks.INERT_TNT.get(),
+                HoopyFroodTutBlocks.STURDY_PISTON.get(),
+                HoopyFroodTutBlocks.STICKY_STURDY_PISTON.get(),
+                HoopyFroodTutBlocks.STURDY_PISTON_HEAD.get()
         );
     }
 }

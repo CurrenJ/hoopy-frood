@@ -162,4 +162,14 @@ public class HoopyFroodItems {
 
     public static final DeferredItem<BlockItem> SCAFFOLDED_RIGHT_ANGLED_REPEATER_ITEM =
             ITEMS.registerSimpleBlockItem("scaffolded_right_angled_repeater", HoopyFroodTutBlocks.SCAFFOLDED_RIGHT_ANGLED_REPEATER);
+
+    public static final DeferredItem<BlockItem> INERT_TNT_ITEM =
+            ITEMS.registerSimpleBlockItem("inert_tnt", HoopyFroodTutBlocks.INERT_TNT);
+
+    // Sturdy Pistons
+    public static final DeferredItem<BlockItem> STURDY_PISTON_ITEM =
+            ITEMS.registerSimpleBlockItem("sturdy_piston", HoopyFroodTutBlocks.STURDY_PISTON);
+
+    public static final DeferredItem<BlockItem> STICKY_STURDY_PISTON_ITEM =
+            ITEMS.registerSimpleBlockItem("sticky_sturdy_piston", HoopyFroodTutBlocks.STICKY_STURDY_PISTON);
 }

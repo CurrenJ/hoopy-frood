@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "minecraft:tnt",
+    "minecraft:honey_bottle"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:inert_tnt"
+  }
+}
