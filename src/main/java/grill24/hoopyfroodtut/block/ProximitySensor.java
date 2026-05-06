@@ -32,7 +32,7 @@ public class ProximitySensor extends BaseEntityBlock {
     private static final VoxelShape SHAPE = Block.column(16.0, 0.0, 6.0);
 
     // Cycle of configurable radii in blocks
-    public static final int[] RADII = {4, 8, 16, 32};
+    public static final int[] RADII = {4, 8, 16, 32, 48, 64, 72, 96, 112, 128};
 
     public ProximitySensor(Properties properties) {
         super(properties);
