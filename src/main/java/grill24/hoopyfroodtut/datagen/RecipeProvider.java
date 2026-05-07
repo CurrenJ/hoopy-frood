@@ -509,6 +509,18 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("", has(Items.ENDER_PEARL))
                 .save(this.output);
 
+        // Death Recall Mirror
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.DEATH_RECALL_MIRROR.get())
+                .pattern("GMG")
+                .pattern("TET")
+                .pattern("GMG")
+                .define('G', Items.GOLD_INGOT)
+                .define('M', HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())
+                .define('T', Items.TOTEM_OF_UNDYING)
+                .define('E', Items.ENDER_PEARL)
+                .unlockedBy("", has(Items.TOTEM_OF_UNDYING))
+                .save(this.output);
+
         // Inert TNT: deactivate regular TNT with a slime ball (absorbs the concussive force)
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.INERT_TNT.get())
                 .requires(Blocks.TNT)

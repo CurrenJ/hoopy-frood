@@ -117,4 +117,16 @@ public class HoopyFroodDataComponents {
                             .persistent(Vec3.CODEC)
                             .networkSynchronized(Vec3.STREAM_CODEC)
                             .build());
+
+    /**
+     * Death position stored on a Death Recall Mirror when the player dies carrying it.
+     * When used, teleports the player to this position and consumes the mirror.
+     * Absent when the mirror has not yet been linked to a death.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Vec3>> DEATH_RECALL_LOCATION =
+            DATA_COMPONENT_TYPES.register("death_recall_location",
+                    () -> DataComponentType.<Vec3>builder()
+                            .persistent(Vec3.CODEC)
+                            .networkSynchronized(Vec3.STREAM_CODEC)
+                            .build());
 }
