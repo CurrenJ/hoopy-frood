@@ -2,19 +2,13 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.Config;
 import grill24.hoopyfroodtut.command.WobblyWaterDebugCommand;
-import grill24.hoopyfroodtut.item.DeathRecallMirrorItem;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.portal.TeleportTransition;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -26,15 +20,12 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(HoopyFroodTut.MODID)
@@ -43,9 +34,6 @@ public class HoopyFroodTut {
     public static final String MODID = "hoopyfroodtut";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
-
-    /** Mirrors preserved from death drops, keyed by player UUID, to be returned on respawn. */
-    private static final Map<UUID, List<ItemStack>> PENDING_DEATH_RECALL_MIRRORS = new ConcurrentHashMap<>();
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
@@ -77,10 +65,6 @@ public class HoopyFroodTut {
 
         // Scaffolding conversion: right-click with scaffolding to upgrade redstone components
         NeoForge.EVENT_BUS.addListener(ScaffoldingConversionEvents::onRightClickBlock);
-
-        // Death Recall Mirror — keep on death and link to death location
-        NeoForge.EVENT_BUS.addListener(this::onLivingDrops);
-        NeoForge.EVENT_BUS.addListener(this::onPlayerClone);
     }
 
     private void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
@@ -126,10 +110,6 @@ public class HoopyFroodTut {
      * suppression applies even to targets that were acquired before the field existed.
      */
     private void onEntityTickPost(EntityTickEvent.Post event) {
-        if (event.getEntity() instanceof ServerPlayer player && !player.level().isClientSide()) {
-            updateMagicMirrorDestination(player);
-        }
-
         if (!(event.getEntity() instanceof Mob mob)) return;
         if (mob.level().isClientSide()) return;
 
@@ -155,88 +135,6 @@ public class HoopyFroodTut {
         WobblyWaterDebugCommand.register(event.getDispatcher());
     }
 
-    private static void updateMagicMirrorDestination(ServerPlayer player) {
-        // Throttle to once per second — the destination only changes when the player sleeps.
-        if (player.tickCount % 20 != 0) return;
-
-        ItemStack main = player.getMainHandItem();
-        ItemStack off  = player.getOffhandItem();
-        boolean holdingMirror = main.is(HoopyFroodItems.MAGIC_MIRROR.get())
-                || off.is(HoopyFroodItems.MAGIC_MIRROR.get());
-        boolean holdingRTMM = main.is(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())
-                || off.is(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get());
-        if (!holdingMirror && !holdingRTMM) return;
-
-        TeleportTransition transition = player.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING);
-        Vec3 dest = transition.position();
-
-        if (main.is(HoopyFroodItems.MAGIC_MIRROR.get())) {
-            main.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
-        }
-        if (off.is(HoopyFroodItems.MAGIC_MIRROR.get())) {
-            off.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
-        }
-
-        if (main.is(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())) {
-            main.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
-        }
-        if (off.is(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())) {
-            off.set(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get(), dest);
-        }
-    }
-
     private void commonSetup(FMLCommonSetupEvent event) {
-    }
-
-    /**
-     * When a player dies carrying a Death Recall Mirror, remove it from the death drops,
-     * stamp it with the death location, and hold it for respawn return.
-     */
-    private void onLivingDrops(LivingDropsEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) return;
-
-        Vec3 deathPos = player.position();
-        Iterator<ItemEntity> it = event.getDrops().iterator();
-        while (it.hasNext()) {
-            ItemEntity drop = it.next();
-            if (drop.getItem().getItem() instanceof DeathRecallMirrorItem) {
-                drop.getItem().set(HoopyFroodDataComponents.DEATH_RECALL_LOCATION.get(), deathPos);
-                PENDING_DEATH_RECALL_MIRRORS
-                    .computeIfAbsent(player.getUUID(), k -> new ArrayList<>())
-                    .add(drop.getItem().copy());
-                it.remove();
-            }
-        }
-    }
-
-    /**
-     * Return preserved Death Recall Mirrors to the player after respawn, or stamp
-     * mirrors that were transferred via keepInventory.
-     */
-    private void onPlayerClone(PlayerEvent.Clone event) {
-        if (!event.isWasDeath()) return;
-        if (!(event.getEntity() instanceof ServerPlayer newPlayer)) return;
-
-        ServerPlayer oldPlayer = (ServerPlayer) event.getOriginal();
-        Vec3 deathPos = oldPlayer.position();
-
-        // Case 1: keepInventory was off — return mirrors preserved from drops.
-        List<ItemStack> pending = PENDING_DEATH_RECALL_MIRRORS.remove(oldPlayer.getUUID());
-        if (pending != null) {
-            for (ItemStack stack : pending) {
-                if (!newPlayer.getInventory().add(stack)) {
-                    newPlayer.drop(stack, false);
-                }
-            }
-        }
-
-        // Case 2: keepInventory was on — stamp mirrors that transferred via restoreFrom.
-        for (int i = 0; i < newPlayer.getInventory().getContainerSize(); i++) {
-            ItemStack stack = newPlayer.getInventory().getItem(i);
-            if (stack.getItem() instanceof DeathRecallMirrorItem
-                && !stack.has(HoopyFroodDataComponents.DEATH_RECALL_LOCATION.get())) {
-                stack.set(HoopyFroodDataComponents.DEATH_RECALL_LOCATION.get(), deathPos);
-            }
-        }
     }
 }

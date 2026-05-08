@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -95,38 +94,4 @@ public class HoopyFroodDataComponents {
                             .networkSynchronized(ByteBufCodecs.INT)
                             .build());
 
-    /**
-     * Cached teleport destination for the Magic Mirror. Stored server-side while held and
-     * network-synced so the client tooltip can show live cost and target coordinates.
-     */
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Vec3>> MAGIC_MIRROR_DESTINATION =
-            DATA_COMPONENT_TYPES.register("magic_mirror_destination",
-                    () -> DataComponentType.<Vec3>builder()
-                            .persistent(Vec3.CODEC)
-                            .networkSynchronized(Vec3.STREAM_CODEC)
-                            .build());
-
-    /**
-     * Original position stored by the Round-Trip Magic Mirror on its first use.
-     * When present, the next use teleports the player back to this position.
-     * Cleared after the return trip. Absent when the mirror is fresh or has completed a round trip.
-     */
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Vec3>> ROUND_TRIP_ORIGIN =
-            DATA_COMPONENT_TYPES.register("round_trip_origin",
-                    () -> DataComponentType.<Vec3>builder()
-                            .persistent(Vec3.CODEC)
-                            .networkSynchronized(Vec3.STREAM_CODEC)
-                            .build());
-
-    /**
-     * Death position stored on a Death Recall Mirror when the player dies carrying it.
-     * When used, teleports the player to this position and consumes the mirror.
-     * Absent when the mirror has not yet been linked to a death.
-     */
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Vec3>> DEATH_RECALL_LOCATION =
-            DATA_COMPONENT_TYPES.register("death_recall_location",
-                    () -> DataComponentType.<Vec3>builder()
-                            .persistent(Vec3.CODEC)
-                            .networkSynchronized(Vec3.STREAM_CODEC)
-                            .build());
 }

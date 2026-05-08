@@ -94,15 +94,6 @@
   "container.expeller": "Expeller",
   "item.hoopyfroodtut.expeller.tooltip.desc": "A self-activating Dropper — drops every 4 ticks without redstone. Inserts into adjacent inventories; ejects as item entities otherwise.",
 
-  "item.hoopyfroodtut.magic_mirror": "Magic Mirror",
-  "item.hoopyfroodtut.magic_mirror.charging": "Charging... costs %s levels",
-  "item.hoopyfroodtut.magic_mirror.insufficient_xp": "Not enough XP — needs %s levels",
-
-  "item.hoopyfroodtut.death_recall_mirror": "Death Recall Mirror",
-  "item.hoopyfroodtut.death_recall_mirror.unlinked": "This mirror is not yet linked to a death location. Carry it when you die.",
-  "item.hoopyfroodtut.round_trip_magic_mirror": "Round-Trip Magic Mirror",
-  "item.hoopyfroodtut.round_trip_magic_mirror.charging": "Charging... costs %s levels",
-
   "tooltip.hoopyfroodtut.hold_shift": "Hold Shift for details",
 
   "hoopyfroodtut.configuration.title": "Hoopy Frood Tut Configs",

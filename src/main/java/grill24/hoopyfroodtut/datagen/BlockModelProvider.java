@@ -26,7 +26,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedStoneWireBlock;
-import grill24.hoopyfroodtut.core.HoopyFroodItems;
 
 public class BlockModelProvider extends ModelProvider {
     public BlockModelProvider(PackOutput output) {
@@ -81,9 +80,6 @@ public class BlockModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(HoopyFroodItems.BROWN_BRICK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(HoopyFroodItems.BALANCER_RANGE_EXTENDER.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(HoopyFroodItems.MAGIC_MIRROR.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(HoopyFroodItems.DEATH_RECALL_MIRROR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.itemModelOutput.accept(
                 HoopyFroodItems.PERIL_SENSITIVE_SUNGLASSES.get(),
                 ItemModelUtils.plainModel(

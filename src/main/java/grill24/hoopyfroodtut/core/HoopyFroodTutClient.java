@@ -2,13 +2,10 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.blockentity.BalancerNodeBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
-import grill24.hoopyfroodtut.item.MagicMirrorItem;
-import grill24.hoopyfroodtut.item.RoundTripMagicMirrorItem;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.color.block.BlockTintSources;
 import net.minecraft.client.renderer.entity.TntRenderer;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.Vec3;
 import grill24.hoopyfroodtut.client.renderer.BalancerNodeRenderer;
 import grill24.hoopyfroodtut.client.renderer.BanishingBinRenderer;
 import grill24.hoopyfroodtut.client.renderer.BeggingItemScrabblerRenderer;
@@ -250,49 +247,6 @@ public class HoopyFroodTutClient {
                         .withStyle(ChatFormatting.GRAY));
             } else {
                 tip.add(1, holdShift);
-            }
-
-        } else if (item == HoopyFroodItems.MAGIC_MIRROR.get()) {
-            if (Minecraft.getInstance().hasShiftDown()) {
-                Vec3 dest = event.getItemStack().get(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get());
-                Player player = Minecraft.getInstance().player;
-                if (dest != null && player != null) {
-                    double cost = MagicMirrorItem.computeCost(player.position(), dest);
-                    String coords = String.format("%d, %d, %d", (int) dest.x, (int) dest.y, (int) dest.z);
-                    // Insert between the description line (index 1) and the rate line (index 2)
-                    tip.add(2, Component.literal("Currently: ").withStyle(ChatFormatting.GRAY)
-                            .append(Component.literal(MagicMirrorItem.fmt(cost) + " levels").withStyle(ChatFormatting.YELLOW))
-                            .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
-                            .append(Component.literal(coords).withStyle(ChatFormatting.AQUA))
-                            .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
-                }
-            }
-
-        } else if (item == HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get()) {
-            if (Minecraft.getInstance().hasShiftDown()) {
-                Vec3 dest = event.getItemStack().get(HoopyFroodDataComponents.MAGIC_MIRROR_DESTINATION.get());
-                Player player = Minecraft.getInstance().player;
-                if (dest != null && player != null) {
-                    double cost = MagicMirrorItem.computeCost(player.position(), dest);
-                    String coords = String.format("%d, %d, %d", (int) dest.x, (int) dest.y, (int) dest.z);
-                    tip.add(2, Component.literal("Spawn: ").withStyle(ChatFormatting.GRAY)
-                            .append(Component.literal(MagicMirrorItem.fmt(cost) + " levels").withStyle(ChatFormatting.YELLOW))
-                            .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
-                            .append(Component.literal(coords).withStyle(ChatFormatting.AQUA))
-                            .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
-                }
-                if (RoundTripMagicMirrorItem.isReturning(event.getItemStack())) {
-                    Vec3 origin = event.getItemStack().get(HoopyFroodDataComponents.ROUND_TRIP_ORIGIN.get());
-                    if (origin != null && player != null) {
-                        double returnCost = MagicMirrorItem.computeCost(player.position(), origin);
-                        String originCoords = String.format("%d, %d, %d", (int) origin.x, (int) origin.y, (int) origin.z);
-                        tip.add(3, Component.literal("Return: ").withStyle(ChatFormatting.GRAY)
-                                .append(Component.literal(MagicMirrorItem.fmt(returnCost) + " levels").withStyle(ChatFormatting.GREEN))
-                                .append(Component.literal(" (").withStyle(ChatFormatting.GRAY))
-                                .append(Component.literal(originCoords).withStyle(ChatFormatting.AQUA))
-                                .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
-                    }
-                }
             }
 
         } else if (item == HoopyFroodItems.EJECTOR_ITEM.get()) {

@@ -485,42 +485,6 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .save(this.output, ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "scaffolded_right_angled_repeater_reverse")));
 
-        // Magic Mirror
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.MAGIC_MIRROR.get())
-                .pattern("GLG")
-                .pattern("DED")
-                .pattern("GLG")
-                .define('G', Items.GOLD_BLOCK)
-                .define('L', Items.LAPIS_BLOCK)
-                .define('D', Items.DIAMOND_BLOCK)
-                .define('E', Items.ENDER_PEARL)
-                .unlockedBy("", has(Items.ENDER_PEARL))
-                .save(this.output);
-
-        // Round-Trip Magic Mirror
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())
-                .pattern("GAG")
-                .pattern("DED")
-                .pattern("GAG")
-                .define('G', Items.GOLD_INGOT)
-                .define('A', Items.AMETHYST_BLOCK)
-                .define('D', Items.DIAMOND)
-                .define('E', Items.ENDER_PEARL)
-                .unlockedBy("", has(Items.ENDER_PEARL))
-                .save(this.output);
-
-        // Death Recall Mirror
-        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodItems.DEATH_RECALL_MIRROR.get())
-                .pattern("GMG")
-                .pattern("TET")
-                .pattern("GMG")
-                .define('G', Items.GOLD_INGOT)
-                .define('M', HoopyFroodItems.ROUND_TRIP_MAGIC_MIRROR.get())
-                .define('T', Items.TOTEM_OF_UNDYING)
-                .define('E', Items.ENDER_PEARL)
-                .unlockedBy("", has(Items.TOTEM_OF_UNDYING))
-                .save(this.output);
-
         // Inert TNT: deactivate regular TNT with a slime ball (absorbs the concussive force)
         ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, HoopyFroodTutBlocks.INERT_TNT.get())
                 .requires(Blocks.TNT)

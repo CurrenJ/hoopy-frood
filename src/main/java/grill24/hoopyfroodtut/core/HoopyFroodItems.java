@@ -4,10 +4,7 @@ import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.item.BalancerRangeExtender;
 import grill24.hoopyfroodtut.item.BeggingItemScrabblerItem;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
-import grill24.hoopyfroodtut.item.DeathRecallMirrorItem;
-import grill24.hoopyfroodtut.item.MagicMirrorItem;
 import grill24.hoopyfroodtut.item.PerilSensitiveSunglassesItem;
-import grill24.hoopyfroodtut.item.RoundTripMagicMirrorItem;
 import grill24.hoopyfroodtut.item.WobblyWaterBucketItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
@@ -111,18 +108,6 @@ public class HoopyFroodItems {
             ITEMS.registerItem("peril_sensitive_sunglasses",
                     p -> new PerilSensitiveSunglassesItem(
                             p.stacksTo(1).equippable(EquipmentSlot.HEAD)));
-
-    public static final DeferredItem<MagicMirrorItem> MAGIC_MIRROR =
-            ITEMS.registerItem("magic_mirror",
-                    p -> new MagicMirrorItem(p.stacksTo(1)));
-
-    public static final DeferredItem<RoundTripMagicMirrorItem> ROUND_TRIP_MAGIC_MIRROR =
-            ITEMS.registerItem("round_trip_magic_mirror",
-                    p -> new RoundTripMagicMirrorItem(p.stacksTo(1).durability(2)));
-
-    public static final DeferredItem<DeathRecallMirrorItem> DEATH_RECALL_MIRROR =
-            ITEMS.registerItem("death_recall_mirror",
-                    p -> new DeathRecallMirrorItem(p.stacksTo(16)));
 
     // ---- Scaffolded Redstone Components ----
     public static final DeferredItem<BlockItem> SCAFFOLDED_INVERTER_ITEM =

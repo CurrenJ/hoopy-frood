@@ -46,28 +46,6 @@ public class Config {
 
     static { BUILDER.pop(); }
 
-    // ── Magic Mirror ──────────────────────────────────────────────────────────
-    static { BUILDER.push("magicMirror"); }
-
-    public static final ModConfigSpec.IntValue MAGIC_MIRROR_BLOCKS_PER_LEVEL = BUILDER
-            .comment("How many blocks of travel cost 1 XP level when using the Magic Mirror.",
-                     "Example: 1000 means a 1000-block teleport costs 1 level, 2000 blocks costs 2 levels, etc.",
-                     "Cost is always rounded up, and is free when distance is effectively zero.")
-            .defineInRange("blocksPerLevel", 1000, 1, Integer.MAX_VALUE);
-
-    static { BUILDER.pop(); }
-
-    // ── Round-Trip Magic Mirror ──────────────────────────────────────────────────
-    static { BUILDER.push("roundTripMagicMirror"); }
-
-    public static final ModConfigSpec.IntValue ROUND_TRIP_MAGIC_MIRROR_MAX_DURABILITY = BUILDER
-            .comment("Maximum durability (number of teleport uses) for the Round-Trip Magic Mirror.",
-                     "A value of 2 gives one full round trip (teleport to spawn, then back to origin).",
-                     "Higher values allow multiple round trips before the mirror shatters.")
-            .defineInRange("maxDurability", 6, 1, Integer.MAX_VALUE);
-
-    static { BUILDER.pop(); }
-
     // ── Inert TNT ──────────────────────────────────────────────────────────────
     static { BUILDER.push("inertTnt"); }
 
