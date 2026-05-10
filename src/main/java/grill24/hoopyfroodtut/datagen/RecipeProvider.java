@@ -7,6 +7,7 @@ import grill24.hoopyfroodtut.core.HoopyFroodItems;
 import grill24.hoopyfroodtut.recipe.CaterpillarAddCountRecipe;
 import grill24.hoopyfroodtut.recipe.CaterpillarCombineRecipe;
 import grill24.hoopyfroodtut.recipe.CaterpillarSetFlagRecipe;
+import grill24.hoopyfroodtut.recipe.SuperEnchantedBookRecipe;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentPatch;
@@ -28,6 +29,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Blocks;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class RecipeProvider extends VanillaRecipeProvider {
@@ -498,6 +500,13 @@ public class RecipeProvider extends VanillaRecipeProvider {
                 .unlockedBy("has_tnt", has(Items.TNT))
                 .save(this.output, ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "inert_tnt_from_honey_bottle")));
+
+        // Super Enchanted Book: max-level enchanted book + netherite block → +1 level
+        saveSuperEnchantedBookRecipe("super_enchanted_book",
+                new SuperEnchantedBookRecipe(
+                        new Recipe.CommonInfo(true),
+                        Ingredient.of(Items.ENCHANTED_BOOK),
+                        Optional.of(Ingredient.of(Items.NETHERITE_BLOCK))));
     }
 
     /** Adds a Disposable Caterpillar crafting recipe for a specific pickaxe tier. */
@@ -519,8 +528,18 @@ public class RecipeProvider extends VanillaRecipeProvider {
                                 "disposable_caterpillar_" + tier)));
     }
 
-    /** Saves a caterpillar custom recipe (no unlock advancement needed — isSpecial = true). */
+    /** Saves a caterpillar custom recipe (no unlock advancement needed). */
     private void saveCaterpillarRecipe(String name, Recipe<?> recipe) {
+        this.output.accept(
+                ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, name)),
+                recipe,
+                null
+        );
+    }
+
+    /** Saves a super enchanted book smithing recipe (no unlock advancement needed). */
+    private void saveSuperEnchantedBookRecipe(String name, Recipe<?> recipe) {
         this.output.accept(
                 ResourceKey.create(Registries.RECIPE,
                         Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, name)),

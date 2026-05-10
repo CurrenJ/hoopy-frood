@@ -6,6 +6,7 @@ import grill24.hoopyfroodtut.recipe.CaterpillarSetFlagRecipe;
 import grill24.hoopyfroodtut.recipe.NoRemainderShapelessRecipe;
 import grill24.hoopyfroodtut.recipe.ScrabblerAddNuggetsRecipe;
 import grill24.hoopyfroodtut.recipe.ScrabblerClearHomeRecipe;
+import grill24.hoopyfroodtut.recipe.SuperEnchantedBookRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -44,4 +45,9 @@ public class HoopyFroodRecipeSerializers {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<NoRemainderShapelessRecipe>>
             NO_REMAINDER_SHAPELESS = RECIPE_SERIALIZERS.register("no_remainder_shapeless",
                     () -> new RecipeSerializer<>(NoRemainderShapelessRecipe.MAP_CODEC, NoRemainderShapelessRecipe.STREAM_CODEC));
+
+    /** Serializer for super enchanted book smithing recipe. */
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<SuperEnchantedBookRecipe>>
+            SUPER_ENCHANTED_BOOK = RECIPE_SERIALIZERS.register("super_enchanted_book",
+                    () -> new RecipeSerializer<>(SuperEnchantedBookRecipe.MAP_CODEC, SuperEnchantedBookRecipe.STREAM_CODEC));
 }
