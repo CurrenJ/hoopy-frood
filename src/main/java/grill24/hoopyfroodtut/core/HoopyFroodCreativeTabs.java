@@ -1,9 +1,15 @@
 package grill24.hoopyfroodtut.core;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -78,5 +84,29 @@ public class HoopyFroodCreativeTabs {
             event.accept(HoopyFroodItems.STURDY_PISTON_ITEM.get());
             event.accept(HoopyFroodItems.STICKY_STURDY_PISTON_ITEM.get());
         }
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.getParameters().holders().lookup(Registries.ENCHANTMENT).ifPresent(enchantments ->
+                generateSuperEnchantmentBooks(event, enchantments, CreativeModeTab.TabVisibility.PARENT_TAB_ONLY));
+        }
+    }
+
+    /**
+     * Adds a super enchanted book (max level + 1) for every registered enchantment.
+     * Each book is named "Super Enchanted Book" to match the smithing recipe output.
+     */
+    private static void generateSuperEnchantmentBooks(
+        CreativeModeTab.Output output,
+        HolderLookup<Enchantment> enchantments,
+        CreativeModeTab.TabVisibility visibility
+    ) {
+        enchantments.listElements()
+            .map(enchantment -> {
+                int maxLevel = enchantment.value().getMaxLevel();
+                ItemStack book = EnchantmentHelper.createBook(
+                    new EnchantmentInstance(enchantment, maxLevel + 1));
+                book.set(DataComponents.ITEM_NAME, Component.literal("Super Enchanted Book"));
+                return book;
+            })
+            .forEach(stack -> output.accept(stack, visibility));
     }
 }

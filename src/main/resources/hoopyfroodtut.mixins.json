@@ -4,6 +4,7 @@
   "package": "grill24.hoopyfroodtut.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+    "AnvilMenuMixin",
     "ItemEntityMixin",
     "PathNavigationMixin"
   ],
