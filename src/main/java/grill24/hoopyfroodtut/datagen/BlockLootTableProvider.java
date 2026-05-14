@@ -59,6 +59,10 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HoopyFroodTutBlocks.EXPELLER.get());
         add(HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(), noDrop());
         add(HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(), noDrop());
+        // Brown bricks
+        dropSelf(HoopyFroodTutBlocks.BROWN_BRICKS.get());
+        dropSelf(HoopyFroodTutBlocks.BROWN_BRICKS_SLAB.get());
+        dropSelf(HoopyFroodTutBlocks.BROWN_BRICKS_STAIRS.get());
         // Scaffolded redstone components — drop scaffolding + base component
         add(HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get(),
                 dropScaffolded(HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get(), HoopyFroodTutBlocks.INVERTER.get()));
@@ -111,6 +115,9 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
                 HoopyFroodTutBlocks.EXPELLER.get(),
                 HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(),
                 HoopyFroodTutBlocks.DISPOSABLE_CATERPILLAR.get(),
+                HoopyFroodTutBlocks.BROWN_BRICKS.get(),
+                HoopyFroodTutBlocks.BROWN_BRICKS_SLAB.get(),
+                HoopyFroodTutBlocks.BROWN_BRICKS_STAIRS.get(),
                 // Scaffolded redstone components
                 HoopyFroodTutBlocks.SCAFFOLDED_INVERTER.get(),
                 HoopyFroodTutBlocks.SCAFFOLDED_REPEATER.get(),
