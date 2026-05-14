@@ -68,6 +68,28 @@ public class Config {
 
     static { SERVER_BUILDER.pop(); }
 
+    // ── Lava Neutralizer ──────────────────────────────────────────────────────
+    static { SERVER_BUILDER.push("lavaNeutralizer"); }
+
+    public static final ModConfigSpec.IntValue LAVA_NEUTRALIZER_TICK_RATE = SERVER_BUILDER
+            .comment("Game ticks between each lava neutralization attempt. Lower = faster.")
+            .defineInRange("tickRate", 100, 1, Integer.MAX_VALUE);
+
+    public static final ModConfigSpec.IntValue LAVA_NEUTRALIZER_RADIUS = SERVER_BUILDER
+            .comment("Maximum distance from the neutralizer to search for lava source blocks.")
+            .defineInRange("radius", 8, 1, 64);
+
+    public static final ModConfigSpec.DoubleValue LAVA_NEUTRALIZER_CHARGE_DEPLETE_CHANCE = SERVER_BUILDER
+            .comment("Chance (0.0-1.0) that a charge is consumed each time the neutralizer places a block.",
+                     "0.0 = charges never deplete, 1.0 = every placement consumes a charge.")
+            .defineInRange("chargeDepleteChance", 0.25, 0.0, 1.0);
+
+    public static final ModConfigSpec.ConfigValue<String> LAVA_NEUTRALIZER_RECHARGE_ITEM = SERVER_BUILDER
+            .comment("Item ID used to recharge the neutralizer (right-click with this item).")
+            .define("rechargeItem", "minecraft:blaze_powder");
+
+    static { SERVER_BUILDER.pop(); }
+
     public static final ModConfigSpec SPEC = BUILDER.build();
     public static final ModConfigSpec SERVER_SPEC = SERVER_BUILDER.build();
 }

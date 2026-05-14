@@ -94,4 +94,15 @@ public class HoopyFroodDataComponents {
                             .networkSynchronized(ByteBufCodecs.INT)
                             .build());
 
+    /**
+     * Number of charges remaining on a Lava Neutralizer. Saved on the item when the block is broken
+     * so charges survive through the item form. 0 to {@code LavaNeutralizerBlock.MAX_CHARGES} (4).
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> LAVA_NEUTRALIZER_CHARGES =
+            DATA_COMPONENT_TYPES.register("lava_neutralizer_charges",
+                    () -> DataComponentType.<Integer>builder()
+                            .persistent(Codec.INT)
+                            .networkSynchronized(ByteBufCodecs.INT)
+                            .build());
+
 }

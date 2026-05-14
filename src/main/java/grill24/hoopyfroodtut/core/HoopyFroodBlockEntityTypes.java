@@ -16,6 +16,7 @@ import grill24.hoopyfroodtut.blockentity.RedstoneClockBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SluggishRedstoneClockBlockEntity;
 import grill24.hoopyfroodtut.blockentity.InfiniteImprobabilityDriveBlockEntity;
 import grill24.hoopyfroodtut.blockentity.WobblyWaterBlockEntity;
+import grill24.hoopyfroodtut.blockentity.LavaNeutralizerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.SomebodyElsesProblemFieldBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -106,6 +107,11 @@ public class HoopyFroodBlockEntityTypes {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ExpellerBlockEntity>> EXPELLER =
             BLOCK_ENTITY_TYPES.register("expeller",
                     () -> new BlockEntityType<>(ExpellerBlockEntity::new, HoopyFroodTutBlocks.EXPELLER.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaNeutralizerBlockEntity>> LAVA_NEUTRALIZER =
+            BLOCK_ENTITY_TYPES.register("lava_neutralizer",
+                    () -> new BlockEntityType<>(LavaNeutralizerBlockEntity::new,
+                            HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BanishingBinBlockEntity>> BANISHING_BIN =
             BLOCK_ENTITY_TYPES.register("banishing_bin",

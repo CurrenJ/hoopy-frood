@@ -34,6 +34,7 @@ import grill24.hoopyfroodtut.block.ProximitySensor;
 import grill24.hoopyfroodtut.block.RedstoneClock;
 import grill24.hoopyfroodtut.block.InfiniteImprobabilityDrive;
 import grill24.hoopyfroodtut.block.WobblyWater;
+import grill24.hoopyfroodtut.block.LavaNeutralizerBlock;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.world.level.block.Block;
@@ -137,6 +138,11 @@ public class HoopyFroodTutBlocks {
     // A directional block that continuously drops items from its 9-slot inventory without needing redstone.
     public static final DeferredBlock<Expeller> EXPELLER = BLOCKS.registerBlock("expeller",
             p -> new Expeller(p.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.5f)));
+
+    // A block that consumes items from its 27-slot inventory to replace nearby lava source blocks.
+    public static final DeferredBlock<LavaNeutralizerBlock> LAVA_NEUTRALIZER = BLOCKS.registerBlock(
+            "lava_neutralizer",
+            p -> new LavaNeutralizerBlock(p.strength(3.0F, 6.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     // A field emitter that makes the surrounding area invisible to mob AI and pathfinding.
     public static final DeferredBlock<SomebodyElsesProblemField> SOMEBODY_ELSES_PROBLEM_FIELD = BLOCKS.registerBlock(

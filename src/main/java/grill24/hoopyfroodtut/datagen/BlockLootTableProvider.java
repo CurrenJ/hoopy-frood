@@ -1,5 +1,6 @@
 package grill24.hoopyfroodtut.datagen;
 
+import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -10,6 +11,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.List;
@@ -44,6 +47,14 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HoopyFroodTutBlocks.REDSTONE_CLOCK.get());
         dropSelf(HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get());
         dropSelf(HoopyFroodTutBlocks.PROXIMITY_SENSOR.get());
+        add(HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1.0F))
+                                .add(LootItem.lootTableItem(HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get())
+                                        .apply(CopyComponentsFunction
+                                                .copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
+                                                .include(HoopyFroodDataComponents.LAVA_NEUTRALIZER_CHARGES.get())))));
         dropSelf(HoopyFroodTutBlocks.EJECTOR.get());
         dropSelf(HoopyFroodTutBlocks.EXPELLER.get());
         add(HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(), noDrop());
@@ -94,6 +105,7 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
                 HoopyFroodTutBlocks.SLUGGISH_RELEASE_LATCH.get(),
                 HoopyFroodTutBlocks.REDSTONE_CLOCK.get(),
                 HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get(),
+                HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get(),
                 HoopyFroodTutBlocks.PROXIMITY_SENSOR.get(),
                 HoopyFroodTutBlocks.EJECTOR.get(),
                 HoopyFroodTutBlocks.EXPELLER.get(),

@@ -4,6 +4,7 @@ import grill24.hoopyfroodtut.block.WobblyWater;
 import grill24.hoopyfroodtut.item.BalancerRangeExtender;
 import grill24.hoopyfroodtut.item.BeggingItemScrabblerItem;
 import grill24.hoopyfroodtut.item.DisposableCaterpillarItem;
+import grill24.hoopyfroodtut.item.LavaNeutralizerItem;
 import grill24.hoopyfroodtut.item.PerilSensitiveSunglassesItem;
 import grill24.hoopyfroodtut.item.WobblyWaterBucketItem;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -100,6 +101,10 @@ public class HoopyFroodItems {
 
     public static final DeferredItem<BlockItem> EXPELLER_ITEM =
             ITEMS.registerSimpleBlockItem("expeller", HoopyFroodTutBlocks.EXPELLER);
+
+    public static final DeferredItem<LavaNeutralizerItem> LAVA_NEUTRALIZER_ITEM =
+            ITEMS.registerItem("lava_neutralizer",
+                    p -> new LavaNeutralizerItem(HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get(), p.fireResistant()));
 
     public static final DeferredItem<BlockItem> BANISHING_BIN_ITEM =
             ITEMS.registerSimpleBlockItem("banishing_bin", HoopyFroodTutBlocks.BANISHING_BIN);

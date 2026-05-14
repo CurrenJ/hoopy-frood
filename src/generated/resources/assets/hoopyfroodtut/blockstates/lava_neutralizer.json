@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "charges=0": {
+      "model": "hoopyfroodtut:block/lava_neutralizer_0"
+    },
+    "charges=1": {
+      "model": "hoopyfroodtut:block/lava_neutralizer_1"
+    },
+    "charges=2": {
+      "model": "hoopyfroodtut:block/lava_neutralizer_2"
+    },
+    "charges=3": {
+      "model": "hoopyfroodtut:block/lava_neutralizer_3"
+    },
+    "charges=4": {
+      "model": "hoopyfroodtut:block/lava_neutralizer_4"
+    }
+  }
+}

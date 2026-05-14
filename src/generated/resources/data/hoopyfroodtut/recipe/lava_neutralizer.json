@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:bucket",
+    "G": "minecraft:gold_block",
+    "N": "minecraft:netherite_ingot"
+  },
+  "pattern": [
+    "GNG",
+    "GBG",
+    "GGG"
+  ],
+  "result": {
+    "id": "hoopyfroodtut:lava_neutralizer"
+  }
+}

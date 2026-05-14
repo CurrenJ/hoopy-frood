@@ -1,0 +1,48 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "hoopyfroodtut:block/lava_neutralizer_0"
+        },
+        "when": 0
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "hoopyfroodtut:block/lava_neutralizer_1"
+        },
+        "when": 1
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "hoopyfroodtut:block/lava_neutralizer_2"
+        },
+        "when": 2
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "hoopyfroodtut:block/lava_neutralizer_3"
+        },
+        "when": 3
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "hoopyfroodtut:block/lava_neutralizer_4"
+        },
+        "when": 4
+      }
+    ],
+    "component": "hoopyfroodtut:lava_neutralizer_charges",
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "hoopyfroodtut:block/lava_neutralizer_4"
+    },
+    "property": "minecraft:component"
+  }
+}

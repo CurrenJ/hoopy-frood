@@ -50,6 +50,7 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.EJECTOR_ITEM.get());
                 output.accept(HoopyFroodItems.EXPELLER_ITEM.get());
                 output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());
+                output.accept(HoopyFroodItems.LAVA_NEUTRALIZER_ITEM.get());
                 // Scaffolded redstone components
                 output.accept(HoopyFroodItems.SCAFFOLDED_INVERTER_ITEM.get());
                 output.accept(HoopyFroodItems.SCAFFOLDED_REPEATER_ITEM.get());

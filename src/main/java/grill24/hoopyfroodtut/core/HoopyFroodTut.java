@@ -75,6 +75,11 @@ public class HoopyFroodTut {
         );
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
+                HoopyFroodBlockEntityTypes.LAVA_NEUTRALIZER.get(),
+                (be, direction) -> VanillaContainerWrapper.of(be)
+        );
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
                 HoopyFroodBlockEntityTypes.BANISHING_BIN.get(),
                 (be, direction) -> VanillaContainerWrapper.of(be)
         );

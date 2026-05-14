@@ -2,6 +2,7 @@ package grill24.hoopyfroodtut.core;
 
 import grill24.hoopyfroodtut.datagen.BlockLootTableProvider;
 import grill24.hoopyfroodtut.datagen.BlockModelProvider;
+import grill24.hoopyfroodtut.datagen.BlockTagProvider;
 import grill24.hoopyfroodtut.datagen.RecipeProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -17,6 +18,7 @@ public class DataGen {
     @SubscribeEvent
     public static void onGatherData(GatherDataEvent.Client event) {
         event.addProvider(new BlockModelProvider(event.getGenerator().getPackOutput()));
+        event.addProvider(new BlockTagProvider(event.getGenerator().getPackOutput(), event.getLookupProvider()));
         event.addProvider(new RecipeProvider.Runner(event.getGenerator().getPackOutput(), event.getLookupProvider()));
         event.addProvider(new LootTableProvider(
                 event.getGenerator().getPackOutput(),

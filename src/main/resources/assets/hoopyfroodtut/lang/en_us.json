@@ -131,6 +131,13 @@
   "block.hoopyfroodtut.inert_tnt": "Inert TNT",
   "item.hoopyfroodtut.inert_tnt": "Inert TNT",
 
+  "block.hoopyfroodtut.lava_neutralizer": "Lava Neutralizer",
+  "item.hoopyfroodtut.lava_neutralizer": "Lava Neutralizer",
+  "container.hoopyfroodtut.lava_neutralizer": "Lava Neutralizer",
+
+  "item.hoopyfroodtut.lava_neutralizer.tooltip.desc": "Consumes blocks from its inventory to replace nearby lava source blocks. Recharge with %s.",
+  "item.hoopyfroodtut.lava_neutralizer.charges": "Charges: %s",
+
   "block.hoopyfroodtut.sturdy_piston": "Sturdy Piston",
   "item.hoopyfroodtut.sturdy_piston": "Sturdy Piston",
   "block.hoopyfroodtut.sticky_sturdy_piston": "Sticky Sturdy Piston",

@@ -507,6 +507,17 @@ public class RecipeProvider extends VanillaRecipeProvider {
                         new Recipe.CommonInfo(true),
                         Ingredient.of(Items.ENCHANTED_BOOK),
                         Optional.of(Ingredient.of(Items.NETHERITE_BLOCK))));
+
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.MISC, HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get())
+                .pattern("GNG")
+                .pattern("GBG")
+                .pattern("GGG")
+                .define('G', Items.GOLD_BLOCK)
+                .define('N', Items.NETHERITE_INGOT)
+                .define('B', Items.BUCKET)
+                .unlockedBy("has_bucket", has(Items.BUCKET))
+                .save(this.output, ResourceKey.create(Registries.RECIPE,
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "lava_neutralizer")));
     }
 
     /** Adds a Disposable Caterpillar crafting recipe for a specific pickaxe tier. */

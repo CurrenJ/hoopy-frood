@@ -7,12 +7,15 @@ import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
 import grill24.hoopyfroodtut.block.Expeller;
 import grill24.hoopyfroodtut.block.Inverter;
+import grill24.hoopyfroodtut.block.LavaNeutralizerBlock;
 import grill24.hoopyfroodtut.block.ProximitySensor;
 import grill24.hoopyfroodtut.block.SomebodyElsesProblemField;
 import grill24.hoopyfroodtut.block.WobblyWater;
+import grill24.hoopyfroodtut.core.HoopyFroodDataComponents;
 import grill24.hoopyfroodtut.core.HoopyFroodTutBlocks;
 import grill24.hoopyfroodtut.core.HoopyFroodTut;
 import grill24.hoopyfroodtut.core.HoopyFroodItems;
+import net.minecraft.client.renderer.item.properties.select.ComponentContents;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -21,11 +24,15 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedStoneWireBlock;
+
+import java.util.function.Function;
 
 public class BlockModelProvider extends ModelProvider {
     public BlockModelProvider(PackOutput output) {
@@ -155,6 +162,7 @@ public class BlockModelProvider extends ModelProvider {
         registerWobblyWater(blockModels, itemModels);
         registerWobblyWaterBuckets(itemModels);
         registerBanishingBin(blockModels, itemModels);
+        registerLavaNeutralizer(blockModels);
     }
 
     /**
@@ -389,6 +397,39 @@ public class BlockModelProvider extends ModelProvider {
                                 .select(true,  model))
                         .with(BlockModelGenerators.ROTATION_FACING)
         );
+    }
+
+    private static void registerLavaNeutralizer(BlockModelGenerators blockModels) {
+        Block block = HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get();
+
+        Function<Integer, MultiVariant> modelForCharges = i -> {
+            Identifier modelId = Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/lava_neutralizer_" + i);
+            ModelTemplates.CUBE_ALL.create(modelId, TextureMapping.cube(new Material(modelId)), blockModels.modelOutput);
+            return BlockModelGenerators.plainVariant(modelId);
+        };
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(PropertyDispatch.initial(LavaNeutralizerBlock.CHARGES)
+                                .generate(modelForCharges)));
+
+        var fallbackModel = ItemModelUtils.plainModel(
+                Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/lava_neutralizer_4"));
+        var selectModel = ItemModelUtils.select(
+                new ComponentContents<>(HoopyFroodDataComponents.LAVA_NEUTRALIZER_CHARGES.get()),
+                fallbackModel,
+                ItemModelUtils.when(0, ItemModelUtils.plainModel(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/lava_neutralizer_0"))),
+                ItemModelUtils.when(1, ItemModelUtils.plainModel(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/lava_neutralizer_1"))),
+                ItemModelUtils.when(2, ItemModelUtils.plainModel(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/lava_neutralizer_2"))),
+                ItemModelUtils.when(3, ItemModelUtils.plainModel(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/lava_neutralizer_3"))),
+                ItemModelUtils.when(4, ItemModelUtils.plainModel(
+                        Identifier.fromNamespaceAndPath(HoopyFroodTut.MODID, "block/lava_neutralizer_4")))
+        );
+        blockModels.itemModelOutput.accept(block.asItem(), selectModel);
     }
 
     private static void registerBalancerNode(BlockModelGenerators blockModels) {
