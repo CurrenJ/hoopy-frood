@@ -120,7 +120,6 @@ public class LavaNeutralizerBlockEntity extends BaseContainerBlockEntity {
         }
 
         int radius = Config.LAVA_NEUTRALIZER_RADIUS.get();
-
         BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
