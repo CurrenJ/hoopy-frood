@@ -96,6 +96,9 @@ public class HoopyFroodItems {
     public static final DeferredItem<BlockItem> PROXIMITY_SENSOR_ITEM =
             ITEMS.registerSimpleBlockItem("proximity_sensor", HoopyFroodTutBlocks.PROXIMITY_SENSOR);
 
+    public static final DeferredItem<BlockItem> PRECISION_DISPENSER_ITEM =
+            ITEMS.registerSimpleBlockItem("precision_dispenser", HoopyFroodTutBlocks.PRECISION_DISPENSER);
+
     public static final DeferredItem<BlockItem> EJECTOR_ITEM =
             ITEMS.registerSimpleBlockItem("ejector", HoopyFroodTutBlocks.EJECTOR);
 

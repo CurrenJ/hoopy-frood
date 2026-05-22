@@ -84,6 +84,11 @@
   "item.hoopyfroodtut.sluggish_redstone_clock": "Sluggish Redstone Clock",
   "block.hoopyfroodtut.proximity_sensor": "Proximity Sensor",
   "item.hoopyfroodtut.proximity_sensor": "Proximity Sensor",
+  "block.hoopyfroodtut.precision_dispenser": "Precision Dispenser",
+  "item.hoopyfroodtut.precision_dispenser": "Precision Dispenser",
+  "container.precision_dispenser": "Precision Dispenser",
+  "item.hoopyfroodtut.precision_dispenser.tooltip.desc": "A redstone-activated dispenser with zero velocity or position variance — every projectile, item, or TNT follows the exact same trajectory every time.",
+
   "block.hoopyfroodtut.ejector": "Ejector",
   "item.hoopyfroodtut.ejector": "Ejector",
   "container.ejector": "Ejector",

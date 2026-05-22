@@ -34,6 +34,7 @@ public class BlockTagProvider extends BlockTagsProvider {
                 .add(HoopyFroodTutBlocks.REDSTONE_CLOCK.get())
                 .add(HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get())
                 .add(HoopyFroodTutBlocks.PROXIMITY_SENSOR.get())
+                .add(HoopyFroodTutBlocks.PRECISION_DISPENSER.get())
                 .add(HoopyFroodTutBlocks.EJECTOR.get())
                 .add(HoopyFroodTutBlocks.EXPELLER.get())
                 .add(HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get())
@@ -58,6 +59,7 @@ public class BlockTagProvider extends BlockTagsProvider {
                 .add(HoopyFroodTutBlocks.STURDY_PISTON_HEAD.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(HoopyFroodTutBlocks.PRECISION_DISPENSER.get())
                 .add(HoopyFroodTutBlocks.EJECTOR.get())
                 .add(HoopyFroodTutBlocks.EXPELLER.get())
                 .add(HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get());

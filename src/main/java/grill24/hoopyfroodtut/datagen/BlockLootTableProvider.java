@@ -55,6 +55,7 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
                                         .apply(CopyComponentsFunction
                                                 .copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                                                 .include(HoopyFroodDataComponents.LAVA_NEUTRALIZER_CHARGES.get())))));
+        dropSelf(HoopyFroodTutBlocks.PRECISION_DISPENSER.get());
         dropSelf(HoopyFroodTutBlocks.EJECTOR.get());
         dropSelf(HoopyFroodTutBlocks.EXPELLER.get());
         add(HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(), noDrop());
@@ -111,6 +112,7 @@ public class BlockLootTableProvider extends BlockLootSubProvider {
                 HoopyFroodTutBlocks.SLUGGISH_REDSTONE_CLOCK.get(),
                 HoopyFroodTutBlocks.LAVA_NEUTRALIZER.get(),
                 HoopyFroodTutBlocks.PROXIMITY_SENSOR.get(),
+                HoopyFroodTutBlocks.PRECISION_DISPENSER.get(),
                 HoopyFroodTutBlocks.EJECTOR.get(),
                 HoopyFroodTutBlocks.EXPELLER.get(),
                 HoopyFroodTutBlocks.BEGGING_ITEM_SCRABBLER.get(),

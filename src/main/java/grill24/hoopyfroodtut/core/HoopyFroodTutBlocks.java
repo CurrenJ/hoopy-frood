@@ -7,6 +7,7 @@ import grill24.hoopyfroodtut.block.BeggingItemScrabbler;
 import grill24.hoopyfroodtut.block.DisposableCaterpillar;
 import grill24.hoopyfroodtut.block.Ejector;
 import grill24.hoopyfroodtut.block.Expeller;
+import grill24.hoopyfroodtut.block.PrecisionDispenser;
 import grill24.hoopyfroodtut.block.InertTntBlock;
 import grill24.hoopyfroodtut.block.Inverter;
 import grill24.hoopyfroodtut.block.SturdyPistonBaseBlock;
@@ -130,6 +131,10 @@ public class HoopyFroodTutBlocks {
     // Emits a redstone signal (0-15) proportional to the proximity of the nearest target entity.
     public static final DeferredBlock<ProximitySensor> PROXIMITY_SENSOR = BLOCKS.registerBlock("proximity_sensor",
             p -> new ProximitySensor(p.instabreak().sound(SoundType.STONE).noOcclusion().pushReaction(PushReaction.DESTROY)));
+
+    // A vanilla-style dispenser that fires with zero velocity/position variance on every activation.
+    public static final DeferredBlock<PrecisionDispenser> PRECISION_DISPENSER = BLOCKS.registerBlock("precision_dispenser",
+            p -> new PrecisionDispenser(p.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.5f)));
 
     // A directional block that continuously dispenses items from its 9-slot inventory without needing redstone.
     public static final DeferredBlock<Ejector> EJECTOR = BLOCKS.registerBlock("ejector",

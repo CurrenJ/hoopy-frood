@@ -47,6 +47,7 @@ public class HoopyFroodCreativeTabs {
                 output.accept(HoopyFroodItems.REDSTONE_CLOCK_ITEM.get());
                 output.accept(HoopyFroodItems.SLUGGISH_REDSTONE_CLOCK_ITEM.get());
                 output.accept(HoopyFroodItems.PROXIMITY_SENSOR_ITEM.get());
+                output.accept(HoopyFroodItems.PRECISION_DISPENSER_ITEM.get());
                 output.accept(HoopyFroodItems.EJECTOR_ITEM.get());
                 output.accept(HoopyFroodItems.EXPELLER_ITEM.get());
                 output.accept(HoopyFroodItems.BANISHING_BIN_ITEM.get());

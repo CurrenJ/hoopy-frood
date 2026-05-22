@@ -5,6 +5,7 @@ import grill24.hoopyfroodtut.blockentity.BanishingBinBlockEntity;
 import grill24.hoopyfroodtut.blockentity.BeggingItemScrabblerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.DisposableCaterpillarBlockEntity;
 import grill24.hoopyfroodtut.blockentity.EjectorBlockEntity;
+import grill24.hoopyfroodtut.blockentity.PrecisionDispenserBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ExpellerBlockEntity;
 import grill24.hoopyfroodtut.blockentity.PulseLatchBlockEntity;
 import grill24.hoopyfroodtut.blockentity.ReleaseLatchBlockEntity;
@@ -99,6 +100,10 @@ public class HoopyFroodBlockEntityTypes {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ProximitySensorBlockEntity>> PROXIMITY_SENSOR =
             BLOCK_ENTITY_TYPES.register("proximity_sensor",
                     () -> new BlockEntityType<>(ProximitySensorBlockEntity::new, HoopyFroodTutBlocks.PROXIMITY_SENSOR.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PrecisionDispenserBlockEntity>> PRECISION_DISPENSER =
+            BLOCK_ENTITY_TYPES.register("precision_dispenser",
+                    () -> new BlockEntityType<>(PrecisionDispenserBlockEntity::new, HoopyFroodTutBlocks.PRECISION_DISPENSER.get()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EjectorBlockEntity>> EJECTOR =
             BLOCK_ENTITY_TYPES.register("ejector",
